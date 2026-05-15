@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <title>DUT · Print</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Crimson+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&family=Caveat:wght@500;700&display=swap" rel="stylesheet"/>
+
+  <style>
+    html, body { margin: 0; padding: 0; background: #2a2722; color: #fff; font-family: 'Inter', system-ui, sans-serif; }
+
+    /* On screen: stack pages with breathing room. */
+    .page {
+      width: 1440px;
+      height: 960px;
+      margin: 24px auto;
+      background: #fff;
+      box-shadow: 0 12px 40px rgba(0,0,0,.4);
+      position: relative;
+      overflow: hidden;
+      page-break-after: always;
+      break-after: page;
+    }
+    .page:last-child { page-break-after: auto; break-after: auto; }
+
+    .page-label {
+      position: absolute;
+      top: 0; left: 0;
+      background: #161413;
+      color: #DCD3BD;
+      font: 600 11px/1 'Inter', sans-serif;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      padding: 8px 14px;
+      z-index: 100;
+    }
+    .page-label .num { color: #C8A24A; margin-right: 8px; }
+
+    /* The artboard inner — variants render at 1440×960. */
+    .artboard {
+      position: absolute;
+      inset: 0;
+      width: 1440px;
+      height: 960px;
+    }
+
+    /* Subtle scrollbars (kept hidden in print) */
+    .sober-root *::-webkit-scrollbar, .modern-root *::-webkit-scrollbar { width: 0; height: 0; }
+
+    /* Print: each .page becomes one landscape page sized to fit. */
+    @media print {
+      @page { size: 1440px 960px; margin: 0; }
+      html, body { background: #fff; }
+      .page {
+        margin: 0;
+        box-shadow: none;
+        width: 1440px;
+        height: 960px;
+        page-break-after: always;
+        break-after: page;
+      }
+      .page:last-child { page-break-after: auto; break-after: auto; }
+      * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    }
+  </style>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel" src="tweaks-panel.jsx"></script>
+  <script type="text/babel" src="shared.jsx"></script>
+  <script type="text/babel" src="sober.jsx"></script>
+  <script type="text/babel" src="modern.jsx"></script>
+
+  <script type="text/babel">
+    // ── Print deck: each screen of each variant on its own landscape page.
+    const PAGES = [
+      // Variant A — Sobre institutionnelle
+      { variant: 'sober',  label: 'A · Sobre — Tableau de bord',         screen: 'dashboard', userState: 'active'  },
+      { variant: 'sober',  label: 'A · Sobre — Formulaire DUT',          screen: 'form',      step: 0 },
+      { variant: 'sober',  label: 'A · Sobre — Récapitulatif & paiement', screen: 'payment',  paymentState: 'sent' },
+      { variant: 'sober',  label: 'A · Sobre — Aperçu du DUT (payé)',     screen: 'pdf',      paid: true },
+
+      // Variant B — Moderne civique
+      { variant: 'modern', label: 'B · Moderne — Tableau de bord',       screen: 'dashboard', userState: 'active'  },
+      { variant: 'modern', label: 'B · Moderne — Formulaire DUT',        screen: 'form',      step: 0 },
+      { variant: 'modern', label: 'B · Moderne — Paiement KKiaPay',      screen: 'payment',   paymentState: 'sent' },
+      { variant: 'modern', label: 'B · Moderne — Aperçu du DUT (payé)',  screen: 'pdf',       paid: true },
+    ];
+
+    const PrintDeck = () => (
+      <>
+        {PAGES.map((p, i) => {
+          const Comp = p.variant === 'sober' ? SoberApp : ModernApp;
+          return (
+            <div className="page" key={i}>
+              <div className="page-label"><span className="num">{String(i + 1).padStart(2, '0')}</span>{p.label}</div>
+              <div className="artboard">
+                <Comp
+                  lang="fr"
+                  density="comfortable"
+                  userState={p.userState || 'active'}
+                  initialScreen={p.screen}
+                  initialStep={p.step ?? 0}
+                  initialPaid={!!p.paid}
+                  initialPaymentState={p.paymentState || 'idle'}
+                />
+              </div>
+            </div>
+          );
+        })}
+      </>
+    );
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<PrintDeck/>);
+
+    // Auto-print once Babel has parsed, React has mounted, and fonts are ready.
+    (async () => {
+      try {
+        if (document.fonts && document.fonts.ready) await document.fonts.ready;
+      } catch (e) {}
+      // Give variant components time to mount + layout (multi-screen render).
+      await new Promise((r) => setTimeout(r, 1500));
+      window.print();
+    })();
+  </script>
+</body>
+</html>

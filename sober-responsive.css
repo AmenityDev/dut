@@ -1,0 +1,121 @@
+/* Responsive layer for both Sober platforms (Officer + Transporter).
+   Uses container queries on .sober-root so each artboard can render
+   "phone", "tablet", or "desktop" independently of the viewport. */
+
+.sober-root {
+  container-type: inline-size;
+  container-name: sober;
+}
+
+/* The sidebar is rendered as <aside class="sober-nav"> — target the class. */
+
+/* ── Tablet (≤900px container) ─────────────────────────── */
+@container sober (max-width: 900px) {
+  .sober-root .sober-nav {
+    width: 64px !important;
+    min-width: 64px !important;
+    padding-top: 10px !important;
+  }
+  .sober-root .sober-nav .sober-navlabel,
+  .sober-root .sober-nav .sober-navbadge,
+  .sober-root .sober-nav .sober-navhead,
+  .sober-root .sober-nav .sober-navfooter {
+    display: none !important;
+  }
+  .sober-root .sober-nav button {
+    justify-content: center !important;
+    padding: 12px 0 !important;
+  }
+  .sober-root .sober-topbar-search { display: none !important; }
+  .sober-root main { padding: 18px 18px !important; }
+  .sober-root .sober-grid-2 { grid-template-columns: 1fr !important; }
+  .sober-root .sober-kpi-grid { grid-template-columns: repeat(2, 1fr) !important; }
+}
+
+/* ── Phone (≤620px container) ──────────────────────────── */
+@container sober (max-width: 620px) {
+  /* Hide sidebar entirely; show bottom tab bar */
+  .sober-root .sober-nav { display: none !important; }
+  .sober-root .sober-bottomnav { display: flex !important; }
+  .sober-root main {
+    padding: 14px 14px 84px !important;
+  }
+  .sober-root .sober-topbar { padding: 10px 14px !important; gap: 10px !important; }
+  .sober-root .sober-topbar-emblem-text { display: none !important; }
+  .sober-root .sober-topbar-user-text { display: none !important; }
+  .sober-root .sober-topbar > :first-child { margin-right: auto; }
+
+  /* Stack everything */
+  .sober-root .sober-grid-2,
+  .sober-root .dut-profile-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .sober-root .sober-kpi-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 8px !important; }
+  .sober-root .sober-kpi-grid > div { padding: 12px !important; }
+
+  /* Tables → vertical card list */
+  .sober-root table.sober-stack thead { display: none !important; }
+  .sober-root table.sober-stack,
+  .sober-root table.sober-stack tbody,
+  .sober-root table.sober-stack tr,
+  .sober-root table.sober-stack td { display: block !important; width: 100% !important; }
+  .sober-root table.sober-stack tr {
+    background: #FFF !important; border: 1px solid #E5DDC9 !important; padding: 10px 12px !important;
+    margin-bottom: 8px !important;
+  }
+  .sober-root table.sober-stack td {
+    border: none !important; padding: 3px 0 !important; display: flex !important;
+    justify-content: space-between !important; gap: 10px;
+  }
+  .sober-root table.sober-stack td::before {
+    content: attr(data-label); color: #9A9281; font-size: 10.5px;
+    letter-spacing: .12em; text-transform: uppercase;
+  }
+
+  /* PDF preview shrinks padding */
+  .sober-root .sober-doc { padding: 22px 18px !important; }
+  .sober-root .sober-pagehead h1 { font-size: 22px !important; }
+
+  /* Form rows */
+  .sober-root .sober-fieldrow { grid-template-columns: 1fr !important; }
+}
+
+/* Bottom nav (hidden by default; shown on phone via @container rule above) */
+.sober-root .sober-bottomnav {
+  display: none;
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  background: #FBF8F2;
+  border-top: 1px solid #E5DDC9;
+  padding: 6px 4px calc(6px + env(safe-area-inset-bottom));
+  justify-content: space-around;
+  z-index: 50;
+}
+.sober-root .sober-bottomnav button {
+  flex: 1;
+  background: transparent;
+  border: none;
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+  padding: 6px 4px;
+  font: inherit; font-size: 10px;
+  color: #6B6557;
+  cursor: pointer;
+  position: relative;
+  font-weight: 500;
+}
+.sober-root .sober-bottomnav button.active {
+  color: #161413;
+  font-weight: 700;
+}
+.sober-root .sober-bottomnav button.active::before {
+  content: ''; position: absolute; top: 0; left: 25%; right: 25%; height: 2px; background: #161413;
+}
+.sober-root .sober-bottomnav .sober-bottomnav-badge {
+  position: absolute; top: 2px; right: calc(50% - 18px);
+  background: #CE1126; color: #fff; font-size: 9px; font-weight: 700;
+  border-radius: 8px; padding: 0 5px; min-width: 14px; text-align: center;
+}
+
+/* Topbar user-name overflow guard (fix for officer dark topbar) */
+.sober-root .sober-topbar-user-text { min-width: 0; }
+.sober-root .sober-topbar-user-text > div > div { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 180px; }
