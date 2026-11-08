@@ -1,5 +1,5 @@
 // ─────────────────────────────────────────────────────────────
-// SOBER · Institutional Direction
+// SOBER, Institutional Direction
 // "Direction Générale des Transports Terrestres" feel.
 // Cream/paper background, deep ink, narrow flag-bar accents,
 // serif (Crimson Pro) for headlines, sans (Inter) for UI body.
@@ -48,7 +48,7 @@ const SoberTransporterApp = ({ lang = 'fr', density = 'comfortable', userState =
                             onOpenDut={() => setScreen('pdf')} userState={userState} />
           )}
           {screen === 'form' && (
-            // Transporters cannot issue DUTs — only officers can. Redirect.
+            // Transporters cannot issue DUTs: only officers can. Redirect.
             <div style={{ padding: 40, textAlign: 'center', color: '#6B6557' }}>
               <p>{lang === 'en' ? 'STDs are issued by DNTT officers only. Please proceed to payment of your due bills.' : 'Les DUT sont émis par les agents DNTT uniquement. Veuillez procéder au règlement de vos DUT en attente.'}</p>
               <button style={primaryBtn()} onClick={() => setScreen('payments')}>{lang === 'en' ? 'Go to bills' : 'Voir mes DUT à régler'}</button>
@@ -76,8 +76,8 @@ const SoberTransporterApp = ({ lang = 'fr', density = 'comfortable', userState =
             <div>
               <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', borderBottom: '1px solid #E5DDC9', paddingBottom: 14, marginBottom: 22 }}>
                 <div>
-                  <div style={{ fontSize: 11, letterSpacing: '.18em', color: '#9A9281', textTransform: 'uppercase' }}>{t('documentReady', lang)} · {viewedImport.id}</div>
-                  <h1 style={{ fontFamily: '"Crimson Pro", serif', fontSize: 28, margin: '6px 0 0', fontWeight: 500 }}>{lang === 'en' ? 'Vehicle Import Tax Notice' : 'Avis de Taxation · Importation Véhicule'}</h1>
+                  <div style={{ fontSize: 11, letterSpacing: '.18em', color: '#9A9281', textTransform: 'uppercase' }}>{t('documentReady', lang)}, {viewedImport.id}</div>
+                  <h1 style={{ fontFamily: '"Crimson Pro", serif', fontSize: 28, margin: '6px 0 0', fontWeight: 500 }}>{lang === 'en' ? 'Vehicle Import Tax Notice' : 'Avis de Taxation, Importation Véhicule'}</h1>
                 </div>
                 <div style={{ display: 'flex', gap: 8 }}>
                   {viewedImport.status === 'pending' && (
@@ -144,8 +144,8 @@ const SoberTopBar = ({ lang }) => (
     <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 11.5, color: '#6B6557' }}>
       <span style={{ padding: '4px 8px', borderRadius: 2, background: lang === 'fr' ? '#161413' : 'transparent',
                      color: lang === 'fr' ? '#fff' : '#6B6557' }}>FR</span>
-      <span style={{ padding: '4px 8px', color: lang === 'sus' ? '#161413' : '#9A9281' }}>SUS</span>
-      <span style={{ padding: '4px 8px', color: lang === 'ful' ? '#161413' : '#9A9281' }}>PUL</span>
+      <span style={{ padding: '4px 8px', color: lang === 'sus' ? '#161413' : '#9A9281' }}>SOU</span>
+      <span style={{ padding: '4px 8px', color: lang === 'ful' ? '#161413' : '#9A9281' }}>PEU</span>
       <span style={{ padding: '4px 8px', color: lang === 'man' ? '#161413' : '#9A9281' }}>MAN</span>
     </div>
 
@@ -160,7 +160,7 @@ const SoberTopBar = ({ lang }) => (
                     display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 600, fontSize: 12 }}>MD</div>
       <div style={{ lineHeight: 1.2 }}>
         <div style={{ fontWeight: 600, fontSize: 12.5 }}>{CARRIER.director}</div>
-        <div style={{ fontSize: 11, color: '#6B6557' }}>{CARRIER.short} · NIF {CARRIER.nif}</div>
+        <div style={{ fontSize: 11, color: '#6B6557' }}>{CARRIER.short}, NIF {CARRIER.nif}</div>
       </div>
     </div>
   </header>
@@ -210,7 +210,7 @@ const SoberSidebar = ({ lang = 'fr', screen, setScreen, setStep, setPaid, setPay
       <div style={{ margin: '10px 14px', padding: 12, background: '#161413', color: '#F7F3EB', borderRadius: 4 }}>
         <div style={{ fontSize: 10, letterSpacing: '.18em', color: '#FCD116' }}>{(lang === 'en' ? 'REMINDER' : lang === 'fr' ? 'RAPPEL' : t('notifications', lang).toUpperCase())}</div>
         <div style={{ fontFamily: '"Crimson Pro", serif', fontSize: 14, marginTop: 4, lineHeight: 1.3 }}>
-          {t('transportCard', lang)} — 38 j
+          {t('transportCard', lang)} : 38 j
         </div>
         <button style={{ marginTop: 8, fontSize: 11, background: 'transparent', border: '1px solid #6B6557',
                          color: '#F7F3EB', padding: '5px 10px', borderRadius: 2, cursor: 'pointer', fontFamily: 'inherit' }}>
@@ -219,7 +219,7 @@ const SoberSidebar = ({ lang = 'fr', screen, setScreen, setStep, setPaid, setPay
       </div>
 
       <div style={{ padding: '10px 14px', fontSize: 10, color: '#9A9281', borderTop: '1px solid #E5DDC9' }}>
-        {t('ministry', lang)}<br/>v 2.4.1 · 04 / 2026
+        {t('ministry', lang)}<br/>v 2.4.1, 04 / 2026
       </div>
     </aside>
   );
@@ -235,12 +235,12 @@ const SoberDashboard = ({ lang = 'fr', onPay, onOpenDut, userState }) => {
       {/* Page header */}
       <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', borderBottom: '1px solid #E5DDC9', paddingBottom: 18, marginBottom: 22 }}>
         <div>
-          <div style={{ fontSize: 11, letterSpacing: '.18em', color: '#9A9281', textTransform: 'uppercase' }}>{t('carrierSpace', lang)} — N° 04/MTI/2019</div>
+          <div style={{ fontSize: 11, letterSpacing: '.18em', color: '#9A9281', textTransform: 'uppercase' }}>{t('carrierSpace', lang)}, N° 04/MTI/2019</div>
           <h1 style={{ fontFamily: '"Crimson Pro", Georgia, serif', fontSize: 32, fontWeight: 500, margin: '6px 0 0', letterSpacing: '-0.01em' }}>
             {t('welcome', lang)}, <i>{CARRIER.director.split(' ').slice(-2).join(' ')}</i>.
           </h1>
           <div style={{ fontSize: 13, color: '#6B6557', marginTop: 4 }}>
-            {t('overview', lang)} — <b>04 / 2026</b>
+            {t('overview', lang)}, <b>04 / 2026</b>
           </div>
         </div>
         <button onClick={onPay} style={primaryBtn()}>
@@ -253,8 +253,8 @@ const SoberDashboard = ({ lang = 'fr', onPay, onOpenDut, userState }) => {
         <div style={{ marginBottom: 18, padding: 14, background: '#FCEAEA', border: '1px solid #E8B6B6', borderLeft: '3px solid #CE1126', display: 'flex', gap: 12, alignItems: 'flex-start' }}>
           <Icon name="bell" size={18} style={{ color: '#CE1126', marginTop: 2 }} />
           <div>
-            <div style={{ fontWeight: 600, color: '#8A1B1B' }}>{t('overdue', lang)} — DUT-2026-04-08698</div>
-            <div style={{ fontSize: 12, color: '#6B4444' }}>372 000 GNF · {t('overdueDetail', lang)}</div>
+            <div style={{ fontWeight: 600, color: '#8A1B1B' }}>{t('overdue', lang)} : DUT-2026-04-08698</div>
+            <div style={{ fontSize: 12, color: '#6B4444' }}>372 000 GNF, {t('overdueDetail', lang)}</div>
           </div>
           <button style={{ marginLeft: 'auto', fontSize: 12, background: '#CE1126', color: '#fff', border: 'none', padding: '7px 14px', borderRadius: 2, cursor: 'pointer', fontFamily: 'inherit', fontWeight: 600 }}>{t('pay', lang)}</button>
         </div>
@@ -338,7 +338,7 @@ const SoberDashboard = ({ lang = 'fr', onPay, onOpenDut, userState }) => {
                                 background: '#FCD116' }}>RG</div>
                   <div>
                     <div style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 12, fontWeight: 600 }}>{v.plate}</div>
-                    <div style={{ fontSize: 11, color: '#6B6557' }}>{v.brand} · {v.capacity} · {v.driver}</div>
+                    <div style={{ fontSize: 11, color: '#6B6557' }}>{v.brand}, {v.capacity}, {v.driver}</div>
                   </div>
                 </div>
               ))}
@@ -349,8 +349,8 @@ const SoberDashboard = ({ lang = 'fr', onPay, onOpenDut, userState }) => {
 
       <footer style={{ marginTop: 28, paddingTop: 14, borderTop: '1px solid #E5DDC9',
                        fontSize: 11, color: '#9A9281', display: 'flex', justifyContent: 'space-between' }}>
-        <div>« <i>Travail · Justice · Solidarité</i> » — devise nationale.</div>
-        <div>Hébergement souverain · Conakry & Dakar · ISO 27001</div>
+        <div>« <i>Travail, Justice, Solidarité</i> », devise nationale.</div>
+        <div>Hébergement souverain, Conakry & Dakar, ISO 27001</div>
       </footer>
     </div>
   );
@@ -373,7 +373,7 @@ const SoberForm = ({ lang = 'fr', form, setForm, step, setStep, goods, distance,
     <div>
       <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', borderBottom: '1px solid #E5DDC9', paddingBottom: 14, marginBottom: 22 }}>
         <div>
-          <div style={{ fontSize: 11, letterSpacing: '.18em', color: '#9A9281', textTransform: 'uppercase' }}>{t('newDut', lang)} · {tFmt(t('stepOf', lang), { n: step + 1, total: STEPS.length })}</div>
+          <div style={{ fontSize: 11, letterSpacing: '.18em', color: '#9A9281', textTransform: 'uppercase' }}>{t('newDut', lang)}, {tFmt(t('stepOf', lang), { n: step + 1, total: STEPS.length })}</div>
           <h1 style={{ fontFamily: '"Crimson Pro", serif', fontSize: 28, margin: '6px 0 0', fontWeight: 500 }}>{STEPS[step]}</h1>
         </div>
         <button onClick={onCancel} style={ghostBtn()}>{t('cancel', lang)}</button>
@@ -422,7 +422,7 @@ const SoberForm = ({ lang = 'fr', form, setForm, step, setStep, goods, distance,
           <h3 style={{ fontFamily: '"Crimson Pro", serif', fontSize: 22, margin: '4px 0 14px', fontWeight: 500 }}>{form.fromCity} → {form.toCity}</h3>
 
           <SummaryRow label={t('estimatedDistance', lang)} value={`${distance} km`} />
-          <SummaryRow label={t('cargo', lang)} value={`${goods.label} · ${form.quantity} ${form.unit || goods.unit}`} />
+          <SummaryRow label={t('cargo', lang)} value={`${goods.label}, ${form.quantity} ${form.unit || goods.unit}`} />
           <SummaryRow label={t('vehicle', lang)} value={form.vehicle} mono />
           <SummaryRow label={t('declaredValue', lang)} value={fmtGNF(form.value)} />
 
@@ -516,7 +516,7 @@ const StepPayer = ({ lang = 'fr', form, set }) => {
           >
             {filtered.map(tr => (
               <option key={tr.id} value={tr.id}>
-                {tr.id} · {tr.short}{form.payerKind==='individual' ? ` (${tr.city})` : ''}
+                {tr.id}, {tr.short}{form.payerKind==='individual' ? ` (${tr.city})` : ''}
               </option>
             ))}
           </select>
@@ -548,16 +548,16 @@ const StepPayer = ({ lang = 'fr', form, set }) => {
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, marginTop: 8 }}>
           <div>
             <div style={{ fontSize: 11, color: '#6B6557' }}>{isFr ? 'Désignation' : 'Name'}</div>
-            <div style={{ fontWeight: 600 }}>{displayName || '—'}</div>
+            <div style={{ fontWeight: 600 }}>{displayName || '-'}</div>
           </div>
           <div>
             <div style={{ fontSize: 11, color: '#6B6557' }}>{form.payerKind === 'company' ? 'RCCM/NIF' : 'CNI/NIF'}</div>
-            <div style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 12 }}>{displayId || '—'}</div>
+            <div style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 12 }}>{displayId || '-'}</div>
           </div>
           {!form.payerCustom && (
             <div>
               <div style={{ fontSize: 11, color: '#6B6557' }}>{isFr ? 'Représentant / contact' : 'Contact'}</div>
-              <div>{displayContact || '—'}</div>
+              <div>{displayContact || '-'}</div>
             </div>
           )}
           <div>
@@ -606,7 +606,7 @@ const StepRoute = ({ lang = 'fr', form, set, distance }) => (
         <circle cx="540" cy="70" r="6" fill="#009460"/>
         <text x="80" y="160" fontSize="11" fontFamily="Inter" fill="#161413" fontWeight="600">{form.fromCity}</text>
         <text x="540" y="60" fontSize="11" fontFamily="Inter" fill="#161413" fontWeight="600" textAnchor="end">{form.toCity}</text>
-        <text x="300" y="40" fontSize="11" fontFamily="Inter" fill="#6B6557" textAnchor="middle">≈ {distance} km · ~ {Math.round(distance/55)} h de route</text>
+        <text x="300" y="40" fontSize="11" fontFamily="Inter" fill="#6B6557" textAnchor="middle">≈ {distance} km, ~ {Math.round(distance/55)} h de route</text>
       </svg>
     </div>
   </>
@@ -645,7 +645,7 @@ const StepGoods = ({ lang = 'fr', form, set }) => (
       <div style={{ padding: 22, border: '1.5px dashed #DCD3BD', background: '#FBF8F2', textAlign: 'center', borderRadius: 2 }}>
         <Icon name="upload" size={26} style={{ color: '#9A9281' }}/>
         <div style={{ marginTop: 8, fontWeight: 600 }}>Glisser-déposer un fichier</div>
-        <div style={{ fontSize: 11.5, color: '#6B6557', marginTop: 4 }}>ou <u>parcourir</u> · PDF, JPG, PNG · max 8 Mo</div>
+        <div style={{ fontSize: 11.5, color: '#6B6557', marginTop: 4 }}>ou <u>parcourir</u> (PDF, JPG, PNG, max 8 Mo)</div>
       </div>
     </Field>
 
@@ -674,7 +674,7 @@ const StepVehicle = ({ lang = 'fr', form, set }) => (
                             background: '#FCD116' }}>{v.plate.slice(0, 2)}</div>
               <div style={{ flex: 1 }}>
                 <div style={{ fontFamily: '"JetBrains Mono", monospace', fontWeight: 600 }}>{v.plate}</div>
-                <div style={{ fontSize: 11.5, color: '#6B6557' }}>{v.brand} · {v.year} · capacité {v.capacity}</div>
+                <div style={{ fontSize: 11.5, color: '#6B6557' }}>{v.brand}, {v.year}, capacité {v.capacity}</div>
               </div>
               <div style={{ fontSize: 11.5, color: '#6B6557' }}>{v.type}</div>
             </label>
@@ -690,13 +690,13 @@ const StepVehicle = ({ lang = 'fr', form, set }) => (
 
     <FieldRow>
       <Field label="N° carte transporteur"><Input value="DNTT/T/2024/00482" /></Field>
-      <Field label="Police d'assurance"><Input value="SUNU-2026-0218 · valide jusqu'au 31/12/2026" /></Field>
+      <Field label="Police d'assurance"><Input value="SUNU-2026-0218, valide jusqu'au 31/12/2026" /></Field>
     </FieldRow>
 
     <div style={{ marginTop: 6, padding: 12, background: '#F1F8F2', border: '1px solid #BFD9C4', display: 'flex', alignItems: 'flex-start', gap: 10 }}>
       <Icon name="check" size={16} style={{ color: '#009460', marginTop: 2 }}/>
       <div style={{ fontSize: 12, color: '#1F4F2C' }}>
-        <b>Vérifications automatiques :</b> visite technique à jour · police d'assurance valide · permis non suspendu · carte transporteur active jusqu'au 07/06/2026.
+        <b>Vérifications automatiques :</b> visite technique à jour, police d'assurance valide, permis non suspendu, carte transporteur active jusqu'au 07/06/2026.
       </div>
     </div>
   </>
@@ -738,8 +738,8 @@ const SoberPayment = ({ lang = 'fr', total, bill, method, setMethod, paymentStat
   const methods = [
     { id: 'orange',   label: t('orangeMoney', lang),  tag: 'OM',   desc: '+224 6XX XX XX XX', color: '#FF6E0E' },
     { id: 'mtn',      label: t('mtnMoMo', lang),      tag: 'MTN',  desc: '+224 6XX XX XX XX', color: '#FFCC00' },
-    { id: 'card',     label: t('bankCard', lang),     tag: 'VISA', desc: 'Visa · Mastercard · GIM-UEMOA', color: '#1A1F71' },
-    { id: 'bank',     label: t('bankTransfer', lang), tag: 'BCI',  desc: 'BICIGUI · Ecobank · UBA · Vista', color: '#161413' },
+    { id: 'card',     label: t('bankCard', lang),     tag: 'VISA', desc: 'Visa, Mastercard, GIM-UEMOA', color: '#1A1F71' },
+    { id: 'bank',     label: t('bankTransfer', lang), tag: 'BCI',  desc: 'BICIGUI, Ecobank, UBA, Vista', color: '#161413' },
   ];
 
   return (
@@ -747,7 +747,7 @@ const SoberPayment = ({ lang = 'fr', total, bill, method, setMethod, paymentStat
       <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', borderBottom: '1px solid #E5DDC9', paddingBottom: 14, marginBottom: 22 }}>
         <div>
           <div style={{ fontSize: 11, letterSpacing: '.18em', color: '#9A9281', textTransform: 'uppercase' }}>
-            {bill ? (lang === 'en' ? 'Vehicle import · Tax payment' : 'Importation véhicule · Paiement de la taxe') : `${tFmt(t('stepOf', lang), { n: 4, total: 4 })} · ${t('paymentMethod', lang)}`}
+            {bill ? (lang === 'en' ? 'Vehicle import: tax payment' : 'Importation véhicule : paiement de la taxe') : `${tFmt(t('stepOf', lang), { n: 4, total: 4 })}, ${t('paymentMethod', lang)}`}
           </div>
           <h1 style={{ fontFamily: '"Crimson Pro", serif', fontSize: 28, margin: '6px 0 0', fontWeight: 500 }}>{t('chooseMethod', lang)}</h1>
         </div>
@@ -805,7 +805,7 @@ const SoberPayment = ({ lang = 'fr', total, bill, method, setMethod, paymentStat
               <Icon name="shield" size={14} style={{ color: '#009460' }}/> {t('securedBy', lang)}
             </div>
             <button onClick={() => setPaymentState('sent')} disabled={paymentState !== 'idle'} style={{ ...primaryBtn(), opacity: paymentState !== 'idle' ? .6 : 1 }}>
-              {paymentState === 'idle'    && <>{t('confirm', lang)} · {fmtGNF(total)} →</>}
+              {paymentState === 'idle'    && <>{t('confirm', lang)} ({fmtGNF(total)}) →</>}
               {paymentState === 'sent'    && <>{t('paymentSent', lang)}</>}
               {paymentState === 'success' && <><Icon name="check" size={14}/> {t('paymentReceived', lang)}</>}
             </button>
@@ -816,8 +816,8 @@ const SoberPayment = ({ lang = 'fr', total, bill, method, setMethod, paymentStat
           <div style={{ fontSize: 10, letterSpacing: '.18em', color: '#9A9281', textTransform: 'uppercase' }}>{t('totalDue', lang)}</div>
           <h3 style={{ fontFamily: '"Crimson Pro", serif', fontSize: 22, margin: '4px 0 14px', fontWeight: 500 }}>
             {bill
-              ? `${lang === 'en' ? 'Vehicle import' : 'Importation véhicule'} · ${bill.vehicle.make} ${bill.vehicle.model}`
-              : 'DUT · Bauxite Kamsar → Conakry'}
+              ? `${lang === 'en' ? 'Vehicle import' : 'Importation véhicule'}, ${bill.vehicle.make} ${bill.vehicle.model}`
+              : 'DUT, Bauxite Kamsar → Conakry'}
           </h3>
           {bill ? (
             (() => {
@@ -857,8 +857,8 @@ const SoberPayment = ({ lang = 'fr', total, bill, method, setMethod, paymentStat
           {paymentState !== 'idle' && (
             <div style={{ marginTop: 16, padding: 14, background: paymentState === 'success' ? '#F1F8F2' : '#FFF8E1', border: '1px solid', borderColor: paymentState === 'success' ? '#BFD9C4' : '#E8D896' }}>
               <div style={{ fontSize: 12, fontWeight: 600, color: paymentState === 'success' ? '#1F4F2C' : '#73591F' }}>
-                {paymentState === 'sent' && <>📲 {t('paymentSent', lang)}</>}
-                {paymentState === 'success' && <>✓ {t('paymentSuccess', lang)} · KKP-2026-A4F71B</>}
+                {paymentState === 'sent' && <>{t('paymentSent', lang)}</>}
+                {paymentState === 'success' && <>✓ {t('paymentSuccess', lang)}, KKP-2026-A4F71B</>}
               </div>
             </div>
           )}
@@ -879,7 +879,7 @@ const SoberPdfPreview = ({ lang = 'fr', form, goods, distance, total, baseFee, s
   <div>
     <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', borderBottom: '1px solid #E5DDC9', paddingBottom: 14, marginBottom: 22 }}>
       <div>
-        <div style={{ fontSize: 11, letterSpacing: '.18em', color: '#9A9281', textTransform: 'uppercase' }}>{t('documentReady', lang)} · DUT-2026-04-08821</div>
+        <div style={{ fontSize: 11, letterSpacing: '.18em', color: '#9A9281', textTransform: 'uppercase' }}>{t('documentReady', lang)}, DUT-2026-04-08821</div>
         <h1 style={{ fontFamily: '"Crimson Pro", serif', fontSize: 28, margin: '6px 0 0', fontWeight: 500 }}>{t('appName', lang)}</h1>
       </div>
       <div style={{ display: 'flex', gap: 8 }}>
@@ -907,19 +907,19 @@ const SoberPdfPreview = ({ lang = 'fr', form, goods, distance, total, baseFee, s
           <div style={{ fontSize: 80, color: 'rgba(206,17,38,.08)', transform: 'rotate(-22deg)', fontWeight: 700, letterSpacing: '.1em' }}>{(t('totalDue', lang)).toUpperCase()}</div>
         </div>}
         {paid && <div style={{ position: 'absolute', top: 28, right: 48, border: '2px solid #009460', color: '#009460',
-                               padding: '6px 14px', transform: 'rotate(-6deg)', fontFamily: 'Georgia, serif', fontWeight: 700, letterSpacing: '.16em', fontSize: 14 }}>{t('paidStamp', lang)} · 28 / 04 / 2026</div>}
+                               padding: '6px 14px', transform: 'rotate(-6deg)', fontFamily: 'Georgia, serif', fontWeight: 700, letterSpacing: '.16em', fontSize: 14 }}>{t('paidStamp', lang)}, 28 / 04 / 2026</div>}
 
         <div style={{ display: 'flex', alignItems: 'flex-start', gap: 18, paddingBottom: 16, borderBottom: '2px solid #161413' }}>
           <SealEmblem size={64} />
           <div style={{ flex: 1 }}>
-            <div style={{ fontSize: 10.5, letterSpacing: '.18em', textTransform: 'uppercase', color: '#6B6557' }}>{t('republic', lang)} — Travail · Justice · Solidarité</div>
+            <div style={{ fontSize: 10.5, letterSpacing: '.18em', textTransform: 'uppercase', color: '#6B6557' }}>{t('republic', lang)}. Travail, Justice, Solidarité</div>
             <div style={{ fontSize: 13, marginTop: 4 }}>{t('ministry', lang)}</div>
             <div style={{ fontSize: 11.5, color: '#6B6557' }}>{t('dntt', lang)}</div>
           </div>
           <div style={{ textAlign: 'right' }}>
             <div style={{ fontSize: 10.5, letterSpacing: '.18em', color: '#6B6557' }}>{t('docNumber', lang)}</div>
             <div style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 13, fontWeight: 700 }}>DUT-2026-04-08821</div>
-            <div style={{ fontSize: 10.5, color: '#6B6557', marginTop: 2 }}>{t('issuedOn', lang)} 28 / 04 / 2026 · 14:32 GMT</div>
+            <div style={{ fontSize: 10.5, color: '#6B6557', marginTop: 2 }}>{t('issuedOn', lang)} 28 / 04 / 2026, 14:32 GMT</div>
           </div>
         </div>
 
@@ -930,14 +930,14 @@ const SoberPdfPreview = ({ lang = 'fr', form, goods, distance, total, baseFee, s
           {t('decree', lang)}
         </div>
 
-        <PdfSection title={`I — ${t('transporter', lang)}`}>
+        <PdfSection title={`I. ${t('transporter', lang)}`}>
           <PdfRow k={lang === 'en' ? 'Company' : 'Raison sociale'} v={CARRIER.name} />
           <PdfRow k="RCCM" v={CARRIER.rccm} />
           <PdfRow k="NIF" v={CARRIER.nif} />
           <PdfRow k={lang === 'en' ? 'Office' : 'Siège'} v={CARRIER.address} />
         </PdfSection>
 
-        <PdfSection title={`II — ${t('route', lang)}`}>
+        <PdfSection title={`II. ${t('route', lang)}`}>
           <PdfRow k={t('fromCity', lang)} v={form.fromCity} />
           <PdfRow k={t('toCity', lang)} v={form.toCity} />
           <PdfRow k={t('estimatedDistance', lang)} v={`${distance} km`} />
@@ -945,19 +945,19 @@ const SoberPdfPreview = ({ lang = 'fr', form, goods, distance, total, baseFee, s
           <PdfRow k={t('arrival', lang)} v={form.arrival} />
         </PdfSection>
 
-        <PdfSection title={`III — ${t('cargo', lang)}`}>
+        <PdfSection title={`III. ${t('cargo', lang)}`}>
           <PdfRow k={t('cargoNature', lang)} v={`${goods.label} (${goods.cat})`} />
           <PdfRow k={t('quantity', lang)} v={`${form.quantity} ${form.unit || goods.unit}`} />
           <PdfRow k={t('declaredValue', lang)} v={fmtGNF(form.value)} />
         </PdfSection>
 
-        <PdfSection title={`IV — ${t('vehicle', lang)} & ${t('driver', lang).toLowerCase()}`}>
+        <PdfSection title={`IV. ${t('vehicle', lang)} & ${t('driver', lang).toLowerCase()}`}>
           <PdfRow k={t('vehicle', lang)} v={form.vehicle} />
           <PdfRow k={t('driver', lang)} v={form.driver} />
           <PdfRow k={t('licenseNumber', lang)} v="C-2018-04-771203" />
         </PdfSection>
 
-        <PdfSection title={`V — ${t('total', lang)}`}>
+        <PdfSection title={`V. ${t('total', lang)}`}>
           <PdfRow k={t('fee', lang)} v={fmtGNF(baseFee)} />
           <PdfRow k={t('stamp', lang)} v={fmtGNF(stamp)} />
           <PdfRow k={t('dnttShare', lang)} v={fmtGNF(stat)} />
@@ -981,14 +981,14 @@ const SoberPdfPreview = ({ lang = 'fr', form, goods, distance, total, baseFee, s
         </div>
       </div>
 
-      {/* Side rail — État */}
+      {/* Side rail: État */}
       <aside>
         <div style={paperCard()}>
           <div style={{ fontSize: 10.5, letterSpacing: '.18em', color: '#9A9281', textTransform: 'uppercase', marginBottom: 8 }}>{lang === 'en' ? 'Status' : 'État'}</div>
           <StatusPill status={paid ? 'paid' : 'pending'} lang={lang}/>
           <div style={{ marginTop: 16, fontSize: 11.5, color: '#6B6557', lineHeight: 1.6 }}>
             {lang === 'en' ? 'Issued by' : 'Émis par'} <strong style={{ color: '#161413' }}>F. Camara</strong><br/>
-            {lang === 'en' ? 'On' : 'Le'} 28 / 04 / 2026 · 14:32 GMT
+            {lang === 'en' ? 'On' : 'Le'} 28 / 04 / 2026, 14:32 GMT
           </div>
         </div>
       </aside>
@@ -1153,7 +1153,7 @@ const ghostBtn = () => ({
   border: '1px solid #DCD3BD', borderRadius: 2, cursor: 'pointer', fontFamily: 'inherit', fontSize: 12, fontWeight: 500,
 });
 
-// Transporter sidebar — no "drivers" item, fleet/profile/support/settings hooks
+// Transporter sidebar: no "drivers" item, fleet/profile/support/settings hooks
 const SoberTransporterSidebar = ({ lang, screen, setScreen, setStep, setPaid, setPaymentState }) => {
   const Item = ({ id, icon, label, badge }) => {
     const active = screen === id || (id === 'payments' && (screen === 'payment' || screen === 'pdf')) || (id === 'history' && screen === 'pdf');
@@ -1186,7 +1186,7 @@ const SoberTransporterSidebar = ({ lang, screen, setScreen, setStep, setPaid, se
       <Item id="support" icon="help" label={t('support', lang)}/>
       <div style={{ flex: 1 }}/>
       <div className="sober-navfooter" style={{ padding: '10px 14px', fontSize: 10, color: '#9A9281', borderTop: '1px solid #E5DDC9' }}>
-        {t('ministry', lang)}<br/>v 2.4.1 · 04 / 2026
+        {t('ministry', lang)}<br/>v 2.4.1, 04 / 2026
       </div>
     </aside>
   );

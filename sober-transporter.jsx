@@ -40,9 +40,9 @@ const TransporterTopBar = ({ lang }) => (
   <header style={{ display: 'flex', alignItems: 'center', gap: 18, padding: '12px 28px', background: '#fff', borderBottom: '1px solid #E5DDC9' }}>
     <div style={{ color: '#161413' }}><SealEmblem size={40}/></div>
     <div style={{ flex: 1 }}>
-      <div style={{ fontSize: 10, letterSpacing: '.22em', color: '#9A9281', textTransform: 'uppercase' }}>République de Guinée · MTI · DNTT</div>
+      <div style={{ fontSize: 10, letterSpacing: '.22em', color: '#9A9281', textTransform: 'uppercase' }}>République de Guinée, MTI, DNTT</div>
       <div style={{ fontFamily: '"Crimson Pro", Georgia, serif', fontSize: 17, fontWeight: 500, marginTop: 2 }}>
-        Document Unique de Transport <span style={{ fontSize: 11.5, color: '#9A9281', fontStyle: 'italic', marginLeft: 6 }}>— Espace Transporteur</span>
+        Document Unique de Transport <span style={{ fontSize: 11.5, color: '#9A9281', fontStyle: 'italic', marginLeft: 6 }}>(espace transporteur)</span>
       </div>
     </div>
     <div style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 12 }}>
@@ -87,12 +87,12 @@ const TransporterSidebar = ({ lang, screen, setScreen, myBills }) => {
 
       <div style={{ fontSize: 9.5, letterSpacing: '.2em', color: '#9A9281', textTransform: 'uppercase', padding: '20px 16px 8px' }}>Compte</div>
       <Item id="profile"  icon="user" label="Profil"/>
-      <Item id="support"  icon="chat" label="Support · *144#"/>
+      <Item id="support"  icon="chat" label="Support, *144#"/>
       <Item id="settings" icon="gear" label="Paramètres"/>
 
       <div style={{ marginTop: 'auto', padding: '14px 16px', fontSize: 10.5, color: '#9A9281', borderTop: '1px solid #E5DDC9' }}>
         <div style={{ fontWeight: 600, color: '#6B6557' }}>{CARRIER.name}</div>
-        <div style={{ marginTop: 2 }}>NIF {CARRIER.nif} · {CARRIER.fleet} véhicules</div>
+        <div style={{ marginTop: 2 }}>NIF {CARRIER.nif}, {CARRIER.fleet} véhicules</div>
       </div>
     </nav>
   );
@@ -109,7 +109,7 @@ const TransporterDashboard = ({ lang, myBills, userState, onOpen, onAllBills }) 
     <div>
       <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', borderBottom: '1px solid #E5DDC9', paddingBottom: 18, marginBottom: 22 }}>
         <div>
-          <div style={{ fontSize: 11, letterSpacing: '.18em', color: '#9A9281', textTransform: 'uppercase' }}>Espace transporteur · {CARRIER.short}</div>
+          <div style={{ fontSize: 11, letterSpacing: '.18em', color: '#9A9281', textTransform: 'uppercase' }}>Espace transporteur, {CARRIER.short}</div>
           <h1 style={{ fontFamily: '"Crimson Pro", Georgia, serif', fontSize: 30, fontWeight: 500, margin: '6px 0 0' }}>
             Bonjour, <i>{CARRIER.director.split(' ').slice(-2).join(' ')}</i>.
           </h1>
@@ -130,7 +130,7 @@ const TransporterDashboard = ({ lang, myBills, userState, onOpen, onAllBills }) 
             {fmtGNF(balance)}
           </div>
           <div style={{ fontSize: 12, color: '#6B6557', marginTop: 8 }}>
-            Réparti sur <b>{unpaid.length}</b> facture{unpaid.length > 1 ? 's' : ''} · prochaine échéance <b>{unpaid[0]?.due || '—'}</b>
+            Réparti sur <b>{unpaid.length}</b> facture{unpaid.length > 1 ? 's' : ''}, prochaine échéance <b>{unpaid[0]?.due || '-'}</b>
           </div>
         </div>
         <div>
@@ -138,7 +138,7 @@ const TransporterDashboard = ({ lang, myBills, userState, onOpen, onAllBills }) 
             <div key={b.id} onClick={() => onOpen(b.id)} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '10px 0', borderTop: i ? '1px solid #E5DDC9' : 'none', cursor: 'pointer' }}>
               <div style={{ flex: 1 }}>
                 <div style={{ fontSize: 11, fontFamily: '"JetBrains Mono", monospace', color: '#9A9281' }}>{b.id}</div>
-                <div style={{ fontSize: 12.5, fontWeight: 500 }}>{b.from} → {b.to} <span style={{ color: '#9A9281' }}>· {b.goodsLabel}</span></div>
+                <div style={{ fontSize: 12.5, fontWeight: 500 }}>{b.from} → {b.to} <span style={{ color: '#9A9281' }}>({b.goodsLabel})</span></div>
               </div>
               <div style={{ textAlign: 'right' }}>
                 <div style={{ fontFamily: '"JetBrains Mono", monospace', fontVariantNumeric: 'tabular-nums', fontWeight: 600 }}>{fmtGNF(b.amount)}</div>
@@ -148,14 +148,14 @@ const TransporterDashboard = ({ lang, myBills, userState, onOpen, onAllBills }) 
             </div>
           ))}
           <button onClick={() => onOpen(unpaid[0]?.id)} style={{ ...primaryBtn(), marginTop: 14, width: '100%', justifyContent: 'center', padding: '12px 16px' }}>
-            <Icon name="coin" size={15}/> Régler maintenant — {fmtGNF(unpaid[0]?.amount || 0)}
+            <Icon name="coin" size={15}/> Régler maintenant, {fmtGNF(unpaid[0]?.amount || 0)}
           </button>
         </div>
       </section>
 
       {/* KPIs */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16, marginBottom: 22 }}>
-        <KpiTile label="Factures reçues · avril" big={String(myBills.length)} hint="émises par DNTT"/>
+        <KpiTile label="Factures reçues / avril" big={String(myBills.length)} hint="émises par DNTT"/>
         <KpiTile label="Réglées ce mois"          big={String(paid.length)} hint={fmtGNF(paidThisMonth)} tone="good"/>
         <KpiTile label="En attente"               big={String(unpaid.length - overdue.length)} hint="dans les délais" tone="warn"/>
         <KpiTile label="En retard"                big={String(overdue.length)} hint="à régler sous 48 h" tone={overdue.length ? 'warn' : 'good'}/>
@@ -221,7 +221,7 @@ const TransporterBills = ({ lang, myBills, onOpen }) => {
     <div>
       <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', borderBottom: '1px solid #E5DDC9', paddingBottom: 14, marginBottom: 22 }}>
         <div>
-          <div style={{ fontSize: 11, letterSpacing: '.18em', color: '#9A9281', textTransform: 'uppercase' }}>Mes factures · {CARRIER.short}</div>
+          <div style={{ fontSize: 11, letterSpacing: '.18em', color: '#9A9281', textTransform: 'uppercase' }}>Mes factures, {CARRIER.short}</div>
           <h1 style={{ fontFamily: '"Crimson Pro", serif', fontSize: 28, margin: '6px 0 0', fontWeight: 500 }}>Toutes mes factures</h1>
         </div>
         <button style={ghostBtn()}><Icon name="download" size={13}/> Exporter</button>
@@ -230,7 +230,7 @@ const TransporterBills = ({ lang, myBills, onOpen }) => {
       {pendingImports.length > 0 && (
         <section style={{ marginBottom: 22 }}>
           <div style={{ fontSize: 10.5, letterSpacing: '.18em', color: '#9A9281', textTransform: 'uppercase', marginBottom: 10, display: 'flex', alignItems: 'center', gap: 8 }}>
-            <Icon name="ship" size={13}/> Importations de véhicules · {pendingImports.length} taxe{pendingImports.length > 1 ? 's' : ''} à régler
+            <Icon name="ship" size={13}/> Importations de véhicules, {pendingImports.length} taxe{pendingImports.length > 1 ? 's' : ''} à régler
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: pendingImports.length > 1 ? '1fr 1fr' : '1fr', gap: 12 }}>
             {pendingImports.map(b => (
@@ -274,7 +274,7 @@ const TransporterBills = ({ lang, myBills, onOpen }) => {
                 <td style={td()}>{b.date}</td>
                 <td style={{ ...td(), color: b.status === 'overdue' ? '#8A1B1B' : '#161413', fontWeight: b.status === 'overdue' ? 600 : 400 }}>{b.due}</td>
                 <td style={td()}>{b.from} → {b.to}</td>
-                <td style={td()}>{b.goodsLabel} <span style={{ color: '#9A9281' }}>· {b.qty.toLocaleString('fr-FR')} {b.unit}</span></td>
+                <td style={td()}>{b.goodsLabel} <span style={{ color: '#9A9281' }}>({b.qty.toLocaleString('fr-FR')} {b.unit})</span></td>
                 <td style={{ ...td(), fontFamily: '"JetBrains Mono", monospace', fontSize: 11 }}>{b.vehicle}</td>
                 <td style={{ ...td(), textAlign: 'right', fontVariantNumeric: 'tabular-nums', fontFamily: '"JetBrains Mono", monospace' }}>{fmtGNF(b.amount)}</td>
                 <td style={td()}><StatusPill status={b.status} lang={lang}/></td>
@@ -304,7 +304,7 @@ const TransporterBillDetail = ({ lang, bill, onPay, onBack }) => {
         <div>
           <div style={{ fontSize: 11, letterSpacing: '.18em', color: '#9A9281', textTransform: 'uppercase' }}>Facture {bill.id}</div>
           <h1 style={{ fontFamily: '"Crimson Pro", serif', fontSize: 28, margin: '6px 0 0', fontWeight: 500 }}>
-            {isPaid ? 'DUT payé · prêt à télécharger' : `À régler avant le ${bill.due}`}
+            {isPaid ? 'DUT payé, prêt à télécharger' : `À régler avant le ${bill.due}`}
           </h1>
         </div>
         <div style={{ display: 'flex', gap: 8 }}>
@@ -317,13 +317,13 @@ const TransporterBillDetail = ({ lang, bill, onPay, onBack }) => {
 
       <div style={{ background: '#fff', boxShadow: '0 0 0 1px #E5DDC9, 0 4px 18px rgba(20,17,13,.06)', padding: '36px 44px', position: 'relative', maxWidth: 880 }}>
         {!isPaid && <div style={{ position: 'absolute', top: 28, right: 48, border: '2px solid #C8A24A', color: '#C8A24A', padding: '6px 14px', transform: 'rotate(-6deg)', fontFamily: 'Georgia, serif', fontWeight: 700, letterSpacing: '.16em', fontSize: 14 }}>EN ATTENTE DE PAIEMENT</div>}
-        {isPaid  && <div style={{ position: 'absolute', top: 28, right: 48, border: '2px solid #009460', color: '#009460', padding: '6px 14px', transform: 'rotate(-6deg)', fontFamily: 'Georgia, serif', fontWeight: 700, letterSpacing: '.16em', fontSize: 14 }}>PAYÉ · {bill.paidOn}</div>}
+        {isPaid  && <div style={{ position: 'absolute', top: 28, right: 48, border: '2px solid #009460', color: '#009460', padding: '6px 14px', transform: 'rotate(-6deg)', fontFamily: 'Georgia, serif', fontWeight: 700, letterSpacing: '.16em', fontSize: 14 }}>PAYÉ, {bill.paidOn}</div>}
 
         <div style={{ display: 'flex', alignItems: 'flex-start', gap: 18, paddingBottom: 16, borderBottom: '2px solid #161413' }}>
           <SealEmblem size={64}/>
           <div style={{ flex: 1 }}>
-            <div style={{ fontSize: 10.5, letterSpacing: '.18em', textTransform: 'uppercase', color: '#6B6557' }}>République de Guinée — Travail · Justice · Solidarité</div>
-            <div style={{ fontSize: 13, marginTop: 4 }}>Ministère des Transports · DGTT</div>
+            <div style={{ fontSize: 10.5, letterSpacing: '.18em', textTransform: 'uppercase', color: '#6B6557' }}>République de Guinée, Travail, Justice, Solidarité</div>
+            <div style={{ fontSize: 13, marginTop: 4 }}>Ministère des Transports, DGTT</div>
             <div style={{ fontSize: 11.5, color: '#6B6557' }}>Direction Nationale du Transports Terrestre (DNTT)</div>
           </div>
           <div style={{ textAlign: 'right' }}>
@@ -337,20 +337,20 @@ const TransporterBillDetail = ({ lang, bill, onPay, onBack }) => {
           DOCUMENT UNIQUE DE TRANSPORT
         </h2>
         <div style={{ textAlign: 'center', fontSize: 11, color: '#6B6557', letterSpacing: '.18em', textTransform: 'uppercase', marginBottom: 22 }}>
-          Arrêté n° 2025/MTI/DNTT · émis par {OFFICER.name}
+          Arrêté n° 2025/MTI/DNTT, émis par {OFFICER.name}
         </div>
 
-        <PdfSection title="I — Transporteur">
+        <PdfSection title="I, Transporteur">
           <PdfRow k="Raison sociale" v={CARRIER.name}/>
           <PdfRow k="RCCM" v={CARRIER.rccm}/>
           <PdfRow k="NIF" v={CARRIER.nif}/>
         </PdfSection>
-        <PdfSection title="II — Itinéraire & marchandise">
+        <PdfSection title="II, Itinéraire & marchandise">
           <PdfRow k="Origine → destination" v={`${bill.from} → ${bill.to} (${distance} km)`}/>
-          <PdfRow k="Marchandise" v={`${goods.label} · ${bill.qty.toLocaleString('fr-FR')} ${bill.unit}`}/>
-          <PdfRow k="Véhicule · conducteur" v={`${bill.vehicle} · ${bill.driver}`}/>
+          <PdfRow k="Marchandise" v={`${goods.label}, ${bill.qty.toLocaleString('fr-FR')} ${bill.unit}`}/>
+          <PdfRow k="Véhicule / conducteur" v={`${bill.vehicle}, ${bill.driver}`}/>
         </PdfSection>
-        <PdfSection title="III — Liquidation">
+        <PdfSection title="III, Liquidation">
           <PdfRow k="Redevance kilométrique" v={fmtGNF(baseFee)}/>
           <PdfRow k="Timbre fiscal" v={fmtGNF(25000)}/>
           <PdfRow k="Quote-part DNTT" v={fmtGNF(8000)}/>
@@ -358,11 +358,11 @@ const TransporterBillDetail = ({ lang, bill, onPay, onBack }) => {
             <b>{isPaid ? 'Total réglé' : `Total à régler avant ${bill.due}`}</b>
             <b style={{ fontFamily: '"Crimson Pro", serif', fontSize: 18 }}>{fmtGNF(bill.amount)}</b>
           </div>
-          {isPaid && <div style={{ marginTop: 10, fontSize: 11.5, color: '#1F4F2C' }}>✓ Réglé le {bill.paidOn} via {bill.payMethod === 'orange' ? 'Orange Money' : bill.payMethod === 'mtn' ? 'MTN MoMo' : 'Carte bancaire'} · réf. <span style={{ fontFamily: '"JetBrains Mono", monospace' }}>{bill.ref}</span></div>}
+          {isPaid && <div style={{ marginTop: 10, fontSize: 11.5, color: '#1F4F2C' }}>✓ Réglé le {bill.paidOn} via {bill.payMethod === 'orange' ? 'Orange Money' : bill.payMethod === 'mtn' ? 'MTN MoMo' : 'Carte bancaire'}, réf. <span style={{ fontFamily: '"JetBrains Mono", monospace' }}>{bill.ref}</span></div>}
         </PdfSection>
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 110px', gap: 18, marginTop: 28, paddingTop: 18, borderTop: '1px solid #DCD3BD' }}>
-          <SignatureBlock title="Agent émetteur · DNTT" name={`${OFFICER.name} · ${OFFICER.badge}`} sig={OFFICER.signatureName}/>
+          <SignatureBlock title="Agent émetteur, DNTT" name={`${OFFICER.name}, ${OFFICER.badge}`} sig={OFFICER.signatureName}/>
           <SignatureBlock title="Le transporteur" name={CARRIER.director} sig="M.S. Diallo"/>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
             <FauxQr/>
@@ -385,8 +385,8 @@ const TransporterPayment = ({ lang, bill, method, setMethod, state, setState, on
   const methods = [
     { id: 'orange', label: 'Orange Money', tag: 'OM',  desc: '+224 622 14 88 03', color: '#FF6E0E' },
     { id: 'mtn',    label: 'MTN MoMo',     tag: 'MTN', desc: '+224 628 41 02 17', color: '#FFCC00' },
-    { id: 'card',   label: 'Carte bancaire', tag: 'VISA', desc: 'Visa · Mastercard · GIM-UEMOA', color: '#1A1F71' },
-    { id: 'bank',   label: 'Virement bancaire', tag: 'BCI', desc: 'BICIGUI · Ecobank · UBA · Vista', color: '#161413' },
+    { id: 'card',   label: 'Carte bancaire', tag: 'VISA', desc: 'Visa, Mastercard, GIM-UEMOA', color: '#1A1F71' },
+    { id: 'bank',   label: 'Virement bancaire', tag: 'BCI', desc: 'BICIGUI, Ecobank, UBA, Vista', color: '#161413' },
   ];
 
   return (
@@ -443,10 +443,10 @@ const TransporterPayment = ({ lang, bill, method, setMethod, state, setState, on
 
           <div style={{ marginTop: 22, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <div style={{ fontSize: 11.5, color: '#6B6557', display: 'flex', alignItems: 'center', gap: 8 }}>
-              <Icon name="shield" size={14} style={{ color: '#009460' }}/> Sécurisé par KKiaPay · TLS 1.3 · PCI-DSS
+              <Icon name="shield" size={14} style={{ color: '#009460' }}/> Sécurisé par KKiaPay, TLS 1.3, PCI-DSS
             </div>
             <button onClick={() => setState('sent')} disabled={state !== 'idle'} style={{ ...primaryBtn(), opacity: state !== 'idle' ? .6 : 1 }}>
-              {state === 'idle' && <>Confirmer · {fmtGNF(bill.amount)} →</>}
+              {state === 'idle' && <>Confirmer, {fmtGNF(bill.amount)} →</>}
               {state === 'sent' && <>Validation en cours…</>}
               {state === 'success' && <><Icon name="check" size={14}/> Paiement reçu</>}
             </button>
@@ -457,7 +457,7 @@ const TransporterPayment = ({ lang, bill, method, setMethod, state, setState, on
           <div style={{ fontSize: 10, letterSpacing: '.18em', color: '#9A9281', textTransform: 'uppercase' }}>Détail à régler</div>
           <h3 style={{ fontFamily: '"Crimson Pro", serif', fontSize: 22, margin: '4px 0 14px', fontWeight: 500 }}>{bill.id}</h3>
           <SummaryRow label="Itinéraire" value={`${bill.from} → ${bill.to}`}/>
-          <SummaryRow label="Marchandise" value={`${bill.goodsLabel} · ${bill.qty.toLocaleString('fr-FR')} ${bill.unit}`}/>
+          <SummaryRow label="Marchandise" value={`${bill.goodsLabel}, ${bill.qty.toLocaleString('fr-FR')} ${bill.unit}`}/>
           <SummaryRow label="Véhicule" value={bill.vehicle} mono/>
           <div style={{ marginTop: 12, paddingTop: 10, borderTop: '1px solid #E5DDC9' }}>
             <SummaryRow label="Redevance kilométrique" value={fmtGNF(bill.amount - 33000)}/>
@@ -471,8 +471,8 @@ const TransporterPayment = ({ lang, bill, method, setMethod, state, setState, on
           {state !== 'idle' && (
             <div style={{ marginTop: 16, padding: 14, background: state === 'success' ? '#E8F2EA' : '#FFF6D6', border: '1px solid', borderColor: state === 'success' ? '#BFD9C4' : '#E8D896' }}>
               <div style={{ fontSize: 12, fontWeight: 600, color: state === 'success' ? '#1F4F2C' : '#73591F' }}>
-                {state === 'sent'    && <>📲 Demande envoyée — composez <b>*144#</b> pour valider</>}
-                {state === 'success' && <>✓ Paiement validé · réf. KKP-2026-{Math.floor(Math.random()*900000+100000).toString(36).toUpperCase()}</>}
+                {state === 'sent'    && <>Demande envoyée, composez <b>*144#</b> pour valider</>}
+                {state === 'success' && <>✓ Paiement validé, réf. KKP-2026-{Math.floor(Math.random()*900000+100000).toString(36).toUpperCase()}</>}
               </div>
             </div>
           )}
@@ -495,7 +495,7 @@ const TransporterHistory = ({ lang, myBills, onOpen }) => {
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16, marginBottom: 22 }}>
-        <KpiTile label="Total payé · 2026" big={(paid.reduce((s,b)=>s+b.amount,0)/1000000).toFixed(2)} suffix="M GNF" hint={`${paid.length} factures`} tone="good"/>
+        <KpiTile label="Total payé, 2026" big={(paid.reduce((s,b)=>s+b.amount,0)/1000000).toFixed(2)} suffix="M GNF" hint={`${paid.length} factures`} tone="good"/>
         <KpiTile label="Mois courant" big={paid.length} hint="DUT réglés en avril"/>
         <KpiTile label="Délai moyen" big="1.4" suffix="j" hint="entre émission et règlement" tone="good"/>
       </div>

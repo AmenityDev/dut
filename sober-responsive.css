@@ -7,7 +7,7 @@
   container-name: sober;
 }
 
-/* The sidebar is rendered as <aside class="sober-nav"> — target the class. */
+/* The sidebar is rendered as <aside class="sober-nav">: target the class. */
 
 /* ── Tablet (≤900px container) ─────────────────────────── */
 @container sober (max-width: 900px) {

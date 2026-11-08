@@ -1,4 +1,4 @@
-// SOBER · Officer (DNTT) platform — issues DUTs, manages queue.
+// SOBER, Officer (DNTT) platform: issues DUTs, manages queue.
 // Reuses primitives from sober.jsx (paperCard, KpiTile, ghostBtn, etc.)
 // and sub-screens from sober-subscreens.jsx.
 
@@ -81,7 +81,7 @@ const SoberOfficerApp = ({ lang = 'fr', density = 'comfortable', initialScreen =
 };
 
 // ─────────────────────────────────────────────────────────────
-// Officer top bar — official portal vibe with badge instead of company
+// Officer top bar: official portal vibe with badge instead of company
 // ─────────────────────────────────────────────────────────────
 const OfficerTopBar = ({ lang }) => (
   <header className="sober-topbar" style={{
@@ -91,7 +91,7 @@ const OfficerTopBar = ({ lang }) => (
     <div style={{ color: '#FCD116' }}><SealEmblem size={44}/></div>
     <div className="sober-topbar-emblem-text" style={{ borderLeft: '1px solid #3A332A', paddingLeft: 16 }}>
       <div style={{ fontFamily: '"Crimson Pro", Georgia, serif', fontSize: 17, lineHeight: 1.1, letterSpacing: '.01em', color: '#FBF8F2' }}>
-        Plateforme DNTT — Émission DUT
+        Plateforme DNTT : émission des DUT
       </div>
       <div style={{ fontSize: 11, color: '#9A9281', letterSpacing: '.16em', textTransform: 'uppercase', marginTop: 2 }}>
         {t('dntt', lang) || 'Direction Nationale du Transports Terrestre'}
@@ -156,7 +156,7 @@ const OfficerSidebar = ({ lang, screen, setScreen, setStep }) => {
       <div style={{ flex: 1 }}/>
       <div style={{ margin: '10px 14px', padding: 12, background: '#161413', color: '#F7F3EB', borderRadius: 4 }} className="sober-navfooter">
         <div style={{ fontSize: 10, letterSpacing: '.18em', color: '#FCD116' }}>FIN DE SESSION</div>
-        <div style={{ fontFamily: '"Crimson Pro", serif', fontSize: 13, marginTop: 4, lineHeight: 1.3 }}>Clôture journalière à 18:00 GMT — verser au Trésor</div>
+        <div style={{ fontFamily: '"Crimson Pro", serif', fontSize: 13, marginTop: 4, lineHeight: 1.3 }}>Clôture journalière à 18:00 GMT, versement au Trésor</div>
       </div>
       <div className="sober-navfooter" style={{ padding: '10px 14px', fontSize: 10, color: '#9A9281', borderTop: '1px solid #E5DDC9' }}>
         Plateforme DNTT v 4.2.1<br/>Habilitation niveau A
@@ -176,11 +176,11 @@ const OfficerDashboard = ({ lang, onIssue, onOpenBill, onOpenQueue }) => {
     <div>
       <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', borderBottom: '1px solid #E5DDC9', paddingBottom: 18, marginBottom: 22, flexWrap: 'wrap', gap: 12 }}>
         <div>
-          <div style={{ fontSize: 11, letterSpacing: '.18em', color: '#9A9281', textTransform: 'uppercase' }}>Bureau Conakry · Poste {OFFICER.badge}</div>
+          <div style={{ fontSize: 11, letterSpacing: '.18em', color: '#9A9281', textTransform: 'uppercase' }}>Bureau Conakry, Poste {OFFICER.badge}</div>
           <h1 className="sober-pagehead" style={{ fontFamily: '"Crimson Pro", Georgia, serif', fontSize: 32, fontWeight: 500, margin: '6px 0 0', letterSpacing: '-0.01em' }}>
             Bonjour, <i>{OFFICER.name.split(' ')[0]}</i>.
           </h1>
-          <div style={{ fontSize: 13, color: '#6B6557', marginTop: 4 }}>Vue d'ensemble — <b>jeudi 30 avril 2026</b> · 09:38 GMT</div>
+          <div style={{ fontSize: 13, color: '#6B6557', marginTop: 4 }}>Vue d'ensemble, <b>jeudi 30 avril 2026</b>, 09:38 GMT</div>
         </div>
         <button onClick={onIssue} style={primaryBtn()}><Icon name="plus" size={15}/> Émettre un DUT</button>
       </div>
@@ -189,7 +189,7 @@ const OfficerDashboard = ({ lang, onIssue, onOpenBill, onOpenQueue }) => {
         <KpiTile label="Émis aujourd'hui" big={String(today.length)} delta={`+${today.length}`} hint="vs J−1 : 4"/>
         <KpiTile label="En attente paiement" big={String(pending.length)} hint={fmtGNF(pending.reduce((s,b)=>s+b.amount,0))} tone="warn"/>
         <KpiTile label="Recettes du jour" big={(todayTotal/1e6).toFixed(2)} suffix="M GNF" hint="Reversé Trésor : 17h"/>
-        <KpiTile label="Habilitation" big="A" hint="Émission · contrôle · verbalisation" tone="good"/>
+        <KpiTile label="Habilitation" big="A" hint="Émission, contrôle, verbalisation" tone="good"/>
       </div>
 
       <div className="sober-grid-2" style={{ display: 'grid', gridTemplateColumns: '1.6fr 1fr', gap: 22 }}>
@@ -227,7 +227,7 @@ const OfficerDashboard = ({ lang, onIssue, onOpenBill, onOpenQueue }) => {
           <section style={paperCard()}>
             <header style={cardHeader()}><h2 style={cardTitle()}>Activité de l'équipe</h2></header>
             {[
-              { who: 'F. Camara', n: 12, m: 'Vous · 3 280 K GNF' },
+              { who: 'F. Camara', n: 12, m: 'Vous, 3 280 K GNF' },
               { who: 'M. Sylla', n: 9, m: '2 145 K GNF' },
               { who: 'A. Diaby', n: 7, m: '1 870 K GNF' },
               { who: 'K. Soumah', n: 5, m: '892 K GNF' },
@@ -247,15 +247,15 @@ const OfficerDashboard = ({ lang, onIssue, onOpenBill, onOpenQueue }) => {
             <div style={{ fontSize: 12, color: '#6B6557', lineHeight: 1.7 }}>
               <div style={{ display: 'flex', gap: 10, padding: '10px 0', borderTop: '1px solid #E5DDC9' }}>
                 <div style={{ width: 6, alignSelf: 'stretch', background: '#CE1126' }}/>
-                <div><b>3 DUT expirés</b> en circulation présumée — RN1 km 218</div>
+                <div><b>3 DUT expirés</b> en circulation présumée sur la RN1 (km 218)</div>
               </div>
               <div style={{ display: 'flex', gap: 10, padding: '10px 0', borderTop: '1px solid #E5DDC9' }}>
                 <div style={{ width: 6, alignSelf: 'stretch', background: '#FCD116' }}/>
-                <div><b>Tonnage suspect</b> — DUT-2026-04-08812 (Hydrocarbures)</div>
+                <div><b>Tonnage suspect</b> : DUT-2026-04-08812 (Hydrocarbures)</div>
               </div>
               <div style={{ display: 'flex', gap: 10, padding: '10px 0', borderTop: '1px solid #E5DDC9' }}>
                 <div style={{ width: 6, alignSelf: 'stretch', background: '#009460' }}/>
-                <div><b>SAFI</b> · réconciliation Trésor terminée pour la veille</div>
+                <div><b>SAFI</b>, réconciliation Trésor terminée pour la veille</div>
               </div>
             </div>
           </section>
@@ -273,7 +273,7 @@ const OfficerQueue = ({ lang, onOpenBill }) => {
   const filtered = filter === 'all' ? BILLS : BILLS.filter(b => b.status === filter);
   return (
     <div>
-      <PageHead kicker={`${BILLS.length} DUT cette semaine · poste ${OFFICER.badge}`} title="File de DUT">
+      <PageHead kicker={`${BILLS.length} DUT cette semaine, poste ${OFFICER.badge}`} title="File de DUT">
         <button style={ghostBtn()}><Icon name="download" size={13}/> Export CSV</button>
         <button style={primaryBtn()}><Icon name="plus" size={14}/> Émettre un DUT</button>
       </PageHead>
@@ -325,7 +325,7 @@ const OfficerBillDetail = ({ lang, bill, onClose }) => (
   <div>
     <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', borderBottom: '1px solid #E5DDC9', paddingBottom: 14, marginBottom: 22, gap: 12, flexWrap: 'wrap' }}>
       <div>
-        <div style={{ fontSize: 11, letterSpacing: '.18em', color: '#9A9281', textTransform: 'uppercase' }}>Détail facture · {bill.officer}</div>
+        <div style={{ fontSize: 11, letterSpacing: '.18em', color: '#9A9281', textTransform: 'uppercase' }}>Détail facture ({bill.officer})</div>
         <h1 style={{ fontFamily: '"Crimson Pro", serif', fontSize: 28, margin: '6px 0 0', fontWeight: 500 }}>{bill.id}</h1>
       </div>
       <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
@@ -371,13 +371,13 @@ const OfficerBillDetail = ({ lang, bill, onClose }) => (
             { time: bill.issued + ' 14:32', who: bill.officer, what: 'DUT émis', tone: 'good' },
             { time: bill.issued + ' 14:32', who: 'Système', what: 'Notifications SMS + email envoyées au transporteur' },
             ...(bill.status === 'paid' ? [
-              { time: bill.issued + ' 16:08', who: 'KKiaPay', what: `Paiement reçu — ${fmtGNF(bill.amount)}`, tone: 'good' },
+              { time: bill.issued + ' 16:08', who: 'KKiaPay', what: `Paiement reçu : ${fmtGNF(bill.amount)}`, tone: 'good' },
               { time: bill.issued + ' 16:09', who: 'Système', what: 'Reçu PDF généré et tampon "PAYÉ" apposé', tone: 'good' },
             ] : bill.status === 'pending' ? [
               { time: '29/04/2026 08:00', who: 'Système', what: 'Rappel automatique J−1' },
               { time: 'Maintenant', who: 'Système', what: 'En attente de règlement', tone: 'warn' },
             ] : [
-              { time: '28/04/2026 18:00', who: 'Système', what: 'Échéance dépassée — DUT expiré', tone: 'bad' },
+              { time: '28/04/2026 18:00', who: 'Système', what: 'Échéance dépassée : DUT expiré', tone: 'bad' },
             ]),
           ].map((e, i) => (
             <div key={i} style={{ position: 'relative', padding: '10px 0', borderTop: i ? '1px solid #F0E9D6' : 'none' }}>

@@ -1,5 +1,5 @@
 // ─────────────────────────────────────────────────────────────
-// MOBILE · Responsive carrier app (iPhone-sized, fits in IOSDevice)
+// MOBILE, Responsive carrier app (iPhone-sized, fits in IOSDevice)
 // Same flows: dashboard → form → payment → PDF.
 // Modern civic visual language adapted for small screens.
 // ─────────────────────────────────────────────────────────────
@@ -56,7 +56,7 @@ const MDash = ({ lang, overdue, onNew, onOpen }) => (
         <div style={{ position: 'absolute', top: 7, right: 7, width: 6, height: 6, background: '#CE1126', borderRadius: '50%' }}/>
       </div>
       <div style={{ flex: 1 }}>
-        <div style={{ fontSize: 11, color: '#5A665E', letterSpacing: '.04em' }}>DUT.gn · {CARRIER.short}</div>
+        <div style={{ fontSize: 11, color: '#5A665E', letterSpacing: '.04em' }}>DUT.gn, {CARRIER.short}</div>
         <div style={{ fontFamily: '"Fraunces", serif', fontSize: 18, fontWeight: 500, lineHeight: 1.1 }}>{ml('hi', lang)}, Mamadou</div>
       </div>
       <div style={{ width: 36, height: 36, borderRadius: 12, background: '#fff', border: '1px solid #E4ECE4',
@@ -74,7 +74,7 @@ const MDash = ({ lang, overdue, onNew, onOpen }) => (
         <div style={{ fontFamily: '"Fraunces", serif', fontSize: 32, fontWeight: 500, lineHeight: 1.05, marginTop: 6 }}>
           38 <span style={{ color: 'rgba(255,255,255,.6)', fontSize: 18 }}>DUT émis</span>
         </div>
-        <div style={{ fontSize: 12, color: 'rgba(255,255,255,.6)', marginTop: 4 }}>8,42 M GNF encaissés · 14 paiements</div>
+        <div style={{ fontSize: 12, color: 'rgba(255,255,255,.6)', marginTop: 4 }}>8,42 M GNF encaissés, 14 paiements</div>
         <button onClick={onNew} style={{
           marginTop: 14, width: '100%', padding: '12px 16px', background: '#FCD116', color: '#0F1A14',
           border: 'none', borderRadius: 12, fontWeight: 700, fontSize: 14, fontFamily: 'inherit',
@@ -91,7 +91,7 @@ const MDash = ({ lang, overdue, onNew, onOpen }) => (
                       display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}><Icon name="bell" size={16}/></div>
         <div style={{ flex: 1, fontSize: 12 }}>
           <div style={{ fontWeight: 700 }}>{ml('overdue', lang)}</div>
-          <div style={{ color: '#7B3D43', fontSize: 11 }}>372 000 GNF · 48 h</div>
+          <div style={{ color: '#7B3D43', fontSize: 11 }}>372 000 GNF, 48 h</div>
         </div>
       </div>
     )}
@@ -180,7 +180,7 @@ const MForm = ({ lang, step, setStep, onSubmit, onBack }) => {
               <text x="290" y="22" fontSize="11" fill="#0F1A14" fontWeight="600" textAnchor="end" fontFamily="DM Sans">{toCity}</text>
             </svg>
           </div>
-          <div style={{ fontSize: 11, color: '#5A665E', marginTop: 8 }}>≈ 254 km · 5 h</div>
+          <div style={{ fontSize: 11, color: '#5A665E', marginTop: 8 }}>≈ 254 km, 5 h</div>
         </>
       )}
 
@@ -223,7 +223,7 @@ const MForm = ({ lang, step, setStep, onSubmit, onBack }) => {
                                 display: 'flex', alignItems: 'center', justifyContent: 'center' }}>RG</div>
                   <div style={{ flex: 1 }}>
                     <div style={{ fontSize: 12, fontWeight: 600, fontFamily: '"JetBrains Mono", monospace' }}>{v.plate}</div>
-                    <div style={{ fontSize: 10.5, opacity: .8 }}>{v.brand} · {v.capacity}</div>
+                    <div style={{ fontSize: 10.5, opacity: .8 }}>{v.brand}, {v.capacity}</div>
                   </div>
                 </label>
               );
@@ -236,7 +236,7 @@ const MForm = ({ lang, step, setStep, onSubmit, onBack }) => {
         <>
           <div style={{ padding: 14, background: '#fff', borderRadius: 14, border: '1px solid #E4ECE4' }}>
             <MSummaryLine k="Itinéraire" v={`${fromCity} → ${toCity}`}/>
-            <MSummaryLine k="Marchandise" v={`${goodsObj.label} · ${qty} ${goodsObj.unit}`}/>
+            <MSummaryLine k="Marchandise" v={`${goodsObj.label}, ${qty} ${goodsObj.unit}`}/>
             <MSummaryLine k="Véhicule" v={vehicle} mono/>
             <MSummaryLine k="Distance" v="254 km"/>
             <div style={{ borderTop: '1px dashed #CDE3D5', marginTop: 8, paddingTop: 8 }}>
@@ -284,14 +284,14 @@ const MPay = ({ lang, method, setMethod, paymentState, setPaymentState, total, o
     <div style={{ padding: '8px 18px 24px' }}>
       <button onClick={onBack} style={{ background: 'transparent', border: 'none', color: '#0F1A14', padding: '6px 0', fontSize: 13 }}>← {ml('back', lang)}</button>
       <h1 style={{ fontFamily: '"Fraunces", serif', fontSize: 26, fontWeight: 500, margin: '4px 0', letterSpacing: '-0.01em' }}>{ml('pay', lang)}</h1>
-      <div style={{ fontSize: 11.5, color: '#5A665E', marginBottom: 16 }}>KKiaPay · TLS 1.3 · PCI-DSS</div>
+      <div style={{ fontSize: 11.5, color: '#5A665E', marginBottom: 16 }}>KKiaPay, TLS 1.3, PCI-DSS</div>
 
       <div style={{ padding: 18, background: '#0F1A14', color: '#fff', borderRadius: 16, marginBottom: 14, position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', top: -30, right: -30, width: 100, height: 100, borderRadius: '50%', background: 'rgba(0,148,96,.4)', filter: 'blur(30px)' }}/>
         <div style={{ position: 'relative' }}>
           <div style={{ fontSize: 11, color: '#FCD116', letterSpacing: '.16em' }}>{ml('total', lang).toUpperCase()}</div>
           <div style={{ fontFamily: '"Fraunces", serif', fontSize: 32, fontWeight: 600, marginTop: 4 }}>{fmtGNF(total)}</div>
-          <div style={{ fontSize: 11, color: 'rgba(255,255,255,.6)', marginTop: 2 }}>DUT-2026-04-08821 · Bauxite Kamsar → Conakry</div>
+          <div style={{ fontSize: 11, color: 'rgba(255,255,255,.6)', marginTop: 2 }}>DUT-2026-04-08821, Bauxite Kamsar → Conakry</div>
         </div>
       </div>
 
@@ -322,7 +322,7 @@ const MPay = ({ lang, method, setMethod, paymentState, setPaymentState, total, o
         opacity: paymentState === 'sent' ? .8 : 1,
       }}>
         {paymentState === 'idle'    && <>{ml('pay', lang)} {fmtGNF(total)}</>}
-        {paymentState === 'sent'    && <>📲 *144# en cours…</>}
+        {paymentState === 'sent'    && <>*144# en cours…</>}
         {paymentState === 'success' && <>✓ {ml('success', lang)}</>}
       </button>
     </div>
@@ -343,7 +343,7 @@ const MPdf = ({ lang, paid, onClose }) => (
                               padding: '2px 8px', transform: 'rotate(-6deg)', fontWeight: 700, letterSpacing: '.14em', fontSize: 9 }}>PAYÉ</div>}
       <div style={{ display: 'flex', alignItems: 'center', gap: 8, paddingBottom: 8, borderBottom: '1.5px solid #0F1A14' }}>
         <SealEmblem size={36}/>
-        <div style={{ fontSize: 9, letterSpacing: '.16em', color: '#5A665E', textTransform: 'uppercase' }}>République de Guinée<br/>DGTT · DNTT</div>
+        <div style={{ fontSize: 9, letterSpacing: '.16em', color: '#5A665E', textTransform: 'uppercase' }}>République de Guinée<br/>DGTT, DNTT</div>
       </div>
       <h2 style={{ textAlign: 'center', fontSize: 13, letterSpacing: '.04em', margin: '12px 0 4px', fontWeight: 600 }}>
         DOCUMENT UNIQUE DE TRANSPORT
@@ -353,7 +353,7 @@ const MPdf = ({ lang, paid, onClose }) => (
       <PdfRowM k="Transporteur" v={CARRIER.short}/>
       <PdfRowM k="Itinéraire" v="Kamsar → Conakry"/>
       <PdfRowM k="Distance" v="254 km"/>
-      <PdfRowM k="Marchandise" v="Bauxite · 32 t"/>
+      <PdfRowM k="Marchandise" v="Bauxite, 32 t"/>
       <PdfRowM k="Véhicule" v="RC-4821-AC" mono/>
       <PdfRowM k="Conducteur" v="Ousmane Bah"/>
 
@@ -381,7 +381,7 @@ const MPdf = ({ lang, paid, onClose }) => (
 const MHistory = ({ lang, onOpen }) => (
   <div style={{ padding: '8px 18px 24px' }}>
     <h1 style={{ fontFamily: '"Fraunces", serif', fontSize: 26, fontWeight: 500, margin: '8px 0 4px' }}>{ml('history', lang)}</h1>
-    <div style={{ fontSize: 11.5, color: '#5A665E', marginBottom: 14 }}>142 documents · avril 2026</div>
+    <div style={{ fontSize: 11.5, color: '#5A665E', marginBottom: 14 }}>142 documents, avril 2026</div>
     <div style={{ display: 'flex', gap: 6, marginBottom: 14, overflow: 'auto' }}>
       {['Tous', 'Payés', 'En attente', 'Expirés'].map((c, i) => (
         <span key={c} style={{ padding: '6px 12px', borderRadius: 99, fontSize: 12, whiteSpace: 'nowrap',
@@ -398,7 +398,7 @@ const MHistory = ({ lang, onOpen }) => (
                         display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}><Icon name="doc" size={16}/></div>
           <div style={{ flex: 1, minWidth: 0 }}>
             <div style={{ fontSize: 12, fontWeight: 600, fontFamily: '"JetBrains Mono", monospace' }}>{d.id.slice(-5)}</div>
-            <div style={{ fontSize: 11, color: '#5A665E' }}>{d.from} → {d.to} · {d.date}</div>
+            <div style={{ fontSize: 11, color: '#5A665E' }}>{d.from} → {d.to}, {d.date}</div>
           </div>
           <div style={{ textAlign: 'right' }}>
             <div style={{ fontSize: 12, fontWeight: 600, fontVariantNumeric: 'tabular-nums' }}>{(d.amount/1000).toFixed(0)} k</div>
@@ -425,8 +425,8 @@ const MProfile = ({ lang }) => (
       { i: 'user', l: 'Conducteurs', d: '22 actifs' },
       { i: 'shield', l: 'Documents légaux', d: 'Tous à jour' },
       { i: 'coin', l: 'Mes paiements', d: '142 transactions' },
-      { i: 'chat', l: 'Aide & support', d: 'FAQ · Chat' },
-      { i: 'gear', l: 'Paramètres', d: 'Langue · Notifications' },
+      { i: 'chat', l: 'Aide & support', d: 'FAQ, Chat' },
+      { i: 'gear', l: 'Paramètres', d: 'Langue, Notifications' },
     ].map((r, i) => (
       <div key={r.l} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: 14, background: '#fff',
                                 borderRadius: i === 0 ? '12px 12px 0 0' : i === 5 ? '0 0 12px 12px' : 0,

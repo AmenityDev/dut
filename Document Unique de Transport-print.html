@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8"/>
-  <title>DUT · Print</title>
+  <title>DUT (impression)</title>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
 
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -39,7 +39,7 @@
     }
     .page-label .num { color: #C8A24A; margin-right: 8px; }
 
-    /* The artboard inner — variants render at 1440×960. */
+    /* The artboard inner: screens render at 1440×960. */
     .artboard {
       position: absolute;
       inset: 0;
@@ -48,7 +48,9 @@
     }
 
     /* Subtle scrollbars (kept hidden in print) */
-    .sober-root *::-webkit-scrollbar, .modern-root *::-webkit-scrollbar { width: 0; height: 0; }
+    .sober-root *::-webkit-scrollbar { width: 0; height: 0; }
+    /* The floating assistant is not printed */
+    .dut-chatbot { display: none !important; }
 
     /* Print: each .page becomes one landscape page sized to fit. */
     @media print {
@@ -77,28 +79,25 @@
   <script type="text/babel" src="tweaks-panel.jsx"></script>
   <script type="text/babel" src="shared.jsx"></script>
   <script type="text/babel" src="sober.jsx"></script>
-  <script type="text/babel" src="modern.jsx"></script>
+  <script type="text/babel" src="sober-subscreens.jsx"></script>
+  <script type="text/babel" src="imports-data.jsx"></script>
+  <script type="text/babel" src="imports-officer.jsx"></script>
+  <script type="text/babel" src="chatbot.jsx"></script>
 
   <script type="text/babel">
-    // ── Print deck: each screen of each variant on its own landscape page.
+    // Print deck: each screen of the transporter app on its own landscape page.
     const PAGES = [
-      // Variant A — Sobre institutionnelle
-      { variant: 'sober',  label: 'A · Sobre — Tableau de bord',         screen: 'dashboard', userState: 'active'  },
-      { variant: 'sober',  label: 'A · Sobre — Formulaire DUT',          screen: 'form',      step: 0 },
-      { variant: 'sober',  label: 'A · Sobre — Récapitulatif & paiement', screen: 'payment',  paymentState: 'sent' },
-      { variant: 'sober',  label: 'A · Sobre — Aperçu du DUT (payé)',     screen: 'pdf',      paid: true },
-
-      // Variant B — Moderne civique
-      { variant: 'modern', label: 'B · Moderne — Tableau de bord',       screen: 'dashboard', userState: 'active'  },
-      { variant: 'modern', label: 'B · Moderne — Formulaire DUT',        screen: 'form',      step: 0 },
-      { variant: 'modern', label: 'B · Moderne — Paiement KKiaPay',      screen: 'payment',   paymentState: 'sent' },
-      { variant: 'modern', label: 'B · Moderne — Aperçu du DUT (payé)',  screen: 'pdf',       paid: true },
+      // Variant A: Sobre institutionnelle
+      { variant: 'sober',  label: 'A. Sobre : tableau de bord',         screen: 'dashboard', userState: 'active'  },
+      { variant: 'sober',  label: 'A. Sobre : formulaire DUT',          screen: 'form',      step: 0 },
+      { variant: 'sober',  label: 'A. Sobre : récapitulatif et paiement', screen: 'payment',  paymentState: 'sent' },
+      { variant: 'sober',  label: 'A. Sobre : aperçu du DUT (payé)',     screen: 'pdf',      paid: true },
     ];
 
     const PrintDeck = () => (
       <>
         {PAGES.map((p, i) => {
-          const Comp = p.variant === 'sober' ? SoberApp : ModernApp;
+          const Comp = SoberApp;
           return (
             <div className="page" key={i}>
               <div className="page-label"><span className="num">{String(i + 1).padStart(2, '0')}</span>{p.label}</div>

@@ -1,9 +1,9 @@
-// SOBER · Imported Vehicle Tax module
+// SOBER, Imported Vehicle Tax module
 // Officer-side: declare imported vehicle, calculate tax, bill the importer.
 // Importer can be a company (RCCM) or an individual (CNI).
 
 // ─────────────────────────────────────────────────────────────
-// Vehicle catalog — for VIN lookup. Faux database of common imports.
+// Vehicle catalog: for VIN lookup. Faux database of common imports.
 // ─────────────────────────────────────────────────────────────
 const VEHICLE_CATALOG = [
   { vin: 'JTEBR3FJ80K123456', make: 'Toyota',    model: 'Hilux',         category: 'pickup',     year: 2023, displacement: 2755, powerKw: 150, fuel: 'diesel',   weight: 2050, fuelEcon: 8.6 },
@@ -18,7 +18,7 @@ const VEHICLE_CATALOG = [
   { vin: 'LAEAJM3K7HB000111', make: 'Bajaj',     model: 'Boxer 100',     category: 'motorcycle', year: 2024, displacement: 100,  powerKw: 6,   fuel: 'petrol',   weight: 110,  fuelEcon: 2.1 },
 ];
 
-// Categories — French label + base duty rate (% of CIF)
+// Categories: French label + base duty rate (% of CIF)
 const VEHICLE_CATEGORIES = [
   { id: 'sedan',      fr: 'Berline / break',          en: 'Sedan / wagon',     duty: 0.25, code: '8703' },
   { id: 'suv',        fr: 'SUV / 4×4',                en: 'SUV / 4×4',         duty: 0.30, code: '8703' },
@@ -44,7 +44,7 @@ const USE_TYPES = [
   { id: 'transport',  fr: 'Transport public',      en: 'Public transport' },
 ];
 
-// Country of origin — top sources for vehicle imports into Guinea
+// Country of origin: top sources for vehicle imports into Guinea
 const ORIGINS = [
   'Allemagne', 'Belgique', 'Chine', 'Corée du Sud', 'Émirats arabes unis',
   'États-Unis', 'France', 'Inde', 'Italie', 'Japon', 'Maroc', 'Pays-Bas',
@@ -61,7 +61,7 @@ const computeImportTax = ({ category, cif, year, powerKw, fuel, use }) => {
   const kw = Math.max(0, Number(powerKw) || 0);
   const ageY = 2026 - (Number(year) || 2026);
 
-  // Age coefficient — multiplies the base duty
+  // Age coefficient: multiplies the base duty
   let ageMult = 1.0;
   if (ageY >= 4 && ageY <= 6)      ageMult = 1.12;
   else if (ageY >= 7 && ageY <= 10) ageMult = 1.25;
@@ -79,20 +79,20 @@ const computeImportTax = ({ category, cif, year, powerKw, fuel, use }) => {
 
   const customsDuty = Math.round(cifVal * cat.duty * ageMult * fuelMult * useMult);
 
-  // Power surcharge — 8 000 GNF / kW above 100 kW (over 100 kW = "luxury")
+  // Power surcharge: 8 000 GNF / kW above 100 kW (over 100 kW = "luxury")
   const powerSurcharge = kw > 100 ? Math.round((kw - 100) * 8000) : 0;
 
-  // Statistical fee — 0.5% of CIF
+  // Statistical fee: 0.5% of CIF
   const statFee = Math.round(cifVal * 0.005);
 
   // Subtotal before VAT
   const subtotal = customsDuty + powerSurcharge + statFee;
 
-  // VAT (TVA) — 18% on (CIF + customs duty + power surcharge), per Guinean law
+  // VAT (TVA): 18% on (CIF + customs duty + power surcharge), per Guinean law
   const vatBase = cifVal + customsDuty + powerSurcharge;
   const vat = Math.round(vatBase * 0.18);
 
-  // Customs stamp — flat
+  // Customs stamp: flat
   const stamp = 35000;
 
   const total = subtotal + vat + stamp;
@@ -142,14 +142,14 @@ const IMPORT_BILLS = [
   },
 ];
 
-// Importers registry (officer-side autocomplete) — extends TRANSPORTERS w/ a few extra individuals
+// Importers registry (officer-side autocomplete): extends TRANSPORTERS w/ a few extra individuals
 const IMPORTERS = [
   { kind: 'company',    id: 'TRP-04812', name: 'Diallo & Frères',         doc: 'RCCM/CKY/B/2009/00482' },
   { kind: 'company',    id: 'TRP-08231', name: 'SAGECO Logistique',       doc: 'RCCM/CKY/B/2014/01173' },
   { kind: 'company',    id: 'TRP-09987', name: 'Mining Express SA',       doc: 'RCCM/BKE/B/2017/00302' },
-  { kind: 'individual', id: 'CNI-7053219K', name: 'Sékou Soumah',         doc: 'CNI 7053219K · Coyah' },
-  { kind: 'individual', id: 'CNI-1284477',  name: 'Aïssatou Diallo',      doc: 'CNI 1284477 · Conakry' },
-  { kind: 'individual', id: 'CNI-9928101',  name: 'Mamadou Camara',       doc: 'CNI 9928101 · Kindia' },
+  { kind: 'individual', id: 'CNI-7053219K', name: 'Sékou Soumah',         doc: 'CNI 7053219K, Coyah' },
+  { kind: 'individual', id: 'CNI-1284477',  name: 'Aïssatou Diallo',      doc: 'CNI 1284477, Conakry' },
+  { kind: 'individual', id: 'CNI-9928101',  name: 'Mamadou Camara',       doc: 'CNI 9928101, Kindia' },
 ];
 
 Object.assign(window, {

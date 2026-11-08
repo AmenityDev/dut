@@ -205,9 +205,9 @@ const BILLS = [
 const OFFICER = {
   name: 'Fatoumata Camara',
   short: 'F. Camara',
-  role: 'Inspectrice DNTT · Direction des Transports Terrestres',
+  role: 'Inspectrice DNTT, Direction des Transports Terrestres',
   badge: 'DNTT-2018-04-771',
-  office: 'Bureau régional · Conakry-Kaloum',
+  office: 'Bureau régional, Conakry-Kaloum',
   email: 'f.camara@dntt.gov.gn',
   signatureName: 'F. Camara',
 };

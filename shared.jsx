@@ -33,7 +33,7 @@ const CARRIER = {
   director: 'Mamadou Saliou Diallo',
   phone: '+224 622 14 88 03',
   email: 'contact@diallo-transports.gn',
-  address: 'Km 36, Route de Kindia · Sonfonia, Conakry',
+  address: 'Km 36, Route de Kindia, Sonfonia, Conakry',
   fleet: 14,
   drivers: 22,
   since: 2007,
@@ -48,21 +48,21 @@ const VEHICLES = [
 ];
 
 const RECENT_DUTS = [
-  { id: 'DUT-2026-04-08821', date: '28/04/2026', from: 'Kamsar', to: 'Conakry', goods: 'Bauxite · 32 t', vehicle: 'RC-4821-AC', amount: 425000, status: 'paid'    },
-  { id: 'DUT-2026-04-08754', date: '24/04/2026', from: 'Conakry', to: 'Kankan', goods: 'Ciment · 1240 sacs', vehicle: 'RC-3107-AB', amount: 612000, status: 'paid' },
-  { id: 'DUT-2026-04-08712', date: '22/04/2026', from: 'Conakry', to: 'Labé',   goods: 'Riz importé · 980 sacs', vehicle: 'RC-7715-AD', amount: 388000, status: 'paid' },
-  { id: 'DUT-2026-04-08698', date: '21/04/2026', from: 'Boké',   to: 'Conakry', goods: 'Bauxite · 28 t', vehicle: 'RC-9032-AB', amount: 372000, status: 'pending' },
-  { id: 'DUT-2026-04-08651', date: '18/04/2026', from: 'Conakry', to: 'Nzérékoré', goods: 'Carburant · 22 000 L', vehicle: 'RC-1244-AE', amount: 845000, status: 'paid' },
-  { id: 'DUT-2026-04-08603', date: '15/04/2026', from: 'Kankan', to: 'Siguiri', goods: 'Ciment · 540 sacs', vehicle: 'RC-3107-AB', amount: 198000, status: 'expired' },
+  { id: 'DUT-2026-04-08821', date: '28/04/2026', from: 'Kamsar', to: 'Conakry', goods: 'Bauxite, 32 t', vehicle: 'RC-4821-AC', amount: 425000, status: 'paid'    },
+  { id: 'DUT-2026-04-08754', date: '24/04/2026', from: 'Conakry', to: 'Kankan', goods: 'Ciment, 1240 sacs', vehicle: 'RC-3107-AB', amount: 612000, status: 'paid' },
+  { id: 'DUT-2026-04-08712', date: '22/04/2026', from: 'Conakry', to: 'Labé',   goods: 'Riz importé, 980 sacs', vehicle: 'RC-7715-AD', amount: 388000, status: 'paid' },
+  { id: 'DUT-2026-04-08698', date: '21/04/2026', from: 'Boké',   to: 'Conakry', goods: 'Bauxite, 28 t', vehicle: 'RC-9032-AB', amount: 372000, status: 'pending' },
+  { id: 'DUT-2026-04-08651', date: '18/04/2026', from: 'Conakry', to: 'Nzérékoré', goods: 'Carburant, 22 000 L', vehicle: 'RC-1244-AE', amount: 845000, status: 'paid' },
+  { id: 'DUT-2026-04-08603', date: '15/04/2026', from: 'Kankan', to: 'Siguiri', goods: 'Ciment, 540 sacs', vehicle: 'RC-3107-AB', amount: 198000, status: 'expired' },
 ];
 
 const ALERTS = [
-  { kind: 'warn', label: 'Carte transporteur', detail: 'Expire dans 38 jours · 07/06/2026' },
-  { kind: 'info', label: 'Nouveau tarif DUT', detail: 'Itinéraire Conakry→Nzérékoré · +4,2%' },
-  { kind: 'ok',   label: 'Paiement reçu',     detail: 'DUT-2026-04-08821 · 425 000 GNF' },
+  { kind: 'warn', label: 'Carte transporteur', detail: 'Expire dans 38 jours, 07/06/2026' },
+  { kind: 'info', label: 'Nouveau tarif DUT', detail: 'Itinéraire Conakry→Nzérékoré, +4,2%' },
+  { kind: 'ok',   label: 'Paiement reçu',     detail: 'DUT-2026-04-08821, 425 000 GNF' },
 ];
 
-// FR / EN / Soussou / Pular / Malinké — translations for visible labels.
+// FR / EN / Soussou / Pular / Malinké: translations for visible labels.
 // Keys are stable; FR is the canonical source. English provides full coverage;
 // Soussou / Pular / Malinké cover all UI strings (some technical terms are kept
 // in French as is common in Guinean usage).
@@ -73,7 +73,7 @@ const I18N = {
     short: 'DUT',
     portal: 'Plateforme officielle de la République de Guinée',
     republic: 'République de Guinée',
-    ministry: 'Ministère des Transports · DGTT',
+    ministry: 'Ministère des Transports, DGTT',
     dntt: 'Direction Nationale du Transports Terrestre',
     // Nav
     dashboard: 'Tableau de bord',
@@ -92,7 +92,7 @@ const I18N = {
     welcome: 'Bonjour',
     welcomeBack: 'Bon retour',
     carrierSpace: 'Espace transporteur',
-    issued: 'DUT émis · avril',
+    issued: 'DUT émis, avril',
     pending: 'En attente de paiement',
     paid: 'Payé',
     paidPlural: 'Payés',
@@ -100,7 +100,7 @@ const I18N = {
     expiredPlural: 'Expirés',
     overdue: 'Paiement en retard',
     overdueDetail: 'à régler sous 48 h',
-    amountDue: 'Total versé · avril',
+    amountDue: 'Total versé, avril',
     distance: 'Distance parcourue',
     trips: 'trajets',
     documentsIssued: 'Documents émis',
@@ -164,8 +164,8 @@ const I18N = {
     mtnMoMo: 'MTN Mobile Money',
     bankCard: 'Carte bancaire',
     bankTransfer: 'Virement bancaire',
-    securedBy: 'Sécurisé par KKiaPay · TLS 1.3 · PCI-DSS',
-    paymentSent: 'Demande envoyée — composez *144#',
+    securedBy: 'Sécurisé par KKiaPay, TLS 1.3, PCI-DSS',
+    paymentSent: 'Demande envoyée, composez *144#',
     paymentSuccess: 'Paiement validé',
     paymentReceived: 'Paiement reçu',
     // PDF / receipt
@@ -187,7 +187,7 @@ const I18N = {
     myPayments: 'Mes paiements',
     transactions: 'transactions',
     helpSupport: 'Aide & support',
-    languageNotifs: 'Langue · Notifications',
+    languageNotifs: 'Langue et notifications',
     // Misc
     filters: 'Filtres',
     all: 'Tous',
@@ -197,9 +197,9 @@ const I18N = {
   en: {
     appName: 'Single Transport Document',
     short: 'STD',
-    portal: 'Official Platform · Republic of Guinea',
+    portal: 'Official Platform, Republic of Guinea',
     republic: 'Republic of Guinea',
-    ministry: 'Ministry of Transport · DGTT',
+    ministry: 'Ministry of Transport, DGTT',
     dntt: 'Direction Nationale du Transports Terrestre',
     dashboard: 'Dashboard',
     newDut: 'Generate STD',
@@ -216,7 +216,7 @@ const I18N = {
     welcome: 'Hello',
     welcomeBack: 'Welcome back',
     carrierSpace: 'Carrier portal',
-    issued: 'STDs issued · April',
+    issued: 'STDs issued, April',
     pending: 'Awaiting payment',
     paid: 'Paid',
     paidPlural: 'Paid',
@@ -224,7 +224,7 @@ const I18N = {
     expiredPlural: 'Expired',
     overdue: 'Payment overdue',
     overdueDetail: 'due within 48 h',
-    amountDue: 'Total paid · April',
+    amountDue: 'Total paid, April',
     distance: 'Distance covered',
     trips: 'trips',
     documentsIssued: 'Documents issued',
@@ -285,8 +285,8 @@ const I18N = {
     mtnMoMo: 'MTN Mobile Money',
     bankCard: 'Bank card',
     bankTransfer: 'Bank transfer',
-    securedBy: 'Secured by KKiaPay · TLS 1.3 · PCI-DSS',
-    paymentSent: 'Request sent — dial *144#',
+    securedBy: 'Secured by KKiaPay, TLS 1.3, PCI-DSS',
+    paymentSent: 'Request sent, dial *144#',
     paymentSuccess: 'Payment confirmed',
     paymentReceived: 'Payment received',
     documentReady: 'Document ready',
@@ -306,7 +306,7 @@ const I18N = {
     myPayments: 'My payments',
     transactions: 'transactions',
     helpSupport: 'Help & support',
-    languageNotifs: 'Language · Notifications',
+    languageNotifs: 'Language and notifications',
     filters: 'Filters',
     all: 'All',
     documents: 'documents',
@@ -315,9 +315,9 @@ const I18N = {
   sus: { // Soussou
     appName: 'Findɛ Wonta nan Ratɛyɛ',
     short: 'DUT',
-    portal: 'Gine Bofe Mangɛya — Sɛbɛ Yɛrɛ',
+    portal: 'Gine Bofe Mangɛya, Sɛbɛ Yɛrɛ',
     republic: 'Gine Bofe',
-    ministry: 'Ratɛyɛ Mangɛya · DGTT',
+    ministry: 'Ratɛyɛ Mangɛya, DGTT',
     dntt: 'Direction Nationale du Transports Terrestre',
     dashboard: 'Tofan',
     newDut: 'DUT raɲɔngɔ',
@@ -342,7 +342,7 @@ const I18N = {
     expiredPlural: 'Bara dangi',
     overdue: 'Saren ma sɔrɔ tɛmuyi',
     overdueDetail: 'sɔrɔ 48 wati i',
-    amountDue: 'Saren bɛɛ · awurili',
+    amountDue: 'Saren bɛɛ, awurili',
     distance: 'Kira fɔrɔn',
     trips: 'taamasen',
     documentsIssued: 'Sɛbɛ bara raɲɔngɔ',
@@ -403,8 +403,8 @@ const I18N = {
     mtnMoMo: 'MTN Mobile Money',
     bankCard: 'Banki kati',
     bankTransfer: 'Banki ratɛyɛ',
-    securedBy: 'KKiaPay a kanta · TLS 1.3 · PCI-DSS',
-    paymentSent: 'Yi rasiga — *144# kompose',
+    securedBy: 'KKiaPay a kanta, TLS 1.3, PCI-DSS',
+    paymentSent: 'Yi rasiga, *144# kompose',
     paymentSuccess: 'Saren bara sɔrɔ',
     paymentReceived: 'Saren bara sɔrɔ',
     documentReady: 'Sɛbɛ a sɔrɔ',
@@ -424,7 +424,7 @@ const I18N = {
     myPayments: 'N saren',
     transactions: 'saren',
     helpSupport: 'Mali',
-    languageNotifs: 'Xui · Lalile',
+    languageNotifs: 'Xui, Lalile',
     filters: 'Sigife',
     all: 'Bɛɛ',
     documents: 'sɛbɛ',
@@ -433,9 +433,9 @@ const I18N = {
   ful: { // Pular
     appName: 'Ɓataake Goote Ronnde',
     short: 'DUT',
-    portal: 'Hilifaaɓe Ronnde — Hubbinde Gineya',
+    portal: 'Hilifaaɓe Ronnde, Hubbinde Gineya',
     republic: 'Hubbinde Gineya',
-    ministry: 'Wuro Ronnde · DGTT',
+    ministry: 'Wuro Ronnde, DGTT',
     dntt: 'Direction Nationale du Transports Terrestre',
     dashboard: 'Hollirde',
     newDut: 'DUT keso',
@@ -460,7 +460,7 @@ const I18N = {
     expiredPlural: 'Ɓe mbeli',
     overdue: 'Yoɓle ñawi sanne',
     overdueDetail: 'yoɓ nder 48 w',
-    amountDue: 'Ko yoɓaa · seeɗto',
+    amountDue: 'Ko yoɓaa, seeɗto',
     distance: 'Yaadu',
     trips: 'jahɗi',
     documentsIssued: 'Ɓataaɗe mbaylaaɗe',
@@ -521,8 +521,8 @@ const I18N = {
     mtnMoMo: 'MTN Mobile Money',
     bankCard: 'Karte banke',
     bankTransfer: 'Neldugol banke',
-    securedBy: 'Reenaa e KKiaPay · TLS 1.3 · PCI-DSS',
-    paymentSent: 'Ñaagunde nelaama — yiilo *144#',
+    securedBy: 'Reenaa e KKiaPay, TLS 1.3, PCI-DSS',
+    paymentSent: 'Ñaagunde nelaama, yiilo *144#',
     paymentSuccess: 'Yoɓle laaɓi',
     paymentReceived: 'Yoɓle ƴetta',
     documentReady: 'Ɓataake heɓii',
@@ -542,7 +542,7 @@ const I18N = {
     myPayments: 'Yoɓle am',
     transactions: 'gollol',
     helpSupport: 'Ballal',
-    languageNotifs: 'Ɗemngal · Habaruuji',
+    languageNotifs: 'Ɗemngal, Habaruuji',
     filters: 'Suɓorɗe',
     all: 'Fof',
     documents: 'ɓataaɗe',
@@ -553,7 +553,7 @@ const I18N = {
     short: 'DUT',
     portal: 'Gine Faso Bolokurunin Tigɛlilan',
     republic: 'Gine Faso',
-    ministry: 'Tigɛli Minisɛri · DGTT',
+    ministry: 'Tigɛli Minisɛri, DGTT',
     dntt: 'Direction Nationale du Transports Terrestre',
     dashboard: 'Sigida',
     newDut: 'DUT kura dilan',
@@ -570,7 +570,7 @@ const I18N = {
     welcome: 'I ni sɔgɔma',
     welcomeBack: 'I ni segin',
     carrierSpace: 'Tigɛlilaw ka yɔrɔ',
-    issued: 'DUT bɔlen · awurili',
+    issued: 'DUT bɔlen, awurili',
     pending: 'Sara ma di',
     paid: 'Sara dilen',
     paidPlural: 'Sara dilen',
@@ -578,7 +578,7 @@ const I18N = {
     expiredPlural: 'Bana',
     overdue: 'Sara ma di lɛrɛ la',
     overdueDetail: 'a ka di 48 lɛrɛ kɔnɔ',
-    amountDue: 'Sara bɛɛ · awurili',
+    amountDue: 'Sara bɛɛ, awurili',
     distance: 'Sira janya',
     trips: 'taama',
     documentsIssued: 'Sɛbɛ dilenw',
@@ -639,8 +639,8 @@ const I18N = {
     mtnMoMo: 'MTN Mobile Money',
     bankCard: 'Banki kati',
     bankTransfer: 'Banki ci',
-    securedBy: 'KKiaPay y\u2019a lakana · TLS 1.3 · PCI-DSS',
-    paymentSent: 'Cikan cilen — *144# wele',
+    securedBy: 'KKiaPay y\u2019a lakana, TLS 1.3, PCI-DSS',
+    paymentSent: 'Cikan cilen, *144# wele',
     paymentSuccess: 'Sara dilen',
     paymentReceived: 'Sara sɔrɔlen',
     documentReady: 'Sɛbɛ labɛnnen',
@@ -660,7 +660,7 @@ const I18N = {
     myPayments: 'N ka sara',
     transactions: 'sara',
     helpSupport: 'Dɛmɛ',
-    languageNotifs: 'Kan · Kibaruya',
+    languageNotifs: 'Kan, Kibaruya',
     filters: 'Sugandi',
     all: 'Bɛɛ',
     documents: 'sɛbɛ',
@@ -731,7 +731,7 @@ const Icon = ({ name, size = 20, stroke = 1.6, style }) => {
 };
 
 // ─────────────────────────────────────────────
-// Guinean coat-of-arms-ish emblem (NOT the real one — original abstraction:
+// Guinean coat-of-arms-ish emblem (NOT the real one, original abstraction:
 // a circular seal with three horizontal bands echoing the flag, framed by a rope)
 // Used as a "République de Guinée" mark on the sober variant.
 // ─────────────────────────────────────────────
@@ -754,9 +754,9 @@ const SealEmblem = ({ size = 56 }) => (
 // ─── Officer (DNTT agent) profile ─────────────────────────────────
 const OFFICER = {
   name: 'Fatoumata Camara',
-  role: 'Inspecteur principal · DNTT Conakry',
+  role: 'Inspecteur principal, DNTT Conakry',
   badge: 'DNTT-INS-0418',
-  office: 'DNTT Conakry · Direction Générale des Transports',
+  office: 'DNTT Conakry, Direction Générale des Transports',
   email: 'f.camara@transports.gov.gn',
 };
 
@@ -789,7 +789,7 @@ const BILLS = [
 
 Object.assign(window, { OFFICER, TRANSPORTERS, BILLS });
 
-// Vertical three-stripe flag bar — red | yellow | green (hoist → fly).
+// Vertical three-stripe flag bar: red | yellow | green (hoist → fly).
 // Used as a hairline accent strip.
 const FlagBar = ({ height = 3, style }) => (
   <div style={{ display: 'flex', height, width: '100%', ...style }}>

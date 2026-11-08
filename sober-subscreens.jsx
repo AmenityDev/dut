@@ -4,7 +4,7 @@
 // ─── Officer: Transporteurs (référentiel) ──────────────────────────
 const OfficerTransporters = ({ lang }) => (
   <div>
-    <PageHead kicker="Référentiel · transporteurs agréés" title="Transporteurs">
+    <PageHead kicker="Référentiel, transporteurs agréés" title="Transporteurs">
       <button style={ghostBtn()}><Icon name="download" size={13}/> Exporter</button>
       <button style={primaryBtn()}><Icon name="plus" size={14}/> Nouveau transporteur</button>
     </PageHead>
@@ -40,7 +40,7 @@ const OfficerTransporters = ({ lang }) => (
           <div style={{ fontSize: 11.5, color: '#6B6557', lineHeight: 1.7 }}>
             {!isInd && <div>{tr.contact}</div>}
             <div style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 11 }}>{tr.rccm}</div>
-            <div>{tr.city} · {tr.fleet} {isInd ? (tr.fleet > 1 ? 'véhicules' : 'véhicule') : 'véhicules'}</div>
+            <div>{tr.city}, {tr.fleet} {isInd ? (tr.fleet > 1 ? 'véhicules' : 'véhicule') : 'véhicules'}</div>
           </div>
           <div style={{ marginTop: 10, paddingTop: 10, borderTop: '1px solid #E5DDC9', display: 'flex', justifyContent: 'space-between' }}>
             <span style={{ fontSize: 11, color: '#9A9281' }}>{BILLS.filter(b => b.transporterId === tr.id).length} DUT émis</span>
@@ -56,7 +56,7 @@ const OfficerTransporters = ({ lang }) => (
 // ─── Officer: Véhicules ────────────────────────────────────────────
 const OfficerVehicles = ({ lang }) => (
   <div>
-    <PageHead kicker="Référentiel · véhicules immatriculés" title="Véhicules"/>
+    <PageHead kicker="Référentiel, véhicules immatriculés" title="Véhicules"/>
     <section style={paperCard()}>
       <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12 }}>
         <thead><tr style={{ color: '#9A9281', fontSize: 10, letterSpacing: '.14em', textTransform: 'uppercase' }}>
@@ -98,7 +98,7 @@ const OfficerTariffs = ({ lang }) => (
             ['Marchandises classées dangereuses', '+15%', 'CMR Article 7'],
             ['Convois exceptionnels (>40 t)', '+25%', 'Étude voirie requise'],
             ['Aide humanitaire homologuée', 'Exonération totale', 'Sur visa MAE'],
-            ['Produits du cru — circuits courts', '−50%', 'Décret 2024/PR/452'],
+            ['Produits du cru, circuits courts', '−50%', 'Décret 2024/PR/452'],
           ].map(([k, v, note], i) => (
             <tr key={k} style={{ background: i % 2 ? '#FBF8F2' : 'transparent' }}>
               <td style={td()}>{k}</td>
@@ -115,7 +115,7 @@ const OfficerTariffs = ({ lang }) => (
 // ─── Officer: Profil ───────────────────────────────────────────────
 const OfficerProfile = ({ lang }) => (
   <div>
-    <PageHead kicker={`Agent DNTT · ${OFFICER.badge}`} title="Mon profil"/>
+    <PageHead kicker={`Agent DNTT, ${OFFICER.badge}`} title="Mon profil"/>
     <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 320px) 1fr', gap: 22 }} className="dut-profile-grid">
       <section style={paperCard(true)}>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
@@ -130,9 +130,9 @@ const OfficerProfile = ({ lang }) => (
         <SummaryRow label="Bureau" value={OFFICER.office}/>
         <SummaryRow label="Email" value={OFFICER.email}/>
         <SummaryRow label="Téléphone" value="+224 622 04 71 88"/>
-        <SummaryRow label="Habilitations" value="Émission DUT · Contrôle routier · Verbalisation"/>
-        <SummaryRow label="Dernière connexion" value="30/04/2026 · 09:38 GMT — Conakry"/>
-        <SummaryRow label="Sessions actives" value="2 (poste bureau · mobile)"/>
+        <SummaryRow label="Habilitations" value="Émission DUT, Contrôle routier, Verbalisation"/>
+        <SummaryRow label="Dernière connexion" value="30/04/2026, 09:38 GMT, Conakry"/>
+        <SummaryRow label="Sessions actives" value="2 (poste bureau, mobile)"/>
         <div style={{ marginTop: 16, paddingTop: 12, borderTop: '1px solid #E5DDC9', display: 'flex', gap: 8 }}>
           <button style={ghostBtn()}>Modifier mes informations</button>
           <button style={ghostBtn()}>Changer le mot de passe</button>
@@ -148,7 +148,7 @@ const OfficerSettings = ({ lang }) => (
     <PageHead kicker="Préférences de l'application" title="Paramètres"/>
     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 16 }}>
       <SettingsCard title="Sécurité">
-        <SettingRow label="Authentification à deux facteurs" value="Activée · SMS au +224 622 04 71 88" toggle/>
+        <SettingRow label="Authentification à deux facteurs" value="Activée, SMS au +224 622 04 71 88" toggle/>
         <SettingRow label="Verrouillage automatique" value="Après 5 minutes d'inactivité"/>
         <SettingRow label="Journal d'audit" value="237 actions ce mois"/>
       </SettingsCard>
@@ -160,11 +160,11 @@ const OfficerSettings = ({ lang }) => (
       <SettingsCard title="Préférences">
         <SettingRow label="Langue" value="Français (Guinée)"/>
         <SettingRow label="Format des dates" value="JJ/MM/AAAA"/>
-        <SettingRow label="Devise par défaut" value="GNF — Franc guinéen"/>
+        <SettingRow label="Devise par défaut" value="GNF, Franc guinéen"/>
         <SettingRow label="Fuseau horaire" value="GMT (Conakry)"/>
       </SettingsCard>
       <SettingsCard title="Intégrations">
-        <SettingRow label="SAFI · Trésor public" value="Connecté" tone="good"/>
+        <SettingRow label="SAFI, Trésor public" value="Connecté" tone="good"/>
         <SettingRow label="RCCM-CCI" value="Connecté" tone="good"/>
         <SettingRow label="KKiaPay" value="Connecté" tone="good"/>
         <SettingRow label="Annuaire DGI (NIF)" value="Connecté" tone="good"/>
@@ -236,7 +236,7 @@ const TransporterPayments = ({ lang, onPay, onPayImport, onViewDut, onViewImport
 
   return (
     <div>
-      <PageHead kicker={isFr ? 'Émis par DNTT · à régler en ligne' : 'Issued by DNTT · to be paid online'} title={isFr ? 'Mes DUT à régler' : 'Bills due'}>
+      <PageHead kicker={isFr ? 'Émis par DNTT, à régler en ligne' : 'Issued by DNTT, to be paid online'} title={isFr ? 'Mes DUT à régler' : 'Bills due'}>
         <button style={ghostBtn()}><Icon name="download" size={13}/> {isFr ? 'Relevé' : 'Statement'}</button>
       </PageHead>
 
@@ -246,7 +246,7 @@ const TransporterPayments = ({ lang, onPay, onPayImport, onViewDut, onViewImport
           <div style={{ fontSize: 10.5, letterSpacing: '.18em', textTransform: 'uppercase', color: '#FCD116' }}>{isFr ? 'Total à régler' : 'Total due'}</div>
           <div style={{ fontFamily: '"Crimson Pro", serif', fontSize: 36, fontWeight: 600, marginTop: 4 }}>{fmtGNF(grandTotal)}</div>
           <div style={{ fontSize: 12, color: '#B5AC97', marginTop: 4 }}>
-            {pending.length} {isFr ? 'DUT' : 'DUT'}{pendingImports.length > 0 ? ` + ${pendingImports.length} ${isFr ? 'taxe d’importation véhicule' + (pendingImports.length > 1 ? 's' : '') : 'vehicle import tax' + (pendingImports.length > 1 ? 'es' : '')}` : ''} · {isFr ? 'prochain règlement avant le 02/05' : 'next due May 2'}
+            {pending.length} {isFr ? 'DUT' : 'DUT'}{pendingImports.length > 0 ? ` + ${pendingImports.length} ${isFr ? 'taxe d’importation véhicule' + (pendingImports.length > 1 ? 's' : '') : 'vehicle import tax' + (pendingImports.length > 1 ? 'es' : '')}` : ''}, {isFr ? 'prochain règlement avant le 02/05' : 'next due May 2'}
           </div>
         </div>
         <button onClick={onPay} style={{ background: '#FCD116', color: '#161413', border: 'none', padding: '12px 22px', fontFamily: 'inherit', fontWeight: 700, fontSize: 13.5, cursor: 'pointer', borderRadius: 2, display: 'inline-flex', alignItems: 'center', gap: 8 }}>
@@ -258,7 +258,7 @@ const TransporterPayments = ({ lang, onPay, onPayImport, onViewDut, onViewImport
       {pendingImports.length > 0 && (
         <section style={{ marginBottom: 22 }}>
           <div style={{ fontSize: 10.5, letterSpacing: '.18em', color: '#9A9281', textTransform: 'uppercase', marginBottom: 10, display: 'flex', alignItems: 'center', gap: 8 }}>
-            <Icon name="ship" size={13}/> {isFr ? 'Importations de véhicules' : 'Vehicle imports'} · {pendingImports.length} {isFr ? 'taxe' : 'tax'}{pendingImports.length > 1 ? 's' : ''} {isFr ? 'à régler' : 'due'}
+            <Icon name="ship" size={13}/> {isFr ? 'Importations de véhicules' : 'Vehicle imports'}, {pendingImports.length} {isFr ? 'taxe' : 'tax'}{pendingImports.length > 1 ? 's' : ''} {isFr ? 'à régler' : 'due'}
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: pendingImports.length > 1 ? 'repeat(auto-fit, minmax(360px, 1fr))' : '1fr', gap: 12 }}>
             {pendingImports.map(b => (
@@ -278,7 +278,7 @@ const TransporterPayments = ({ lang, onPay, onPayImport, onViewDut, onViewImport
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 10 }}>
               <div>
                 <div style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 12, fontWeight: 700 }}>{b.id}</div>
-                <div style={{ fontSize: 11, color: '#9A9281' }}>{isFr ? 'Émis le' : 'Issued'} {b.issued} · {b.officer}</div>
+                <div style={{ fontSize: 11, color: '#9A9281' }}>{isFr ? 'Émis le' : 'Issued'} {b.issued}, {b.officer}</div>
               </div>
               <StatusPill status="pending" lang={lang}/>
             </div>
@@ -350,7 +350,7 @@ const TransporterPayments = ({ lang, onPay, onPayImport, onViewDut, onViewImport
 // ─── Transporter: Ma flotte ────────────────────────────────────────
 const TransporterFleet = ({ lang }) => (
   <div>
-    <PageHead kicker={`${CARRIER.short} · ${VEHICLES.length} véhicules`} title="Ma flotte">
+    <PageHead kicker={`${CARRIER.short}, ${VEHICLES.length} véhicules`} title="Ma flotte">
       <button style={ghostBtn()}><Icon name="download" size={13}/> Exporter</button>
       <button style={primaryBtn()}><Icon name="plus" size={14}/> Ajouter un véhicule</button>
     </PageHead>
@@ -382,7 +382,7 @@ const TransporterFleet = ({ lang }) => (
 // ─── Transporter: Profil ───────────────────────────────────────────
 const TransporterProfile = ({ lang }) => (
   <div>
-    <PageHead kicker={`Compte transporteur · ${CARRIER.id || CARRIER.rccm}`} title="Profil de ma société"/>
+    <PageHead kicker={`Compte transporteur, ${CARRIER.id || CARRIER.rccm}`} title="Profil de ma société"/>
     <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 320px) 1fr', gap: 22 }} className="dut-profile-grid">
       <section style={paperCard(true)}>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
@@ -415,8 +415,8 @@ const TransporterSupport = ({ lang }) => (
   <div>
     <PageHead kicker="Aide & assistance" title="Support transporteur"/>
     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 16, marginBottom: 22 }}>
-      <ContactTile icon="phone" label="USSD gratuit" value="*144#" detail="Tous opérateurs · 24/7 · français + langues nationales"/>
-      <ContactTile icon="phone" label="Hotline" value="+224 657 144 144" detail="Lun–Ven 08:00–18:00 GMT"/>
+      <ContactTile icon="phone" label="USSD gratuit" value="*144#" detail="Tous opérateurs, 24/7, français + langues nationales"/>
+      <ContactTile icon="phone" label="Hotline" value="+224 657 144 144" detail="Lun-Ven, 08:00 à 18:00 GMT"/>
       <ContactTile icon="chat"  label="WhatsApp"  value="+224 622 14 88 03" detail="Réponse sous 30 min en heures ouvrables"/>
       <ContactTile icon="search"  label="Email"     value="support@dut.gov.gn" detail="Réponse sous 24 h"/>
     </div>
@@ -443,19 +443,19 @@ const TransporterSettings = ({ lang }) => (
     <PageHead kicker="Préférences du compte" title="Paramètres"/>
     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 16 }}>
       <SettingsCard title="Sécurité">
-        <SettingRow label="Authentification à deux facteurs" value={`Activée · SMS au ${CARRIER.phone}`} toggle defaultChecked/>
-        <SettingRow label="PIN de validation paiement" value="4 chiffres · changé il y a 14 j"/>
+        <SettingRow label="Authentification à deux facteurs" value={`Activée, SMS au ${CARRIER.phone}`} toggle defaultChecked/>
+        <SettingRow label="PIN de validation paiement" value="4 chiffres, changé il y a 14 j"/>
         <SettingRow label="Sessions actives" value="3 appareils"/>
       </SettingsCard>
       <SettingsCard title="Notifications">
         <SettingRow label="Nouvelle facture DUT émise" value="SMS + email" toggle defaultChecked/>
-        <SettingRow label="Rappel d'échéance" value="J−2 · J−1 · jour J" toggle defaultChecked/>
+        <SettingRow label="Rappel d'échéance" value="J−2, J−1, jour J" toggle defaultChecked/>
         <SettingRow label="Confirmation de paiement" value="SMS uniquement" toggle defaultChecked/>
       </SettingsCard>
       <SettingsCard title="Moyens de paiement enregistrés">
         <SettingRow label="Orange Money" value={CARRIER.phone} tone="good"/>
         <SettingRow label="MTN MoMo" value="+224 628 41 02 17" tone="good"/>
-        <SettingRow label="Carte Visa" value="•••• 7821 · BICIGUI"/>
+        <SettingRow label="Carte Visa" value="•••• 7821, BICIGUI"/>
         <button style={{ ...ghostBtn(), marginTop: 8 }}><Icon name="plus" size={12}/> Ajouter un moyen</button>
       </SettingsCard>
       <SettingsCard title="Préférences">

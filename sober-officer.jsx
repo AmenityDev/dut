@@ -1,5 +1,5 @@
 // Sober Officer (DNTT) platform.
-// The official issuing the bills — they create DUTs from scratch (transporters
+// The official issuing the bills: they create DUTs from scratch (transporters
 // have no input). Multi-role admin look, slightly more authoritative than the
 // transporter side: darker top header, gold ribbon, denser tables, official chrome.
 
@@ -62,7 +62,7 @@ const SoberOfficerApp = ({ lang = 'fr', initialScreen = 'dashboard', initialStep
 };
 
 // ─────────────────────────────────────────────────────────────
-// Top bar — darker / more authoritative for the officer side
+// Top bar: darker / more authoritative for the officer side
 // ─────────────────────────────────────────────────────────────
 const OfficerTopBar = ({ lang }) => (
   <header style={{
@@ -71,9 +71,9 @@ const OfficerTopBar = ({ lang }) => (
   }}>
     <div style={{ color: '#FCD116' }}><SealEmblem size={42} /></div>
     <div style={{ flex: 1 }}>
-      <div style={{ fontSize: 10, letterSpacing: '.22em', color: '#C8A24A', textTransform: 'uppercase' }}>{t('republic', lang)} · MTI · DGTT</div>
+      <div style={{ fontSize: 10, letterSpacing: '.22em', color: '#C8A24A', textTransform: 'uppercase' }}>{t('republic', lang)}, MTI, DGTT</div>
       <div style={{ fontFamily: '"Crimson Pro", Georgia, serif', fontSize: 17, fontWeight: 500, letterSpacing: '-0.005em', marginTop: 2 }}>
-        Plateforme officielle du Document Unique de Transport <span style={{ fontSize: 11.5, color: '#9A9281', fontStyle: 'italic', marginLeft: 6 }}>— Espace Agent</span>
+        Plateforme officielle du Document Unique de Transport <span style={{ fontSize: 11.5, color: '#9A9281', fontStyle: 'italic', marginLeft: 6 }}>(espace agent)</span>
       </div>
     </div>
     <div style={{ display: 'flex', alignItems: 'center', gap: 12, fontSize: 12 }}>
@@ -86,7 +86,7 @@ const OfficerTopBar = ({ lang }) => (
         <div style={{ width: 28, height: 28, borderRadius: '50%', background: '#FCD116', color: '#161413', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: 11 }}>FC</div>
         <div style={{ lineHeight: 1.2 }}>
           <div style={{ fontSize: 12, fontWeight: 600 }}>{OFFICER.short}</div>
-          <div style={{ fontSize: 10, color: '#9A9281' }}>Inspectrice · {OFFICER.badge}</div>
+          <div style={{ fontSize: 10, color: '#9A9281' }}>Inspectrice, {OFFICER.badge}</div>
         </div>
       </div>
     </div>
@@ -130,7 +130,7 @@ const OfficerSidebar = ({ lang, screen, setScreen, setStep }) => {
 
       <div style={{ marginTop: 'auto', padding: '14px 16px', fontSize: 10.5, color: '#9A9281', borderTop: '1px solid #E5DDC9' }}>
         <div style={{ fontWeight: 600, color: '#6B6557' }}>{OFFICER.office}</div>
-        <div style={{ marginTop: 2 }}>v 2.4.1 · Hébergement souverain</div>
+        <div style={{ marginTop: 2 }}>v 2.4.1, Hébergement souverain</div>
       </div>
     </nav>
   );
@@ -150,11 +150,11 @@ const OfficerDashboard = ({ lang, queueState, onIssue, onOpenBill }) => {
       {/* Page header */}
       <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', borderBottom: '1px solid #E5DDC9', paddingBottom: 18, marginBottom: 22 }}>
         <div>
-          <div style={{ fontSize: 11, letterSpacing: '.18em', color: '#9A9281', textTransform: 'uppercase' }}>Espace Agent · Bureau Conakry-Kaloum</div>
+          <div style={{ fontSize: 11, letterSpacing: '.18em', color: '#9A9281', textTransform: 'uppercase' }}>Espace Agent, Bureau Conakry-Kaloum</div>
           <h1 style={{ fontFamily: '"Crimson Pro", Georgia, serif', fontSize: 30, fontWeight: 500, margin: '6px 0 0' }}>
             Bonjour, <i>{OFFICER.short}</i>.
           </h1>
-          <div style={{ fontSize: 13, color: '#6B6557', marginTop: 4 }}>Vendredi 30 avril 2026 · 09:42 GMT — vous avez <b>{pending.length} DUT en attente</b> d'émission ce matin.</div>
+          <div style={{ fontSize: 13, color: '#6B6557', marginTop: 4 }}>Vendredi 30 avril 2026, 09:42 GMT, vous avez <b>{pending.length} DUT en attente</b> d'émission ce matin.</div>
         </div>
         <button onClick={onIssue} style={primaryBtn()}>
           <Icon name="plus" size={15}/> Émettre un nouveau DUT
@@ -163,8 +163,8 @@ const OfficerDashboard = ({ lang, queueState, onIssue, onOpenBill }) => {
 
       {/* KPI strip */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16, marginBottom: 22 }}>
-        <KpiTile label="DUT émis · aujourd'hui" big="6"  hint="3 par moi · 3 collègues" delta="+2" tone="good"/>
-        <KpiTile label="DUT du mois (avril)"     big={String(month.length)} hint={`${month.filter(b=>b.status==='paid').length} payés · ${pending.length} en attente`}/>
+        <KpiTile label="DUT émis, aujourd'hui" big="6"  hint="3 par moi, 3 collègues" delta="+2" tone="good"/>
+        <KpiTile label="DUT du mois (avril)"     big={String(month.length)} hint={`${month.filter(b=>b.status==='paid').length} payés, ${pending.length} en attente`}/>
         <KpiTile label="Recettes encaissées"     big={(totalRevenue/1000000).toFixed(2)} suffix="M GNF" hint="Reversées au Trésor public" tone="good"/>
         <KpiTile label="Paiements en retard"     big={String(month.filter(b=>b.status==='overdue').length)} hint="à relancer" tone="warn"/>
       </div>
@@ -197,7 +197,7 @@ const OfficerDashboard = ({ lang, queueState, onIssue, onOpenBill }) => {
                     <td style={td()}>{b.date}</td>
                     <td style={td()}><div style={{ fontWeight: 500 }}>{trp.short}</div><div style={{ fontSize: 10.5, color: '#9A9281', fontFamily: '"JetBrains Mono", monospace' }}>{trp.id}</div></td>
                     <td style={td()}><span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>{b.from} <Icon name="arrow" size={10} style={{ color: '#9A9281' }}/> {b.to}</span></td>
-                    <td style={td()}>{b.goodsLabel} <span style={{ color: '#9A9281' }}>· {b.qty.toLocaleString('fr-FR')} {b.unit}</span></td>
+                    <td style={td()}>{b.goodsLabel} <span style={{ color: '#9A9281' }}>({b.qty.toLocaleString('fr-FR')} {b.unit})</span></td>
                     <td style={{ ...td(), textAlign: 'right', fontVariantNumeric: 'tabular-nums' }}>{fmtGNF(b.amount)}</td>
                     <td style={td()}><StatusPill status={b.status} lang={lang}/></td>
                   </tr>
@@ -258,15 +258,15 @@ const OfficerDashboard = ({ lang, queueState, onIssue, onOpenBill }) => {
       </div>
 
       <footer style={{ marginTop: 28, paddingTop: 14, borderTop: '1px solid #E5DDC9', fontSize: 11, color: '#9A9281', display: 'flex', justifyContent: 'space-between' }}>
-        <div>« <i>Travail · Justice · Solidarité</i> » — devise nationale</div>
-        <div>Connecté à : SAFI (Trésor) · RCCM-CCI · KKiaPay</div>
+        <div>« <i>Travail, Justice, Solidarité</i> », devise nationale</div>
+        <div>Connecté à : SAFI (Trésor), RCCM-CCI, KKiaPay</div>
       </footer>
     </div>
   );
 };
 
 // ─────────────────────────────────────────────────────────────
-// Issue DUT — multi-step form (officer creates bill from scratch)
+// Issue DUT: multi-step form (officer creates bill from scratch)
 // ─────────────────────────────────────────────────────────────
 const OfficerIssueForm = ({ lang, draft, setDraft, step, setStep, transporter, goods, distance, total, baseFee, stamp, stat, onCancel, onIssued }) => {
   const STEPS = ['Transporteur', 'Itinéraire', 'Marchandise & véhicule', 'Liquidation & émission'];
@@ -278,7 +278,7 @@ const OfficerIssueForm = ({ lang, draft, setDraft, step, setStep, transporter, g
     <div>
       <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', borderBottom: '1px solid #E5DDC9', paddingBottom: 14, marginBottom: 22 }}>
         <div>
-          <div style={{ fontSize: 11, letterSpacing: '.18em', color: '#9A9281', textTransform: 'uppercase' }}>Émission · Étape {step + 1} / {STEPS.length}</div>
+          <div style={{ fontSize: 11, letterSpacing: '.18em', color: '#9A9281', textTransform: 'uppercase' }}>Émission, Étape {step + 1} / {STEPS.length}</div>
           <h1 style={{ fontFamily: '"Crimson Pro", serif', fontSize: 28, margin: '6px 0 0', fontWeight: 500 }}>Émettre un Document Unique de Transport</h1>
         </div>
         <button onClick={onCancel} style={ghostBtn()}>← Annuler</button>
@@ -330,7 +330,7 @@ const OfficerIssueForm = ({ lang, draft, setDraft, step, setStep, transporter, g
           <SummaryRow label="RCCM" value={transporter.rccm} mono/>
           <SummaryRow label="Itinéraire" value={`${draft.fromCity} → ${draft.toCity}`}/>
           <SummaryRow label="Distance" value={`${distance} km`} mono/>
-          <SummaryRow label="Marchandise" value={`${goods.label} · ${draft.quantity} ${draft.unit}`}/>
+          <SummaryRow label="Marchandise" value={`${goods.label}, ${draft.quantity} ${draft.unit}`}/>
           <SummaryRow label="Véhicule" value={draft.vehicle} mono/>
           <div style={{ marginTop: 12, paddingTop: 10, borderTop: '1px solid #E5DDC9' }}>
             <SummaryRow label="Redevance" value={fmtGNF(baseFee)} mono/>
@@ -352,7 +352,7 @@ const OfficerIssueForm = ({ lang, draft, setDraft, step, setStep, transporter, g
 
 const StepTransporter = ({ draft, set, transporter }) => (
   <>
-    <div style={{ fontSize: 11, letterSpacing: '.16em', color: '#9A9281', textTransform: 'uppercase', marginBottom: 14 }}>I — Transporteur destinataire</div>
+    <div style={{ fontSize: 11, letterSpacing: '.16em', color: '#9A9281', textTransform: 'uppercase', marginBottom: 14 }}>I, Transporteur destinataire</div>
     <Field label="Rechercher un transporteur (RCCM, NIF, raison sociale)">
       <Input defaultValue={transporter.name} />
     </Field>
@@ -368,8 +368,8 @@ const StepTransporter = ({ draft, set, transporter }) => (
             cursor: 'pointer', fontFamily: 'inherit',
           }}>
             <div style={{ fontSize: 12.5, fontWeight: 600 }}>{tr.short}</div>
-            <div style={{ fontSize: 10.5, color: '#9A9281', fontFamily: '"JetBrains Mono", monospace' }}>{tr.id} · {tr.city}</div>
-            <div style={{ fontSize: 11, color: '#6B6557', marginTop: 4 }}>{tr.fleet} véhicules · {tr.contact}</div>
+            <div style={{ fontSize: 10.5, color: '#9A9281', fontFamily: '"JetBrains Mono", monospace' }}>{tr.id}, {tr.city}</div>
+            <div style={{ fontSize: 11, color: '#6B6557', marginTop: 4 }}>{tr.fleet} véhicules, {tr.contact}</div>
           </button>
         );
       })}
@@ -389,7 +389,7 @@ const StepTransporter = ({ draft, set, transporter }) => (
 
 const StepRouteOff = ({ draft, set, distance }) => (
   <>
-    <div style={{ fontSize: 11, letterSpacing: '.16em', color: '#9A9281', textTransform: 'uppercase', marginBottom: 14 }}>II — Itinéraire & calendrier</div>
+    <div style={{ fontSize: 11, letterSpacing: '.16em', color: '#9A9281', textTransform: 'uppercase', marginBottom: 14 }}>II, Itinéraire & calendrier</div>
     <FieldRow>
       <Field label="Ville de départ"><Select value={draft.fromCity} onChange={(v) => set('fromCity', v)} options={GUINEA_CITIES}/></Field>
       <Field label="Ville d'arrivée"><Select value={draft.toCity}   onChange={(v) => set('toCity', v)}   options={GUINEA_CITIES}/></Field>
@@ -401,16 +401,16 @@ const StepRouteOff = ({ draft, set, distance }) => (
     <div style={{ background: '#FBF8F2', border: '1px solid #E5DDC9', padding: 12, fontSize: 12 }}>
       <span style={{ color: '#6B6557' }}>Distance officielle (réf. DGTT) :</span>{' '}
       <b style={{ fontFamily: '"JetBrains Mono", monospace' }}>{distance} km</b>
-      <span style={{ color: '#6B6557' }}> · Durée estimée :</span> <b>{Math.round(distance / 55)} h</b>
+      <span style={{ color: '#6B6557' }}>, Durée estimée :</span> <b>{Math.round(distance / 55)} h</b>
     </div>
   </>
 );
 
 const StepCargoVeh = ({ draft, set }) => (
   <>
-    <div style={{ fontSize: 11, letterSpacing: '.16em', color: '#9A9281', textTransform: 'uppercase', marginBottom: 14 }}>III — Marchandise & véhicule</div>
+    <div style={{ fontSize: 11, letterSpacing: '.16em', color: '#9A9281', textTransform: 'uppercase', marginBottom: 14 }}>III, Marchandise & véhicule</div>
     <Field label="Nature de la marchandise">
-      <Select value={draft.goods} onChange={(v) => set('goods', v)} options={GOODS.map(g => ({ value: g.code, label: `${g.label} · ${g.cat}` }))}/>
+      <Select value={draft.goods} onChange={(v) => set('goods', v)} options={GOODS.map(g => ({ value: g.code, label: `${g.label}, ${g.cat}` }))}/>
     </Field>
     <FieldRow>
       <Field label="Quantité"><Input type="number" value={draft.quantity} onChange={(v) => set('quantity', +v || 0)}/></Field>
@@ -426,7 +426,7 @@ const StepCargoVeh = ({ draft, set }) => (
 
 const StepLiquid = ({ draft, transporter, goods, distance, baseFee, stamp, stat, total }) => (
   <>
-    <div style={{ fontSize: 11, letterSpacing: '.16em', color: '#9A9281', textTransform: 'uppercase', marginBottom: 14 }}>IV — Liquidation & émission</div>
+    <div style={{ fontSize: 11, letterSpacing: '.16em', color: '#9A9281', textTransform: 'uppercase', marginBottom: 14 }}>IV, Liquidation & émission</div>
     <ReviewBlock title="Transporteur">
       <ReviewLine k="Raison sociale" v={transporter.name}/>
       <ReviewLine k="RCCM" v={transporter.rccm} mono/>
@@ -440,7 +440,7 @@ const StepLiquid = ({ draft, transporter, goods, distance, baseFee, stamp, stat,
       <ReviewLine k="Période" v={`${draft.departure} → ${draft.arrival}`}/>
     </ReviewBlock>
     <ReviewBlock title="Marchandise & véhicule">
-      <ReviewLine k="Marchandise" v={`${goods.label} · ${draft.quantity} ${draft.unit}`}/>
+      <ReviewLine k="Marchandise" v={`${goods.label}, ${draft.quantity} ${draft.unit}`}/>
       <ReviewLine k="Véhicule" v={draft.vehicle} mono/>
       <ReviewLine k="Conducteur" v={draft.driver}/>
       <ReviewLine k="Valeur déclarée" v={fmtGNF(draft.value)}/>
@@ -466,14 +466,14 @@ const StepLiquid = ({ draft, transporter, goods, distance, baseFee, stamp, stat,
 );
 
 // ─────────────────────────────────────────────────────────────
-// Bill preview (after emission) — shown to officer with "send to transporter"
+// Bill preview (after emission): shown to officer with "send to transporter"
 // ─────────────────────────────────────────────────────────────
 const OfficerBillPreview = ({ lang, billId, transporter, draft, goods, distance, total, baseFee, stamp, stat, onClose, onNew }) => (
   <div>
     <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', borderBottom: '1px solid #E5DDC9', paddingBottom: 14, marginBottom: 22 }}>
       <div>
-        <div style={{ fontSize: 11, letterSpacing: '.18em', color: '#9A9281', textTransform: 'uppercase' }}>DUT émis · {billId || 'DUT-2026-04-08851'}</div>
-        <h1 style={{ fontFamily: '"Crimson Pro", serif', fontSize: 28, margin: '6px 0 0', fontWeight: 500 }}>Aperçu de la facture · à envoyer au transporteur</h1>
+        <div style={{ fontSize: 11, letterSpacing: '.18em', color: '#9A9281', textTransform: 'uppercase' }}>DUT émis, {billId || 'DUT-2026-04-08851'}</div>
+        <h1 style={{ fontFamily: '"Crimson Pro", serif', fontSize: 28, margin: '6px 0 0', fontWeight: 500 }}>Aperçu de la facture, à envoyer au transporteur</h1>
       </div>
       <div style={{ display: 'flex', gap: 8 }}>
         <button onClick={onClose} style={ghostBtn()}>← Tous les DUT</button>
@@ -501,46 +501,46 @@ const OfficerBillPreview = ({ lang, billId, transporter, draft, goods, distance,
       <div style={{ display: 'flex', alignItems: 'flex-start', gap: 18, paddingBottom: 16, borderBottom: '2px solid #161413' }}>
         <SealEmblem size={64}/>
         <div style={{ flex: 1 }}>
-          <div style={{ fontSize: 10.5, letterSpacing: '.18em', textTransform: 'uppercase', color: '#6B6557' }}>République de Guinée — Travail · Justice · Solidarité</div>
-          <div style={{ fontSize: 13, marginTop: 4 }}>Ministère des Transports · Direction Générale des Transports Terrestres</div>
+          <div style={{ fontSize: 10.5, letterSpacing: '.18em', textTransform: 'uppercase', color: '#6B6557' }}>République de Guinée, Travail, Justice, Solidarité</div>
+          <div style={{ fontSize: 13, marginTop: 4 }}>Ministère des Transports, Direction Générale des Transports Terrestres</div>
           <div style={{ fontSize: 11.5, color: '#6B6557' }}>Direction Nationale du Transports Terrestre (DNTT)</div>
         </div>
         <div style={{ textAlign: 'right' }}>
           <div style={{ fontSize: 10.5, letterSpacing: '.18em', color: '#6B6557' }}>RÉFÉRENCE</div>
           <div style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 13, fontWeight: 700 }}>{billId || 'DUT-2026-04-08851'}</div>
-          <div style={{ fontSize: 10.5, color: '#6B6557', marginTop: 2 }}>Émis le 30 / 04 / 2026 · 09:42 GMT</div>
+          <div style={{ fontSize: 10.5, color: '#6B6557', marginTop: 2 }}>Émis le 30 / 04 / 2026, 09:42 GMT</div>
         </div>
       </div>
 
       <h2 style={{ textAlign: 'center', fontFamily: 'Georgia, serif', fontWeight: 600, fontSize: 22, letterSpacing: '.04em', margin: '18px 0 6px' }}>
-        DOCUMENT UNIQUE DE TRANSPORT — FACTURE
+        DOCUMENT UNIQUE DE TRANSPORT, FACTURE
       </h2>
       <div style={{ textAlign: 'center', fontSize: 11, color: '#6B6557', letterSpacing: '.18em', textTransform: 'uppercase', marginBottom: 22 }}>
         Arrêté n° 2025/MTI/DNTT du 14 janvier 2026
       </div>
 
-      <PdfSection title="I — Transporteur destinataire">
+      <PdfSection title="I, Transporteur destinataire">
         <PdfRow k="Raison sociale" v={transporter.name}/>
         <PdfRow k="RCCM" v={transporter.rccm}/>
         <PdfRow k="NIF" v={transporter.nif}/>
         <PdfRow k="Adresse" v={transporter.city}/>
       </PdfSection>
 
-      <PdfSection title="II — Itinéraire">
+      <PdfSection title="II, Itinéraire">
         <PdfRow k="Origine" v={draft.fromCity}/>
         <PdfRow k="Destination" v={draft.toCity}/>
         <PdfRow k="Distance officielle" v={`${distance} km`}/>
         <PdfRow k="Période" v={`${draft.departure} → ${draft.arrival}`}/>
       </PdfSection>
 
-      <PdfSection title="III — Marchandise & véhicule">
+      <PdfSection title="III, Marchandise & véhicule">
         <PdfRow k="Marchandise" v={`${goods.label} (${goods.cat})`}/>
         <PdfRow k="Quantité" v={`${draft.quantity} ${draft.unit}`}/>
         <PdfRow k="Véhicule" v={draft.vehicle}/>
         <PdfRow k="Conducteur" v={draft.driver}/>
       </PdfSection>
 
-      <PdfSection title="IV — Montant à régler">
+      <PdfSection title="IV, Montant à régler">
         <PdfRow k="Redevance kilométrique" v={fmtGNF(baseFee)}/>
         <PdfRow k="Timbre fiscal" v={fmtGNF(stamp)}/>
         <PdfRow k="Quote-part DNTT" v={fmtGNF(stat)}/>
@@ -551,7 +551,7 @@ const OfficerBillPreview = ({ lang, billId, transporter, draft, goods, distance,
       </PdfSection>
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 110px', gap: 18, marginTop: 28, paddingTop: 18, borderTop: '1px solid #DCD3BD' }}>
-        <SignatureBlock title="Agent émetteur · DNTT" name={`${OFFICER.name} · ${OFFICER.badge}`} sig={OFFICER.signatureName}/>
+        <SignatureBlock title="Agent émetteur, DNTT" name={`${OFFICER.name}, ${OFFICER.badge}`} sig={OFFICER.signatureName}/>
         <div>
           <div style={{ fontSize: 10.5, letterSpacing: '.16em', textTransform: 'uppercase', color: '#6B6557' }}>Modalités de paiement</div>
           <div style={{ fontSize: 11.5, color: '#6B6557', marginTop: 6, lineHeight: 1.55 }}>
@@ -577,7 +577,7 @@ const OfficerBillsList = ({ lang, onOpen }) => {
     <div>
       <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', borderBottom: '1px solid #E5DDC9', paddingBottom: 14, marginBottom: 22 }}>
         <div>
-          <div style={{ fontSize: 11, letterSpacing: '.18em', color: '#9A9281', textTransform: 'uppercase' }}>Registre des émissions · 04 / 2026</div>
+          <div style={{ fontSize: 11, letterSpacing: '.18em', color: '#9A9281', textTransform: 'uppercase' }}>Registre des émissions, 04 / 2026</div>
           <h1 style={{ fontFamily: '"Crimson Pro", serif', fontSize: 28, margin: '6px 0 0', fontWeight: 500 }}>Tous les DUT émis</h1>
         </div>
         <div style={{ display: 'flex', gap: 8 }}>
@@ -631,7 +631,7 @@ const OfficerBillsList = ({ lang, onOpen }) => {
                     <div style={{ fontSize: 10.5, color: '#9A9281', fontFamily: '"JetBrains Mono", monospace' }}>{trp.id}</div>
                   </td>
                   <td style={td()}>{b.from} → {b.to}</td>
-                  <td style={td()}>{b.goodsLabel} <span style={{ color: '#9A9281' }}>· {b.qty.toLocaleString('fr-FR')} {b.unit}</span></td>
+                  <td style={td()}>{b.goodsLabel} <span style={{ color: '#9A9281' }}>({b.qty.toLocaleString('fr-FR')} {b.unit})</span></td>
                   <td style={{ ...td(), textAlign: 'right', fontVariantNumeric: 'tabular-nums', fontFamily: '"JetBrains Mono", monospace' }}>{fmtGNF(b.amount)}</td>
                   <td style={td()}><StatusPill status={b.status} lang={lang}/></td>
                   <td style={td()}>

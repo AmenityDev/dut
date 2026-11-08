@@ -1,4 +1,4 @@
-// SOBER · Officer-side Imports screens
+// SOBER, Officer-side Imports screens
 // 3 screens: list, new (form), detail (tax invoice).
 
 const fmtNum = (n) => new Intl.NumberFormat('fr-FR').format(n);
@@ -19,7 +19,7 @@ const OfficerImports = ({ lang, onOpen, onNew }) => {
       <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 18 }}>
         <div>
           <h2 style={{ fontFamily: '"Crimson Pro", Georgia, serif', fontSize: 26, margin: 0, fontWeight: 500 }}>Importations de véhicules</h2>
-          <p style={{ color: '#6B6557', fontSize: 13, margin: '2px 0 0' }}>Déclaration et taxation des véhicules importés · DNTT</p>
+          <p style={{ color: '#6B6557', fontSize: 13, margin: '2px 0 0' }}>Déclaration et taxation des véhicules importés, DNTT</p>
         </div>
         <button style={primaryBtn()} onClick={onNew}>
           <Icon name="plus" size={16}/> Nouvelle déclaration
@@ -28,7 +28,7 @@ const OfficerImports = ({ lang, onOpen, onNew }) => {
 
       {/* KPIs */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 14, marginBottom: 20 }}>
-        <KpiTile label="Déclarations · ce mois" big={monthCount} hint="3 en attente · 2 payées"/>
+        <KpiTile label="Déclarations ce mois" big={monthCount} hint="3 en attente, 2 payées"/>
         <KpiTile label="Recouvrement attendu" big={fmtNum(totalDue)} suffix="GNF" tone="warn"/>
         <KpiTile label="Recettes encaissées" big={fmtNum(monthRevenue)} suffix="GNF" tone="ok"/>
       </div>
@@ -76,7 +76,7 @@ const OfficerImports = ({ lang, onOpen, onNew }) => {
                 </td>
                 <td style={td()}>
                   <div>{b.vehicle.make} {b.vehicle.model}</div>
-                  <div style={{ fontSize: 10.5, color: '#9A9281' }}>{b.vehicle.year} · {b.vehicle.fuel} · {b.vehicle.powerKw} kW</div>
+                  <div style={{ fontSize: 10.5, color: '#9A9281' }}>{b.vehicle.year}, {b.vehicle.fuel}, {b.vehicle.powerKw} kW</div>
                 </td>
                 <td style={{ ...td(), textAlign: 'right', fontFamily: 'ui-monospace, monospace' }}>{fmtNum(b.cif)}</td>
                 <td style={{ ...td(), textAlign: 'right', fontFamily: 'ui-monospace, monospace', fontWeight: 600 }}>{fmtNum(b.total)}</td>
@@ -94,7 +94,7 @@ const OfficerImports = ({ lang, onOpen, onNew }) => {
 // 2. New import declaration form
 // ─────────────────────────────────────────────────────────────
 const OfficerImportNew = ({ lang, onCancel, onIssue }) => {
-  const [step, setStep] = React.useState(0); // 0 importer · 1 vehicle · 2 valuation · 3 review
+  const [step, setStep] = React.useState(0); // 0 importer, 1 vehicle, 2 valuation, 3 review
 
   const [importerKind, setImporterKind] = React.useState('individual');
   const [importerId, setImporterId] = React.useState('');
@@ -126,7 +126,7 @@ const OfficerImportNew = ({ lang, onCancel, onIssue }) => {
       setMake(found.make); setModel(found.model); setCategory(found.category);
       setYear(found.year); setFuel(found.fuel); setDisplacement(found.displacement);
       setPowerKw(found.powerKw); setWeight(found.weight);
-      setLookupMsg(`✓ Correspondance trouvée — ${found.make} ${found.model} (${found.year}) — données pré-remplies, vérifiez avant de valider.`);
+      setLookupMsg(`✓ Correspondance trouvée, ${found.make} ${found.model} (${found.year}), données pré-remplies, vérifiez avant de valider.`);
     } else {
       setLookupMsg(`Aucune correspondance dans le registre douanier. Saisie manuelle requise.`);
     }
@@ -151,7 +151,7 @@ const OfficerImportNew = ({ lang, onCancel, onIssue }) => {
         </span>
       </div>
       <p style={{ color: '#6B6557', fontSize: 13, margin: '0 0 18px' }}>
-        Déclaration de mise à la consommation d'un véhicule importé · taxation au prorata du barème DNTT 2026.
+        Déclaration de mise à la consommation d'un véhicule importé, taxation au prorata du barème DNTT 2026.
       </p>
 
       {/* Stepper */}
@@ -180,8 +180,8 @@ const OfficerImportNew = ({ lang, onCancel, onIssue }) => {
               <Field label="Type d'importateur">
                 <div style={{ display: 'flex', gap: 8 }}>
                   {[
-                    { id: 'individual', label: 'Personne physique', sub: 'CNI · particulier' },
-                    { id: 'company', label: 'Personne morale', sub: 'RCCM · entreprise' },
+                    { id: 'individual', label: 'Personne physique', sub: 'CNI, particulier' },
+                    { id: 'company', label: 'Personne morale', sub: 'RCCM, entreprise' },
                   ].map(o => (
                     <button key={o.id} onClick={() => { setImporterKind(o.id); setImporterId(''); setImporterName(''); setImporterDoc(''); }} style={{
                       flex: 1, padding: '10px 12px', textAlign: 'left',
@@ -202,7 +202,7 @@ const OfficerImportNew = ({ lang, onCancel, onIssue }) => {
                   setImporterId(v);
                   const f = importers.find(i => i.id === v);
                   if (f) { setImporterName(f.name); setImporterDoc(f.doc); }
-                }} options={[{ value: '', label: '— Saisie manuelle —' }, ...importers.map(i => ({ value: i.id, label: `${i.name} · ${i.doc}` }))]}/>
+                }} options={[{ value: '', label: 'Saisie manuelle' }, ...importers.map(i => ({ value: i.id, label: `${i.name}, ${i.doc}` }))]}/>
               </Field>
 
               <FieldRow>
@@ -222,7 +222,7 @@ const OfficerImportNew = ({ lang, onCancel, onIssue }) => {
                 <h3 style={cardTitle()}>Caractéristiques du véhicule</h3>
               </div>
 
-              <Field label="Numéro de châssis (VIN)" hint="17 caractères · code constructeur ISO 3779">
+              <Field label="Numéro de châssis (VIN)" hint="17 caractères, code constructeur ISO 3779">
                 <div style={{ display: 'flex', gap: 8 }}>
                   <Input value={vin} onChange={setVin} placeholder="JTEBR3FJ80K123456"/>
                   <button onClick={doLookup} style={{ ...ghostBtn(), whiteSpace: 'nowrap' }}>
@@ -247,7 +247,7 @@ const OfficerImportNew = ({ lang, onCancel, onIssue }) => {
               <FieldRow>
                 <Field label="Catégorie">
                   <Select value={category} onChange={setCategory}
-                          options={VEHICLE_CATEGORIES.map(c => ({ value: c.id, label: `${c.fr} · code SH ${c.code}` }))}/>
+                          options={VEHICLE_CATEGORIES.map(c => ({ value: c.id, label: `${c.fr}, code SH ${c.code}` }))}/>
                 </Field>
                 <Field label="Année 1ère mise en circulation">
                   <Input type="number" value={year} onChange={(v) => setYear(Number(v))} min={1990} max={2026}/>
@@ -286,19 +286,19 @@ const OfficerImportNew = ({ lang, onCancel, onIssue }) => {
                 <h3 style={cardTitle()}>Évaluation et droits</h3>
               </div>
 
-              <Field label="Valeur CIF (Coût · Assurance · Fret)" hint="Valeur déclarée en douane, en GNF · base de calcul des droits ad valorem">
+              <Field label="Valeur CIF (Coût, Assurance, Fret)" hint="Valeur déclarée en douane, en GNF, base de calcul des droits ad valorem">
                 <Input type="number" value={cif} onChange={(v) => setCif(Number(v))}/>
               </Field>
 
               <div style={{ marginTop: 8, padding: 14, background: '#FBF8F2', border: '1px solid #E5DDC9' }}>
                 <div style={{ fontSize: 10.5, letterSpacing: '.18em', color: '#9A9281', textTransform: 'uppercase', marginBottom: 10 }}>
-                  Décomposition du calcul · barème DNTT 2026
+                  Décomposition du calcul, barème DNTT 2026
                 </div>
 
-                <SummaryRow label={`Droit de douane · ${(tax.dutyRate*100).toFixed(0)}% × coef. âge ${tax.ageMult.toFixed(2)} × coef. carburant ${tax.fuelMult.toFixed(2)} × coef. usage ${tax.useMult.toFixed(2)}`} value={`${fmtNum(tax.customsDuty)} GNF`} mono/>
-                <SummaryRow label={`Surtaxe puissance · ${powerKw} kW (au‑delà de 100 kW · 8 000 GNF/kW)`} value={`${fmtNum(tax.powerSurcharge)} GNF`} mono/>
-                <SummaryRow label="Redevance statistique · 0,5 % CIF" value={`${fmtNum(tax.statFee)} GNF`} mono/>
-                <SummaryRow label={`TVA · 18 % sur (CIF + droits + surtaxe) = ${fmtNum(tax.vatBase)}`} value={`${fmtNum(tax.vat)} GNF`} mono/>
+                <SummaryRow label={`Droit de douane, ${(tax.dutyRate*100).toFixed(0)}% × coef. âge ${tax.ageMult.toFixed(2)} × coef. carburant ${tax.fuelMult.toFixed(2)} × coef. usage ${tax.useMult.toFixed(2)}`} value={`${fmtNum(tax.customsDuty)} GNF`} mono/>
+                <SummaryRow label={`Surtaxe puissance, ${powerKw} kW (au‑delà de 100 kW, 8 000 GNF/kW)`} value={`${fmtNum(tax.powerSurcharge)} GNF`} mono/>
+                <SummaryRow label="Redevance statistique, 0,5 % CIF" value={`${fmtNum(tax.statFee)} GNF`} mono/>
+                <SummaryRow label={`TVA, 18 % sur (CIF + droits + surtaxe) = ${fmtNum(tax.vatBase)}`} value={`${fmtNum(tax.vat)} GNF`} mono/>
                 <SummaryRow label="Timbre douanier" value={`${fmtNum(tax.stamp)} GNF`} mono/>
 
                 <div style={{ borderTop: '1px solid #161413', marginTop: 8, paddingTop: 8, display: 'flex', justifyContent: 'space-between', fontSize: 14, fontWeight: 600 }}>
@@ -306,7 +306,7 @@ const OfficerImportNew = ({ lang, onCancel, onIssue }) => {
                   <span style={{ fontFamily: 'ui-monospace, monospace' }}>{fmtNum(tax.total)} GNF</span>
                 </div>
                 <div style={{ fontSize: 10.5, color: '#9A9281', marginTop: 6, fontStyle: 'italic' }}>
-                  Soit {((tax.total / Math.max(1, tax.cif)) * 100).toFixed(1)} % de la valeur CIF · véhicule âgé de {tax.ageY} an{tax.ageY > 1 ? 's' : ''}.
+                  Soit {((tax.total / Math.max(1, tax.cif)) * 100).toFixed(1)} % de la valeur CIF, véhicule âgé de {tax.ageY} an{tax.ageY > 1 ? 's' : ''}.
                 </div>
               </div>
             </div>
@@ -320,17 +320,17 @@ const OfficerImportNew = ({ lang, onCancel, onIssue }) => {
 
               <ReviewBlock title="Importateur">
                 <ReviewLine k="Type"  v={importerKind === 'company' ? 'Personne morale' : 'Personne physique'}/>
-                <ReviewLine k={importerKind === 'company' ? 'Raison sociale' : 'Nom'} v={importerName || '—'}/>
-                <ReviewLine k={importerKind === 'company' ? 'RCCM / NIF' : 'CNI / NIF'} v={importerDoc || '—'} mono/>
+                <ReviewLine k={importerKind === 'company' ? 'Raison sociale' : 'Nom'} v={importerName || '-'}/>
+                <ReviewLine k={importerKind === 'company' ? 'RCCM / NIF' : 'CNI / NIF'} v={importerDoc || '-'} mono/>
               </ReviewBlock>
 
               <ReviewBlock title="Véhicule">
-                <ReviewLine k="VIN" v={vin || '—'} mono/>
-                <ReviewLine k="Marque · modèle" v={`${make || '—'} ${model || ''}`}/>
+                <ReviewLine k="VIN" v={vin || '-'} mono/>
+                <ReviewLine k="Marque / modèle" v={`${make || '-'} ${model || ''}`}/>
                 <ReviewLine k="Catégorie" v={VEHICLE_CATEGORIES.find(c => c.id === category)?.fr}/>
-                <ReviewLine k="Année · carburant" v={`${year} · ${FUEL_TYPES.find(f => f.id === fuel)?.fr}`}/>
-                <ReviewLine k="Cylindrée · puissance" v={`${fmtNum(displacement)} cm³ · ${powerKw} kW`}/>
-                <ReviewLine k="Poids · origine" v={`${fmtNum(weight)} kg · ${origin}`}/>
+                <ReviewLine k="Année / carburant" v={`${year}, ${FUEL_TYPES.find(f => f.id === fuel)?.fr}`}/>
+                <ReviewLine k="Cylindrée / puissance" v={`${fmtNum(displacement)} cm³, ${powerKw} kW`}/>
+                <ReviewLine k="Poids / origine" v={`${fmtNum(weight)} kg, ${origin}`}/>
                 <ReviewLine k="Usage" v={USE_TYPES.find(u => u.id === use)?.fr}/>
               </ReviewBlock>
 
@@ -375,7 +375,7 @@ const OfficerImportNew = ({ lang, onCancel, onIssue }) => {
               {make || 'Véhicule'} {model}
             </div>
             <div style={{ fontSize: 12, color: '#6B6557', marginBottom: 14 }}>
-              {VEHICLE_CATEGORIES.find(c => c.id === category)?.fr} · {year} · {FUEL_TYPES.find(f => f.id === fuel)?.fr}
+              {VEHICLE_CATEGORIES.find(c => c.id === category)?.fr}, {year}, {FUEL_TYPES.find(f => f.id === fuel)?.fr}
             </div>
 
             <SummaryRow label="CIF déclaré" value={`${fmtNum(cif)} GNF`} mono/>
@@ -428,11 +428,11 @@ const OfficerImportDetail = ({ lang, bill, onBack, hideBack }) => {
                 <SealEmblem size={42}/>
                 <div>
                   <div style={{ fontSize: 9.5, letterSpacing: '.2em', textTransform: 'uppercase', color: '#6B6557' }}>République de Guinée</div>
-                  <div style={{ fontSize: 11.5, fontWeight: 600 }}>Travail · Justice · Solidarité</div>
+                  <div style={{ fontSize: 11.5, fontWeight: 600 }}>Travail, Justice, Solidarité</div>
                 </div>
               </div>
               <div style={{ fontSize: 10.5, letterSpacing: '.18em', textTransform: 'uppercase', color: '#9A9281', marginTop: 6 }}>
-                Contribution Générale Commune · Direction des Importations
+                Contribution Générale Commune, Direction des Importations
               </div>
             </div>
             <div style={{ textAlign: 'right' }}>
@@ -443,10 +443,10 @@ const OfficerImportDetail = ({ lang, bill, onBack, hideBack }) => {
           </div>
 
           <h1 style={{ fontFamily: '"Crimson Pro", Georgia, serif', fontSize: 30, fontWeight: 500, margin: '12px 0 4px' }}>
-            Avis d'imposition · Importation
+            Avis d'imposition : importation
           </h1>
           <div style={{ fontSize: 11.5, color: '#6B6557', marginBottom: 18, fontStyle: 'italic' }}>
-            Mise à la consommation d'un véhicule importé — barème DNTT 2026 (décret 2024‑217)
+            Mise à la consommation d'un véhicule importé, barème DNTT 2026 (décret 2024‑217)
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 22 }}>
@@ -456,21 +456,21 @@ const OfficerImportDetail = ({ lang, bill, onBack, hideBack }) => {
               <PdfRow k={bill.importerKind === 'company' ? 'RCCM' : 'CNI'} v={bill.importerId}/>
             </PdfSection>
             <PdfSection title="Véhicule importé">
-              <PdfRow k="Marque · modèle" v={`${v.make} ${v.model}`}/>
+              <PdfRow k="Marque / modèle" v={`${v.make} ${v.model}`}/>
               <PdfRow k="VIN" v={v.vin}/>
-              <PdfRow k="Catégorie · année" v={`${VEHICLE_CATEGORIES.find(c => c.id === v.category)?.fr} · ${v.year}`}/>
-              <PdfRow k="Carburant · puissance" v={`${FUEL_TYPES.find(f => f.id === v.fuel)?.fr} · ${v.powerKw} kW`}/>
-              <PdfRow k="Cylindrée · poids" v={`${fmtNum(v.displacement)} cm³ · ${fmtNum(v.weight)} kg`}/>
-              <PdfRow k="Origine · usage" v={`${v.origin} · ${USE_TYPES.find(u => u.id === v.use)?.fr}`}/>
+              <PdfRow k="Catégorie / année" v={`${VEHICLE_CATEGORIES.find(c => c.id === v.category)?.fr}, ${v.year}`}/>
+              <PdfRow k="Carburant / puissance" v={`${FUEL_TYPES.find(f => f.id === v.fuel)?.fr}, ${v.powerKw} kW`}/>
+              <PdfRow k="Cylindrée / poids" v={`${fmtNum(v.displacement)} cm³, ${fmtNum(v.weight)} kg`}/>
+              <PdfRow k="Origine / usage" v={`${v.origin}, ${USE_TYPES.find(u => u.id === v.use)?.fr}`}/>
             </PdfSection>
           </div>
 
           <PdfSection title="Décomposition de la taxe">
             <PdfRow k="Valeur CIF déclarée" v={`${fmtNum(bill.cif)} GNF`}/>
             <PdfRow k={`Droit de douane (${(tax.dutyRate*100).toFixed(0)}% × ${tax.ageMult.toFixed(2)} âge × ${tax.fuelMult.toFixed(2)} carb. × ${tax.useMult.toFixed(2)} usage)`} v={`${fmtNum(tax.customsDuty)} GNF`}/>
-            <PdfRow k="Surtaxe puissance (kW > 100 · 8 000/kW)" v={`${fmtNum(tax.powerSurcharge)} GNF`}/>
+            <PdfRow k="Surtaxe puissance (kW > 100, 8 000/kW)" v={`${fmtNum(tax.powerSurcharge)} GNF`}/>
             <PdfRow k="Redevance statistique (0,5 % CIF)" v={`${fmtNum(tax.statFee)} GNF`}/>
-            <PdfRow k="TVA · 18 %" v={`${fmtNum(tax.vat)} GNF`}/>
+            <PdfRow k="TVA, 18 %" v={`${fmtNum(tax.vat)} GNF`}/>
             <PdfRow k="Timbre douanier" v={`${fmtNum(tax.stamp)} GNF`}/>
             <div style={{ display: 'flex', justifyContent: 'space-between', borderTop: '2px solid #161413', marginTop: 8, paddingTop: 8, fontSize: 14, fontWeight: 700 }}>
               <span>TOTAL À RÉGLER</span>
@@ -490,14 +490,14 @@ const OfficerImportDetail = ({ lang, bill, onBack, hideBack }) => {
           </div>
         </div>
 
-        {/* Side rail — État only */}
+        {/* Side rail: État only */}
         <aside>
           <div style={paperCard()}>
             <div style={{ fontSize: 10.5, letterSpacing: '.18em', color: '#9A9281', textTransform: 'uppercase', marginBottom: 8 }}>État</div>
             <StatusPill status={bill.status} lang={lang}/>
             <div style={{ marginTop: 16, fontSize: 11.5, color: '#6B6557', lineHeight: 1.6 }}>
               Émise par <strong style={{ color: '#161413' }}>{bill.officer}</strong><br/>
-              Le {bill.date} · échéance {bill.due}
+              Le {bill.date}, échéance {bill.due}
             </div>
           </div>
         </aside>
@@ -525,13 +525,13 @@ const ImportBillCard = ({ bill, lang = 'fr', onPay, onView }) => {
       </div>
       <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, marginBottom: 6 }}>
         <span style={{ fontFamily: 'ui-monospace, monospace', fontSize: 12, fontWeight: 700 }}>{bill.id}</span>
-        <span style={{ fontSize: 11, color: '#9A9281' }}>· {isFr ? 'émise le' : 'issued'} {bill.date}</span>
+        <span style={{ fontSize: 11, color: '#9A9281' }}>{isFr ? 'émise le' : 'issued'} {bill.date}</span>
       </div>
       <div style={{ fontFamily: '"Crimson Pro", serif', fontSize: 18, fontWeight: 600, marginBottom: 2 }}>
         {v.make} {v.model}
       </div>
       <div style={{ fontSize: 12, color: '#6B6557', marginBottom: 12 }}>
-        {v.year} · {VEHICLE_CATEGORIES.find(c => c.id === v.category)?.fr} · {v.powerKw} kW · {v.origin}
+        {v.year}, {VEHICLE_CATEGORIES.find(c => c.id === v.category)?.fr}, {v.powerKw} kW, {v.origin}
       </div>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10, padding: '10px 0', borderTop: '1px solid #E5DDC9', borderBottom: '1px solid #E5DDC9', marginBottom: 12 }}>
         <div>

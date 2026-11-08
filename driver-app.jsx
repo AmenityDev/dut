@@ -1,4 +1,4 @@
-// Driver mobile app — Android, 4 screens.
+// Driver mobile app: Android, 4 screens.
 // Pairs with the carrier's DUT account and tracks the truck's trip in real time.
 // Sober palette to match the desktop platform.
 
@@ -28,7 +28,7 @@ const DriverPill = ({ children, color = DRIVER_PALETTE.ink, bg = '#FFFFFF', icon
   </div>
 );
 
-// ─── Screen 1: Driver — pair / setup with carrier ──────────────
+// ─── Screen 1: Driver: pair / setup with carrier ──────────────
 const DriverScreen1Setup = () => (
   <div style={{
     width: '100%', height: '100%', background: DRIVER_PALETTE.cream,
@@ -40,9 +40,9 @@ const DriverScreen1Setup = () => (
     <div style={{ padding: '14px 22px 10px', display: 'flex', alignItems: 'center', gap: 10 }}>
       <SealEmblem size={34}/>
       <div>
-        <div style={{ fontSize: 13, fontWeight: 700, letterSpacing: '.04em' }}>DUT · Conducteur</div>
+        <div style={{ fontSize: 13, fontWeight: 700, letterSpacing: '.04em' }}>DUT, Conducteur</div>
         <div style={{ fontSize: 9.5, color: DRIVER_PALETTE.muted, letterSpacing: '.18em', textTransform: 'uppercase' }}>
-          République de Guinée · DNTT
+          République de Guinée, DNTT
         </div>
       </div>
     </div>
@@ -65,7 +65,7 @@ const DriverScreen1Setup = () => (
           Code de jumelage
         </div>
         <div style={{ display: 'flex', gap: 8, justifyContent: 'space-between' }}>
-          {['4','7','2','8','—','—'].map((c, i) => (
+          {['4','7','2','8','-','-'].map((c, i) => (
             <div key={i} style={{
               flex: 1, height: 48, border: `1px solid ${i < 4 ? DRIVER_PALETTE.ink : DRIVER_PALETTE.rule}`,
               background: '#FFF', borderRadius: 8,
@@ -91,8 +91,8 @@ const DriverScreen1Setup = () => (
             <Icon name="truck" size={18}/>
           </div>
           <div style={{ flex: 1 }}>
-            <div style={{ fontSize: 13, fontWeight: 600 }}>Diallo &amp; Frères · Renault Kerax</div>
-            <div style={{ fontSize: 11, color: DRIVER_PALETTE.muted, fontFamily: '"SF Mono",ui-monospace,monospace' }}>RC-4582-G · 26 t</div>
+            <div style={{ fontSize: 13, fontWeight: 600 }}>Diallo &amp; Frères, Renault Kerax</div>
+            <div style={{ fontSize: 11, color: DRIVER_PALETTE.muted, fontFamily: '"SF Mono",ui-monospace,monospace' }}>RC-4582-G, 26 t</div>
           </div>
           <Icon name="check" size={16} style={{ color: DRIVER_PALETTE.green }}/>
         </div>
@@ -115,15 +115,15 @@ const DriverScreen1Setup = () => (
   </div>
 );
 
-// ─── Screen 2: Driver — Active trip with live tracking ───────────
+// ─── Screen 2: Driver: Active trip with live tracking ───────────
 const DriverScreen2Trip = () => {
   const checkpoints = [
-    { city: 'Kamsar',         time: '06:14', state: 'done', detail: 'Départ · DUT activé' },
-    { city: 'Boké',           time: '08:02', state: 'done', detail: 'DNTT contrôle · plaque scannée par F. Camara' },
+    { city: 'Kamsar',         time: '06:14', state: 'done', detail: 'Départ, DUT activé' },
+    { city: 'Boké',           time: '08:02', state: 'done', detail: 'DNTT contrôle, plaque scannée par F. Camara' },
     { city: 'Boffa',          time: '10:48', state: 'done', detail: 'Passage automatique (GPS)' },
-    { city: 'Kindia',         time: '13:22', state: 'current', detail: 'En route vers Coyah · 64 km' },
-    { city: 'Coyah',          time: '—',     state: 'pending', detail: 'Contrôle prévu' },
-    { city: 'Conakry · Port', time: '—',     state: 'pending', detail: 'Destination' },
+    { city: 'Kindia',         time: '13:22', state: 'current', detail: 'En route vers Coyah, 64 km' },
+    { city: 'Coyah',          time: '-',     state: 'pending', detail: 'Contrôle prévu' },
+    { city: 'Conakry, Port', time: '-',     state: 'pending', detail: 'Destination' },
   ];
   return (
     <div style={{
@@ -159,7 +159,7 @@ const DriverScreen2Trip = () => {
             <div style={{ fontSize: 13, fontWeight: 600, fontFamily: '"SF Mono",ui-monospace,monospace' }}>
               DUT-2026-04-08512
             </div>
-            <div style={{ fontSize: 11, color: DRIVER_PALETTE.muted }}>Bauxite · 26 t · Kamsar → Conakry</div>
+            <div style={{ fontSize: 11, color: DRIVER_PALETTE.muted }}>Bauxite, 26 t, Kamsar → Conakry</div>
           </div>
           <Icon name="qr" size={22} stroke={1.6}/>
         </div>
@@ -168,7 +168,7 @@ const DriverScreen2Trip = () => {
       {/* Schematic route */}
       <div style={{ padding: '14px 18px 0', flex: 1, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
         <div style={{ fontSize: 10.5, color: DRIVER_PALETTE.muted, letterSpacing: '.22em', textTransform: 'uppercase', marginBottom: 10 }}>
-          Itinéraire · 372 km
+          Itinéraire, 372 km
         </div>
         <div style={{
           flex: 1, padding: '14px 12px', background: DRIVER_PALETTE.paper,
@@ -215,7 +215,7 @@ const DriverScreen2Trip = () => {
                   </div>
                   {cp.state === 'current' && (
                     <div style={{ marginTop: 6, fontSize: 10.5, fontFamily: '"SF Mono",ui-monospace,monospace', color: DRIVER_PALETTE.muted }}>
-                      9°44'21" N · 13°02'08" W · 62 km/h
+                      9°44'21" N, 13°02'08" W, 62 km/h
                     </div>
                   )}
                 </div>
@@ -232,23 +232,23 @@ const DriverScreen2Trip = () => {
         display: 'flex', alignItems: 'center', gap: 10, fontSize: 11.5,
       }}>
         <span style={{ width: 6, height: 6, borderRadius: 999, background: DRIVER_PALETTE.green }}/>
-        <span style={{ color: DRIVER_PALETTE.muted }}>GPS · 1 ping / 30 s</span>
-        <span style={{ marginLeft: 'auto', color: DRIVER_PALETTE.muted, fontFamily: '"SF Mono",ui-monospace,monospace' }}>Dernier · 13:21:42</span>
+        <span style={{ color: DRIVER_PALETTE.muted }}>GPS, 1 ping / 30 s</span>
+        <span style={{ marginLeft: 'auto', color: DRIVER_PALETTE.muted, fontFamily: '"SF Mono",ui-monospace,monospace' }}>Dernier, 13:21:42</span>
       </div>
     </div>
   );
 };
 
-// ─── Screen 3: Driver — Offline mode with sync queue ───────────
+// ─── Screen 3: Driver: Offline mode with sync queue ───────────
 const DriverScreen3Offline = () => {
   const queue = [
-    { kind: 'GPS',     ts: '13:48:02', detail: '9°41\'18" N · 12°58\'42" W · 58 km/h' },
-    { kind: 'GPS',     ts: '13:47:32', detail: '9°41\'02" N · 12°58\'31" W · 60 km/h' },
-    { kind: 'GPS',     ts: '13:47:02', detail: '9°40\'48" N · 12°58\'18" W · 61 km/h' },
-    { kind: 'EVENT',   ts: '13:46:14', detail: 'Passage Mambia · plaque lue (auto)' },
-    { kind: 'GPS',     ts: '13:46:02', detail: '9°40\'21" N · 12°58\'02" W · 59 km/h' },
-    { kind: 'GPS',     ts: '13:45:32', detail: '9°40\'02" N · 12°57\'48" W · 62 km/h' },
-    { kind: 'GPS',     ts: '13:45:02', detail: '9°39\'42" N · 12°57\'31" W · 64 km/h' },
+    { kind: 'GPS',     ts: '13:48:02', detail: '9°41\'18" N, 12°58\'42" W, 58 km/h' },
+    { kind: 'GPS',     ts: '13:47:32', detail: '9°41\'02" N, 12°58\'31" W, 60 km/h' },
+    { kind: 'GPS',     ts: '13:47:02', detail: '9°40\'48" N, 12°58\'18" W, 61 km/h' },
+    { kind: 'EVENT',   ts: '13:46:14', detail: 'Passage Mambia, plaque lue (auto)' },
+    { kind: 'GPS',     ts: '13:46:02', detail: '9°40\'21" N, 12°58\'02" W, 59 km/h' },
+    { kind: 'GPS',     ts: '13:45:32', detail: '9°40\'02" N, 12°57\'48" W, 62 km/h' },
+    { kind: 'GPS',     ts: '13:45:02', detail: '9°39\'42" N, 12°57\'31" W, 64 km/h' },
   ];
   return (
     <div style={{
@@ -338,7 +338,7 @@ const DriverScreen3Offline = () => {
   );
 };
 
-// ─── Screen 4: Driver — Trip recap (after passage confirmed) ────
+// ─── Screen 4: Driver: Trip recap (after passage confirmed) ────
 const DriverScreen4Recap = () => (
   <div style={{
     width: '100%', height: '100%', background: DRIVER_PALETTE.cream,
@@ -356,7 +356,7 @@ const DriverScreen4Recap = () => (
     </div>
     <FlagBar height={2}/>
 
-    {/* Hero — passage confirmation */}
+    {/* Hero: passage confirmation */}
     <div style={{ padding: '20px 18px 0' }}>
       <div style={{
         padding: '20px 18px', background: '#FFF',
@@ -376,11 +376,11 @@ const DriverScreen4Recap = () => (
             <div style={{ fontSize: 10.5, color: DRIVER_PALETTE.muted, letterSpacing: '.22em', textTransform: 'uppercase' }}>
               Passage confirmé
             </div>
-            <div style={{ fontSize: 16, fontWeight: 700 }}>Arrivée Conakry · Port</div>
+            <div style={{ fontSize: 16, fontWeight: 700 }}>Arrivée Conakry, Port</div>
           </div>
         </div>
         <div style={{ fontSize: 12, color: DRIVER_PALETTE.muted, lineHeight: 1.5 }}>
-          DUT-2026-04-08512 · clôturé par l'agent F. Camara · 17:42
+          DUT-2026-04-08512, clôturé par l'agent F. Camara, 17:42
         </div>
       </div>
     </div>

@@ -1,4 +1,4 @@
-// SOBER · Individual transporter — owner-driver, single vehicle.
+// SOBER, Individual transporter: owner-driver, single vehicle.
 // Same sober design language as the company app, drastically simplified:
 // no fleet manager, no drivers list, no company KPIs. Mobile-first patterns
 // even on desktop (single column, stacked cards, big CTA).
@@ -41,7 +41,7 @@ const SoberIndividualApp = ({ lang = 'fr', density = 'comfortable' }) => {
   const paidBills = INDIVIDUAL_BILLS.filter(b => b.status === 'paid');
   const totalDue = pending.reduce((s, b) => s + b.amount, 0);
 
-  // Import bills addressed to this individual (Sékou Soumah — CNI-7053219K)
+  // Import bills addressed to this individual (Sékou Soumah: CNI-7053219K)
   const myImportBills = IMPORT_BILLS.filter(b => b.importerKind === 'individual' && b.importerId === 'CNI-7053219K');
   const pendingImports = myImportBills.filter(b => b.status === 'pending');
 
@@ -51,7 +51,7 @@ const SoberIndividualApp = ({ lang = 'fr', density = 'comfortable' }) => {
     const asPayable = {
       id: imp.id, amount: imp.total, kind: 'import',
       from: imp.vehicle.origin, to: 'Conakry',
-      goods: `${imp.vehicle.make} ${imp.vehicle.model} · ${imp.vehicle.year}`,
+      goods: `${imp.vehicle.make} ${imp.vehicle.model}, ${imp.vehicle.year}`,
       issued: imp.date, due: imp.due, officer: imp.officer,
       _import: imp,
     };
@@ -124,7 +124,7 @@ const SoberIndividualApp = ({ lang = 'fr', density = 'comfortable' }) => {
 };
 
 // ─────────────────────────────────────────────────────────────
-// Top bar — same shape as Officer/Company
+// Top bar: same shape as Officer/Company
 // ─────────────────────────────────────────────────────────────
 const IndividualTopBar = ({ lang, pending }) => {
   const isFr = lang !== 'en';
@@ -136,7 +136,7 @@ const IndividualTopBar = ({ lang, pending }) => {
       <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
         <div style={{ width: 32, height: 32, background: '#161413', color: '#FCD116', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: '"Crimson Pro", serif', fontWeight: 700, fontSize: 15 }}>D</div>
         <div style={{ lineHeight: 1.1 }}>
-          <div style={{ fontSize: 9.5, letterSpacing: '.18em', color: '#9A9281', textTransform: 'uppercase' }}>République de Guinée · DNTT</div>
+          <div style={{ fontSize: 9.5, letterSpacing: '.18em', color: '#9A9281', textTransform: 'uppercase' }}>République de Guinée, DNTT</div>
           <div style={{ fontFamily: '"Crimson Pro", serif', fontSize: 17, fontWeight: 600 }}>Document Unique de Transport</div>
         </div>
       </div>
@@ -155,7 +155,7 @@ const IndividualTopBar = ({ lang, pending }) => {
         </div>
         <div style={{ lineHeight: 1.2 }}>
           <div style={{ fontSize: 12.5, fontWeight: 600 }}>{INDIVIDUAL.name}</div>
-          <div style={{ fontSize: 10.5, color: '#9A9281' }}>{isFr ? 'Personne physique' : 'Individual'} · {INDIVIDUAL.city}</div>
+          <div style={{ fontSize: 10.5, color: '#9A9281' }}>{isFr ? 'Personne physique' : 'Individual'}, {INDIVIDUAL.city}</div>
         </div>
       </div>
     </header>
@@ -163,7 +163,7 @@ const IndividualTopBar = ({ lang, pending }) => {
 };
 
 // ─────────────────────────────────────────────────────────────
-// Sidebar — matches company app shape (230px, icon nav, footer)
+// Sidebar: matches company app shape (230px, icon nav, footer)
 // ─────────────────────────────────────────────────────────────
 const IndividualSidebar = ({ lang, screen, setScreen, pending }) => {
   const isFr = lang !== 'en';
@@ -196,7 +196,7 @@ const IndividualSidebar = ({ lang, screen, setScreen, pending }) => {
       </div>
       <Item id="account" icon="user" label={isFr ? 'Mon profil' : 'My profile'}/>
 
-      {/* Vehicle card pinned in sidebar — single vehicle is the defining trait of an individual */}
+      {/* Vehicle card pinned in sidebar: single vehicle is the defining trait of an individual */}
       <div style={{ margin: '20px 14px 0', padding: 12, background: '#fff', border: '1px solid #E5DDC9' }}>
         <div style={{ fontSize: 9.5, letterSpacing: '.16em', color: '#9A9281', textTransform: 'uppercase', marginBottom: 8 }}>
           {isFr ? 'Mon véhicule' : 'My vehicle'}
@@ -215,14 +215,14 @@ const IndividualSidebar = ({ lang, screen, setScreen, pending }) => {
 
       <div style={{ flex: 1 }}/>
       <div style={{ padding: '10px 14px', fontSize: 10, color: '#9A9281', borderTop: '1px solid #E5DDC9' }}>
-        {isFr ? 'DNTT · Min. des Transports' : 'DNTT · Transport Min.'}<br/>v 2.4.1 · 04 / 2026
+        {isFr ? 'DNTT, Min. des Transports' : 'DNTT, Transport Min.'}<br/>v 2.4.1, 04 / 2026
       </div>
     </aside>
   );
 };
 
 // ─────────────────────────────────────────────────────────────
-// Home — greeting hero + amount due + last few receipts
+// Home: greeting hero + amount due + last few receipts
 // ─────────────────────────────────────────────────────────────
 const IndividualHome = ({ lang, pending, totalDue, paidBills, onPay, onOpenBill, onOpenReceipt }) => {
   const isFr = lang !== 'en';
@@ -232,7 +232,7 @@ const IndividualHome = ({ lang, pending, totalDue, paidBills, onPay, onOpenBill,
       {/* Greeting */}
       <div style={{ padding: '8px 0 18px' }}>
         <div style={{ fontSize: 11, letterSpacing: '.18em', color: '#9A9281', textTransform: 'uppercase' }}>
-          {isFr ? 'Bonjour' : 'Hello'} · {INDIVIDUAL.city}
+          {isFr ? 'Bonjour' : 'Hello'}, {INDIVIDUAL.city}
         </div>
         <h1 style={{ fontFamily: '"Crimson Pro", serif', fontSize: 28, fontWeight: 500, margin: '4px 0 0', letterSpacing: '-0.01em' }}>
           {INDIVIDUAL.name.split(' ')[0]}, <i style={{ color: '#6B6557', fontWeight: 400 }}>
@@ -251,7 +251,7 @@ const IndividualHome = ({ lang, pending, totalDue, paidBills, onPay, onOpenBill,
           </div>
           <div style={{ fontFamily: '"Crimson Pro", serif', fontSize: 44, fontWeight: 600, marginTop: 6, lineHeight: 1 }}>{fmtGNF(totalDue)}</div>
           <div style={{ fontSize: 12, color: '#B5AC97', marginTop: 6 }}>
-            {pending.length} DUT · {isFr ? 'avant le' : 'before'} {pending[0].due}
+            {pending.length} DUT, {isFr ? 'avant le' : 'before'} {pending[0].due}
           </div>
           <button onClick={onPay} style={{
             marginTop: 16, width: '100%', background: '#FCD116', color: '#161413',
@@ -280,7 +280,7 @@ const IndividualHome = ({ lang, pending, totalDue, paidBills, onPay, onOpenBill,
         </div>
         <div style={{ flex: 1, minWidth: 0 }}>
           <div style={{ fontFamily: '"JetBrains Mono", monospace', fontWeight: 700, fontSize: 14 }}>{INDIVIDUAL.vehicle.plate}</div>
-          <div style={{ fontSize: 12, color: '#6B6557' }}>{INDIVIDUAL.vehicle.brand} · {INDIVIDUAL.vehicle.capacity}</div>
+          <div style={{ fontSize: 12, color: '#6B6557' }}>{INDIVIDUAL.vehicle.brand}, {INDIVIDUAL.vehicle.capacity}</div>
         </div>
         <div style={{ textAlign: 'right' }}>
           <div style={{ fontSize: 10.5, color: '#9A9281', letterSpacing: '.12em', textTransform: 'uppercase' }}>{isFr ? 'Carte transp.' : 'Carrier card'}</div>
@@ -307,7 +307,7 @@ const IndividualHome = ({ lang, pending, totalDue, paidBills, onPay, onOpenBill,
               <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#1F4F2C', flexShrink: 0 }}/>
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div style={{ fontSize: 13, fontWeight: 600 }}>{b.from} → {b.to}</div>
-                <div style={{ fontSize: 11.5, color: '#6B6557' }}>{b.goods} · {b.issued}</div>
+                <div style={{ fontSize: 11.5, color: '#6B6557' }}>{b.goods}, {b.issued}</div>
               </div>
               <div style={{ textAlign: 'right' }}>
                 <div style={{ fontSize: 13, fontWeight: 600, fontVariantNumeric: 'tabular-nums' }}>{fmtGNF(b.amount)}</div>
@@ -323,7 +323,7 @@ const IndividualHome = ({ lang, pending, totalDue, paidBills, onPay, onOpenBill,
 };
 
 // ─────────────────────────────────────────────────────────────
-// Pay list — pending bills with full detail
+// Pay list: pending bills with full detail
 // ─────────────────────────────────────────────────────────────
 const IndividualPayList = ({ lang, pending, totalDue, importBills = [], onOpenBill, onViewDut, onViewImport, onPayImport, onBack }) => {
   const isFr = lang !== 'en';
@@ -343,7 +343,7 @@ const IndividualPayList = ({ lang, pending, totalDue, importBills = [], onOpenBi
     <>
       <div style={{ padding: '8px 0 18px', borderBottom: '1px solid #E5DDC9', marginBottom: 18 }}>
         <div style={{ fontSize: 11, letterSpacing: '.18em', color: '#9A9281', textTransform: 'uppercase' }}>
-          {isFr ? `À régler · ${pending.length + importBills.length} document${pending.length + importBills.length > 1 ? 's' : ''}` : `${pending.length + importBills.length} bills due`}
+          {isFr ? `À régler, ${pending.length + importBills.length} document${pending.length + importBills.length > 1 ? 's' : ''}` : `${pending.length + importBills.length} bills due`}
         </div>
         <h1 style={{ fontFamily: '"Crimson Pro", serif', fontSize: 26, fontWeight: 500, margin: '4px 0 0' }}>
           {fmtGNF(totalDue + totalImportDue)}
@@ -374,7 +374,7 @@ const IndividualPayList = ({ lang, pending, totalDue, importBills = [], onOpenBi
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 12 }}>
               <div>
                 <div style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 12, fontWeight: 700 }}>{b.id}</div>
-                <div style={{ fontSize: 11, color: '#9A9281', marginTop: 2 }}>{isFr ? 'Émis le' : 'Issued'} {b.issued} · {b.officer}</div>
+                <div style={{ fontSize: 11, color: '#9A9281', marginTop: 2 }}>{isFr ? 'Émis le' : 'Issued'} {b.issued}, {b.officer}</div>
               </div>
               <span style={{ background: '#FCD116', color: '#161413', padding: '3px 8px', fontSize: 10.5, fontWeight: 700, letterSpacing: '.08em', textTransform: 'uppercase' }}>
                 {isFr ? 'À régler' : 'Due'}
@@ -415,7 +415,7 @@ const IndividualPayList = ({ lang, pending, totalDue, importBills = [], onOpenBi
 };
 
 // ─────────────────────────────────────────────────────────────
-// Pay flow — mobile-money first, simple step
+// Pay flow: mobile-money first, simple step
 // ─────────────────────────────────────────────────────────────
 const IndividualPayFlow = ({ lang, bill, method, setMethod, paymentState, setPaymentState, onDone, onBack }) => {
   const isFr = lang !== 'en';
@@ -458,7 +458,7 @@ const IndividualPayFlow = ({ lang, bill, method, setMethod, paymentState, setPay
         {[
           { id: 'orange', label: 'Orange Money', sub: '+224 622 04 18 77', accent: '#FF6600' },
           { id: 'mtn',    label: 'MTN MoMo',     sub: '+224 660 12 88 21', accent: '#FFCC00' },
-          { id: 'cash',   label: isFr ? 'Espèces (au bureau DNTT)' : 'Cash (at DNTT office)', sub: isFr ? 'Bureau Coyah · 8h-17h' : 'Coyah office · 8a-5p', accent: '#9A9281' },
+          { id: 'cash',   label: isFr ? 'Espèces (au bureau DNTT)' : 'Cash (at DNTT office)', sub: isFr ? 'Bureau Coyah, 8h-17h' : 'Coyah office, 8a-5p', accent: '#9A9281' },
         ].map(m => {
           const active = method === m.id;
           return (
@@ -492,7 +492,7 @@ const IndividualPayFlow = ({ lang, bill, method, setMethod, paymentState, setPay
         }}>
           {method === 'cash'
             ? (isFr ? 'Réserver le paiement en espèces' : 'Reserve cash payment')
-            : <><Icon name="phone" size={16}/> {isFr ? `Envoyer demande · ${fmtGNF(bill.amount)}` : `Send request · ${fmtGNF(bill.amount)}`}</>}
+            : <><Icon name="phone" size={16}/> {isFr ? `Envoyer la demande (${fmtGNF(bill.amount)})` : `Send request (${fmtGNF(bill.amount)})`}</>}
         </button>
       )}
       {paymentState === 'sent' && (
@@ -520,7 +520,7 @@ const IndividualPayFlow = ({ lang, bill, method, setMethod, paymentState, setPay
 };
 
 // ─────────────────────────────────────────────────────────────
-// Receipt — paid DUT, mobile-friendly compact card
+// Receipt: paid DUT, mobile-friendly compact card
 // ─────────────────────────────────────────────────────────────
 const IndividualReceipt = ({ lang, bill, onBack }) => {
   const isFr = lang !== 'en';
@@ -543,7 +543,7 @@ const IndividualReceipt = ({ lang, bill, onBack }) => {
         }}>{isFr ? 'PAYÉ' : 'PAID'}</div>
 
         <div style={{ borderBottom: '2px solid #161413', paddingBottom: 10, marginBottom: 14 }}>
-          <div style={{ fontSize: 9.5, letterSpacing: '.18em', color: '#9A9281', textTransform: 'uppercase' }}>République de Guinée — DNTT</div>
+          <div style={{ fontSize: 9.5, letterSpacing: '.18em', color: '#9A9281', textTransform: 'uppercase' }}>République de Guinée, DNTT</div>
           <div style={{ fontFamily: '"Crimson Pro", serif', fontSize: 18, fontWeight: 600, marginTop: 2 }}>
             Document Unique de Transport
           </div>
@@ -587,7 +587,7 @@ const IndividualReceipt = ({ lang, bill, onBack }) => {
 };
 
 // ─────────────────────────────────────────────────────────────
-// DUT view (pre-payment) — same chrome as company DUT page
+// DUT view (pre-payment): same chrome as company DUT page
 // ─────────────────────────────────────────────────────────────
 const IndividualDutView = ({ lang, bill, onBack, onPay }) => {
   const isFr = lang !== 'en';
@@ -595,7 +595,7 @@ const IndividualDutView = ({ lang, bill, onBack, onPay }) => {
     <div>
       <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', borderBottom: '1px solid #E5DDC9', paddingBottom: 14, marginBottom: 22, gap: 12, flexWrap: 'wrap' }}>
         <div>
-          <div style={{ fontSize: 11, letterSpacing: '.18em', color: '#9A9281', textTransform: 'uppercase' }}>{isFr ? 'Document prêt' : 'Document ready'} · {bill.id}</div>
+          <div style={{ fontSize: 11, letterSpacing: '.18em', color: '#9A9281', textTransform: 'uppercase' }}>{isFr ? 'Document prêt' : 'Document ready'}, {bill.id}</div>
           <h1 style={{ fontFamily: '"Crimson Pro", serif', fontSize: 26, margin: '6px 0 0', fontWeight: 500 }}>{isFr ? 'Document Unique de Transport' : 'Unique Transport Document'}</h1>
         </div>
         <div style={{ display: 'flex', gap: 8 }}>
@@ -615,7 +615,7 @@ const IndividualDutView = ({ lang, bill, onBack, onPay }) => {
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 320px', gap: 22, alignItems: 'flex-start' }}>
         <article style={{ background: '#fff', border: '1px solid #DCD3BD', padding: 26, position: 'relative' }}>
         <div style={{ borderBottom: '2px solid #161413', paddingBottom: 12, marginBottom: 16 }}>
-          <div style={{ fontSize: 9.5, letterSpacing: '.18em', color: '#9A9281', textTransform: 'uppercase' }}>République de Guinée — DNTT</div>
+          <div style={{ fontSize: 9.5, letterSpacing: '.18em', color: '#9A9281', textTransform: 'uppercase' }}>République de Guinée, DNTT</div>
           <div style={{ fontFamily: '"Crimson Pro", serif', fontSize: 20, fontWeight: 600, marginTop: 2 }}>
             Document Unique de Transport
           </div>
@@ -654,7 +654,7 @@ const IndividualDutView = ({ lang, bill, onBack, onPay }) => {
             <StatusPill status={bill.status === 'paid' ? 'paid' : 'pending'} lang={lang}/>
             <div style={{ marginTop: 16, fontSize: 11.5, color: '#6B6557', lineHeight: 1.6 }}>
               {isFr ? 'Émis par' : 'Issued by'} <strong style={{ color: '#161413' }}>{bill.officer}</strong><br/>
-              {isFr ? 'Le' : 'On'} {bill.issued} · {isFr ? 'échéance' : 'due'} {bill.due}
+              {isFr ? 'Le' : 'On'} {bill.issued}, {isFr ? 'échéance' : 'due'} {bill.due}
             </div>
           </div>
         </aside>
@@ -664,7 +664,7 @@ const IndividualDutView = ({ lang, bill, onBack, onPay }) => {
 };
 
 // ─────────────────────────────────────────────────────────────
-// Import bill view — full-page invoice (same chrome as DUT page)
+// Import bill view: full-page invoice (same chrome as DUT page)
 // ─────────────────────────────────────────────────────────────
 const IndividualImportView = ({ lang, bill, onBack, onPay }) => {
   const isFr = lang !== 'en';
@@ -672,8 +672,8 @@ const IndividualImportView = ({ lang, bill, onBack, onPay }) => {
     <div>
       <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', borderBottom: '1px solid #E5DDC9', paddingBottom: 14, marginBottom: 22, gap: 12, flexWrap: 'wrap' }}>
         <div>
-          <div style={{ fontSize: 11, letterSpacing: '.18em', color: '#9A9281', textTransform: 'uppercase' }}>{isFr ? 'Document prêt' : 'Document ready'} · {bill.id}</div>
-          <h1 style={{ fontFamily: '"Crimson Pro", serif', fontSize: 26, margin: '6px 0 0', fontWeight: 500 }}>{isFr ? 'Avis de Taxation · Importation Véhicule' : 'Vehicle Import Tax Notice'}</h1>
+          <div style={{ fontSize: 11, letterSpacing: '.18em', color: '#9A9281', textTransform: 'uppercase' }}>{isFr ? 'Document prêt' : 'Document ready'}, {bill.id}</div>
+          <h1 style={{ fontFamily: '"Crimson Pro", serif', fontSize: 26, margin: '6px 0 0', fontWeight: 500 }}>{isFr ? 'Avis de Taxation, Importation Véhicule' : 'Vehicle Import Tax Notice'}</h1>
         </div>
         <div style={{ display: 'flex', gap: 8 }}>
           {bill.status === 'pending' && (
@@ -708,7 +708,7 @@ const IndividualAccount = ({ lang, onBack }) => {
           {INDIVIDUAL.name.split(' ').map(s => s[0]).join('')}
         </div>
         <div style={{ fontFamily: '"Crimson Pro", serif', fontSize: 22, fontWeight: 600 }}>{INDIVIDUAL.name}</div>
-        <div style={{ fontSize: 12, color: '#6B6557', marginTop: 2 }}>{isFr ? 'Transporteur indépendant' : 'Independent carrier'} · {INDIVIDUAL.city}</div>
+        <div style={{ fontSize: 12, color: '#6B6557', marginTop: 2 }}>{isFr ? 'Transporteur indépendant' : 'Independent carrier'}, {INDIVIDUAL.city}</div>
         <div style={{ marginTop: 8, display: 'inline-block', padding: '3px 10px', background: '#FFF6E0', color: '#7A5A00', border: '1px solid #E8D38A', fontSize: 10.5, fontWeight: 700, letterSpacing: '.1em', textTransform: 'uppercase' }}>
           {isFr ? 'Personne physique' : 'Individual'}
         </div>
@@ -736,7 +736,7 @@ const IndividualAccount = ({ lang, onBack }) => {
           <div>
             <div style={{ fontFamily: '"JetBrains Mono", monospace', fontWeight: 700, fontSize: 14 }}>{INDIVIDUAL.vehicle.plate}</div>
             <div style={{ fontSize: 12, color: '#6B6557' }}>{INDIVIDUAL.vehicle.brand}</div>
-            <div style={{ fontSize: 11.5, color: '#6B6557' }}>{INDIVIDUAL.vehicle.type} · {INDIVIDUAL.vehicle.capacity}</div>
+            <div style={{ fontSize: 11.5, color: '#6B6557' }}>{INDIVIDUAL.vehicle.type}, {INDIVIDUAL.vehicle.capacity}</div>
           </div>
         </div>
       </div>

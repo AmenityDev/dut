@@ -1,4 +1,4 @@
-// Inspector mobile app — Android, 4 screens.
+// Inspector mobile app: Android, 4 screens.
 // Field-deployed agent at a control point. Photographs plate + goods,
 // confirms vehicle passage, syncs to the central DUT system.
 // Sober palette (cream + ink + flag accents).
@@ -48,14 +48,14 @@ const InsHeader = ({ title, subtitle, online = true, queue }) => (
   </div>
 );
 
-// ─── Screen 1: Inspector — Queue / today's passages ─────────────
+// ─── Screen 1: Inspector: Queue / today's passages ─────────────
 const InspectorScreen1Queue = () => {
   const passages = [
-    { plate: 'RC-4582-G',  carrier: 'Diallo & Frères', dut: 'DUT-2026-04-08512', goods: 'Bauxite · 26 t', time: '13:48', status: 'ok' },
-    { plate: 'RC-2914-G',  carrier: 'TransAfrica',     dut: 'DUT-2026-04-08501', goods: 'Riz · 480 sacs', time: '12:22', status: 'ok' },
-    { plate: 'KA-7821-D',  carrier: 'Conducteur particulier', dut: 'DUT-2026-04-08498', goods: 'Ciment · 12 t', time: '11:14', status: 'ok' },
-    { plate: 'RC-1108-G',  carrier: 'GuineExport',     dut: '— DUT introuvable',    goods: 'Café · 8 t',     time: '10:42', status: 'flag' },
-    { plate: 'RC-3340-G',  carrier: 'Sangaré Logistique', dut: 'DUT-2026-04-08487', goods: 'Bauxite · 24 t', time: '09:18', status: 'ok' },
+    { plate: 'RC-4582-G',  carrier: 'Diallo & Frères', dut: 'DUT-2026-04-08512', goods: 'Bauxite, 26 t', time: '13:48', status: 'ok' },
+    { plate: 'RC-2914-G',  carrier: 'TransAfrica',     dut: 'DUT-2026-04-08501', goods: 'Riz, 480 sacs', time: '12:22', status: 'ok' },
+    { plate: 'KA-7821-D',  carrier: 'Conducteur particulier', dut: 'DUT-2026-04-08498', goods: 'Ciment, 12 t', time: '11:14', status: 'ok' },
+    { plate: 'RC-1108-G',  carrier: 'GuineExport',     dut: 'DUT introuvable',    goods: 'Café, 8 t',     time: '10:42', status: 'flag' },
+    { plate: 'RC-3340-G',  carrier: 'Sangaré Logistique', dut: 'DUT-2026-04-08487', goods: 'Bauxite, 24 t', time: '09:18', status: 'ok' },
   ];
   return (
     <div style={{
@@ -64,7 +64,7 @@ const InspectorScreen1Queue = () => {
       display: 'flex', flexDirection: 'column',
       fontFamily: '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif',
     }}>
-      <InsHeader title="Poste · Mambia" subtitle="F. Camara · Agent DNTT 04812" queue={3}/>
+      <InsHeader title="Poste de Mambia" subtitle="F. Camara, Agent DNTT 04812" queue={3}/>
 
       {/* KPI row */}
       <div style={{ padding: '14px 18px 0', display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8 }}>
@@ -148,7 +148,7 @@ const InspectorScreen1Queue = () => {
   );
 };
 
-// ─── Screen 2: Inspector — Plate capture (camera viewfinder) ────
+// ─── Screen 2: Inspector: Plate capture (camera viewfinder) ────
 const InspectorScreen2Plate = () => (
   <div style={{
     width: '100%', height: '100%', background: '#0A0908',
@@ -165,14 +165,14 @@ const InspectorScreen2Plate = () => (
       }}>
         <Icon name="chev" size={16} stroke={2.4} style={{ transform: 'rotate(180deg)' }}/>
       </button>
-      <div style={{ flex: 1, fontSize: 13, fontWeight: 600 }}>Étape 1 / 3 · Plaque</div>
+      <div style={{ flex: 1, fontSize: 13, fontWeight: 600 }}>Étape 1 / 3 : plaque</div>
       <div style={{
         padding: '4px 10px', borderRadius: 999, background: 'rgba(255,255,255,.12)',
         border: '1px solid rgba(255,255,255,.18)', fontSize: 10.5, fontWeight: 600, letterSpacing: '.04em',
       }}>13:48</div>
     </div>
 
-    {/* Faux dashcam scene background — gradient road + horizon */}
+    {/* Faux dashcam scene background: gradient road + horizon */}
     <div style={{
       position: 'absolute', inset: 0,
       background: 'linear-gradient(180deg,#1B1A18 0%,#26241F 35%,#3B342A 60%,#5C5141 80%,#7A6951 100%)',
@@ -242,7 +242,7 @@ const InspectorScreen2Plate = () => (
       display: 'flex', alignItems: 'center', gap: 6,
     }}>
       <span style={{ width: 6, height: 6, borderRadius: 999, background: INS_PALETTE.shadow }}/>
-      DÉTECTÉ · 97%
+      DÉTECTÉ (97 %)
     </div>
 
     {/* Bottom info card */}
@@ -255,9 +255,9 @@ const InspectorScreen2Plate = () => (
       <div style={{ fontSize: 10, color: 'rgba(255,255,255,.55)', letterSpacing: '.22em', textTransform: 'uppercase' }}>
         DUT correspondant trouvé
       </div>
-      <div style={{ fontSize: 14, fontWeight: 600, marginTop: 4 }}>Diallo &amp; Frères · Bauxite 26 t</div>
+      <div style={{ fontSize: 14, fontWeight: 600, marginTop: 4 }}>Diallo &amp; Frères, Bauxite 26 t</div>
       <div style={{ fontSize: 11, color: 'rgba(255,255,255,.6)', fontFamily: '"SF Mono",ui-monospace,monospace', marginTop: 2 }}>
-        DUT-2026-04-08512 · Kamsar → Conakry
+        DUT-2026-04-08512, Kamsar → Conakry
       </div>
       <div style={{ display: 'flex', gap: 8, marginTop: 12 }}>
         <button style={{
@@ -290,7 +290,7 @@ const InspectorScreen2Plate = () => (
   </div>
 );
 
-// ─── Screen 3: Inspector — Goods verification (review step) ─────
+// ─── Screen 3: Inspector: Goods verification (review step) ─────
 const InspectorScreen3Goods = () => (
   <div style={{
     width: '100%', height: '100%', background: INS_PALETTE.cream,
@@ -307,7 +307,7 @@ const InspectorScreen3Goods = () => (
       }}>
         <Icon name="chev" size={14} stroke={2.4} style={{ transform: 'rotate(180deg)', color: INS_PALETTE.ink }}/>
       </button>
-      <div style={{ flex: 1, fontSize: 13, fontWeight: 600 }}>Étape 2 / 3 · Marchandise</div>
+      <div style={{ flex: 1, fontSize: 13, fontWeight: 600 }}>Étape 2 / 3 : marchandise</div>
       <DriverPill dot={INS_PALETTE.green}>EN LIGNE</DriverPill>
     </div>
     <FlagBar height={2}/>
@@ -371,7 +371,7 @@ const InspectorScreen3Goods = () => (
             position: 'absolute', top: 6, left: 6, padding: '2px 6px',
             background: 'rgba(0,0,0,.55)', color: '#FFF', borderRadius: 4,
             fontSize: 9, fontWeight: 600, letterSpacing: '.06em',
-          }}>13:48 · BENNE</div>
+          }}>13:48, BENNE</div>
         </div>
         {/* Photo 2: filled */}
         <div style={{
@@ -390,7 +390,7 @@ const InspectorScreen3Goods = () => (
             position: 'absolute', top: 6, left: 6, padding: '2px 6px',
             background: 'rgba(0,0,0,.55)', color: '#FFF', borderRadius: 4,
             fontSize: 9, fontWeight: 600, letterSpacing: '.06em',
-          }}>13:49 · SCEAU</div>
+          }}>13:49, SCEAU</div>
         </div>
         {/* Add slot */}
         <button style={{
@@ -416,7 +416,7 @@ const InspectorScreen3Goods = () => (
       </div>
       <div style={{ background: '#FFF', border: `1px solid ${INS_PALETTE.rule}`, borderRadius: 12, overflow: 'hidden' }}>
         {[
-          { label: 'Marchandise déclarée',     value: 'Bauxite · 26 t',      ok: true },
+          { label: 'Marchandise déclarée',     value: 'Bauxite, 26 t',      ok: true },
           { label: 'Sceau intact',             value: 'Sceau 0341',          ok: true },
           { label: 'Quantité visuelle',        value: 'Conforme',            ok: true },
           { label: 'Itinéraire',               value: 'Kamsar → Conakry',    ok: true },
@@ -460,7 +460,7 @@ const InspectorScreen3Goods = () => (
   </div>
 );
 
-// ─── Screen 4: Inspector — Confirmation receipt ─────────────────
+// ─── Screen 4: Inspector: Confirmation receipt ─────────────────
 const InspectorScreen4Confirm = () => (
   <div style={{
     width: '100%', height: '100%', background: INS_PALETTE.cream,
@@ -468,7 +468,7 @@ const InspectorScreen4Confirm = () => (
     display: 'flex', flexDirection: 'column',
     fontFamily: '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif',
   }}>
-    <InsHeader title="Passage validé" subtitle="Étape 3 / 3 · Synchronisé"/>
+    <InsHeader title="Passage validé" subtitle="Étape 3 / 3 : synchronisé"/>
 
     {/* Hero confirmation */}
     <div style={{ padding: '24px 18px 0', textAlign: 'center' }}>
@@ -507,7 +507,7 @@ const InspectorScreen4Confirm = () => (
           }}>RC-4582-G</div>
           <div style={{ flex: 1, minWidth: 0 }}>
             <div style={{ fontSize: 13, fontWeight: 600 }}>Diallo &amp; Frères</div>
-            <div style={{ fontSize: 11, color: INS_PALETTE.muted }}>Bauxite · 26 t · Sceau 0341</div>
+            <div style={{ fontSize: 11, color: INS_PALETTE.muted }}>Bauxite, 26 t, Sceau 0341</div>
           </div>
         </div>
 
@@ -515,7 +515,7 @@ const InspectorScreen4Confirm = () => (
           {[
             { k: 'DUT',         v: 'DUT-2026-04-08512', mono: true },
             { k: 'Poste',       v: 'Mambia' },
-            { k: 'Agent',       v: 'F. Camara · 04812' },
+            { k: 'Agent',       v: 'F. Camara, 04812' },
             { k: 'Heure',       v: '13:50:14',  mono: true },
             { k: 'Itinéraire',  v: 'Kamsar → Conakry' },
             { k: 'Réf passage', v: 'PSG-MBA-22894', mono: true },
@@ -536,7 +536,7 @@ const InspectorScreen4Confirm = () => (
           display: 'flex', alignItems: 'center', gap: 8,
         }}>
           <span style={{ width: 6, height: 6, borderRadius: 999, background: INS_PALETTE.green }}/>
-          <span style={{ fontSize: 11, color: INS_PALETTE.muted }}>Synchronisé · 0 en attente</span>
+          <span style={{ fontSize: 11, color: INS_PALETTE.muted }}>Synchronisé, 0 en attente</span>
           <span style={{ marginLeft: 'auto', fontSize: 10.5, color: INS_PALETTE.muted, fontFamily: '"SF Mono",ui-monospace,monospace' }}>1.4 KB</span>
         </div>
       </div>
