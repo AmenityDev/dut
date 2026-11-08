@@ -71,6 +71,7 @@ const SoberTransporterApp = ({ lang = 'fr', density = 'comfortable', userState =
           )}
           {screen === 'history' && <TransporterHistory lang={lang} onOpen={() => setScreen('pdf')}/>}
           {screen === 'fleet' && <TransporterFleet lang={lang}/>}
+          {screen === 'tracking' && <TransporterTracking lang={lang} onOpenDut={() => setScreen('pdf')}/>}
           {screen === 'payments' && <TransporterPayments lang={lang} onPay={() => { setSelectedImport(null); setScreen('payment'); }} onPayImport={(b) => { setSelectedImport(b); setPaymentState('idle'); setScreen('payment'); }} onViewDut={() => setScreen('pdf')} onViewImport={(b) => { setViewedImport(b); setScreen('importView'); }}/>}
           {screen === 'importView' && viewedImport && (
             <div>
@@ -105,6 +106,7 @@ const SoberTransporterApp = ({ lang = 'fr', density = 'comfortable', userState =
           { id: 'dashboard', icon: 'home', label: t('dashboard', lang) },
           { id: 'payments', icon: 'coin', label: lang === 'en' ? 'Pay' : 'Régler', badge: '2' },
           { id: 'fleet', icon: 'truck', label: t('fleet', lang) },
+          { id: 'tracking', icon: 'pin', label: lang === 'en' ? 'Tracking' : 'Suivi' },
           { id: 'profile', icon: 'user', label: lang === 'en' ? 'Account' : 'Compte' },
         ]}/>
       </div>
@@ -899,7 +901,7 @@ const SoberPdfPreview = ({ lang = 'fr', form, goods, distance, total, baseFee, s
     </div>
 
     {/* Faux PDF page + side rail */}
-    <div style={{ display: 'grid', gridTemplateColumns: '1fr 320px', gap: 22, alignItems: 'flex-start', padding: '0 0 40px' }}>
+    <div className="sober-grid-2" style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) 340px', gap: 22, alignItems: 'flex-start', padding: '0 0 40px' }}>
       <div style={{ background: '#fff', boxShadow: '0 1px 0 rgba(0,0,0,.06), 0 24px 60px rgba(20,15,10,.12)',
                     border: '1px solid #E5DDC9', position: 'relative', padding: 48, fontFamily: 'Georgia, "Crimson Pro", serif', color: '#161413' }}>
         {/* watermark */}
@@ -973,6 +975,7 @@ const SoberPdfPreview = ({ lang = 'fr', form, goods, distance, total, baseFee, s
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
             <FauxQr />
             <div style={{ fontSize: 9.5, color: '#6B6557', textAlign: 'center', letterSpacing: '.08em' }}>{t('scanToVerify', lang)}<br/>dut.gov.gn/v</div>
+            <div style={{ fontSize: 9, color: '#6B6557', textAlign: 'center', lineHeight: 1.4 }}>{lang === 'en' ? 'Scan with the DUT Driver app to link this STD to the phone' : 'Scannez avec l\u2019app DUT Conducteur pour lier ce DUT au téléphone'}</div>
           </div>
         </div>
 
@@ -990,6 +993,10 @@ const SoberPdfPreview = ({ lang = 'fr', form, goods, distance, total, baseFee, s
             {lang === 'en' ? 'Issued by' : 'Émis par'} <strong style={{ color: '#161413' }}>F. Camara</strong><br/>
             {lang === 'en' ? 'On' : 'Le'} 28 / 04 / 2026, 14:32 GMT
           </div>
+        </div>
+        <div style={{ marginTop: 14 }}>
+          <PairingCard lang={lang} actor="company" paid={paid} compact
+                       dut={{ id: 'DUT-2026-04-08821', vehicle: form.vehicle, driver: form.driver, from: form.fromCity, to: form.toCity }}/>
         </div>
       </aside>
     </div>
@@ -1045,9 +1052,9 @@ const Radio = ({ name, options, default: def }) => {
   );
 };
 const SummaryRow = ({ label, value, mono }) => (
-  <div style={{ display: 'flex', justifyContent: 'space-between', padding: '5px 0', fontSize: 12.5 }}>
-    <span style={{ color: '#6B6557' }}>{label}</span>
-    <span style={{ fontFamily: mono ? '"JetBrains Mono", monospace' : 'inherit', fontVariantNumeric: 'tabular-nums' }}>{value}</span>
+  <div className="sober-summaryrow" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 16, padding: '5px 0', fontSize: 12.5 }}>
+    <span className="sober-summaryrow-k" style={{ color: '#6B6557', flexShrink: 0 }}>{label}</span>
+    <span className="sober-summaryrow-v" style={{ fontFamily: mono ? '"JetBrains Mono", monospace' : 'inherit', fontVariantNumeric: 'tabular-nums', textAlign: 'right', minWidth: 0, overflowWrap: 'anywhere' }}>{value}</span>
   </div>
 );
 const KpiTile = ({ label, big, suffix, hint, delta, tone }) => (
@@ -1180,6 +1187,7 @@ const SoberTransporterSidebar = ({ lang, screen, setScreen, setStep, setPaid, se
       <Item id="dashboard" icon="home" label={t('dashboard', lang)}/>
       <Item id="payments" icon="coin" label={lang === 'en' ? 'Pay bills' : 'Régler mes DUT'} badge="2"/>
       <Item id="fleet" icon="truck" label={t('fleet', lang)} badge="14"/>
+      <Item id="tracking" icon="pin" label={lang === 'en' ? 'Vehicle tracking' : 'Suivi des véhicules'}/>
       <div className="sober-navhead" style={{ padding: '18px 14px 6px', fontSize: 10, letterSpacing: '.18em', color: '#9A9281', textTransform: 'uppercase' }}>{lang === 'en' ? 'Account' : 'Compte'}</div>
       <Item id="profile" icon="user" label={t('profile', lang) || 'Profil'}/>
       <Item id="settings" icon="gear" label={t('settings', lang)}/>

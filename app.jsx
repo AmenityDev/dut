@@ -51,12 +51,15 @@ const App = () => {
             <DCArtboard id="transporter-phone" label="Mobile : transporteur" width={390} height={844}>
               <SoberTransporterApp lang={tweaks.lang} userState={tweaks.userState}/>
             </DCArtboard>
+            <DCArtboard id="individual-phone" label="Mobile : particulier" width={390} height={844}>
+              <SoberIndividualApp lang={tweaks.lang}/>
+            </DCArtboard>
           </DCSection>
         )}
 
         {tweaks.showFieldApps && (
-          <DCSection id="field" title="A. Sobre (applications terrain Android)"
-                     subtitle="Deux applications de terrain : le téléphone du conducteur devient l'unité de suivi GPS du camion ; l'agent au poste de contrôle photographie la plaque et la marchandise pour valider chaque passage.">
+          <DCSection id="field" title="A. Sobre (applications terrain mobiles)"
+                     subtitle="Deux applications de terrain, disponibles sur Android et iOS : le téléphone du conducteur devient l'unité de suivi GPS du camion ; l'agent au poste de contrôle photographie la plaque et la marchandise pour valider chaque passage.">
             <DCArtboard id="driver-1" label="Conducteur 1 : jumelage avec le transporteur" width={412} height={892}>
               <AndroidDevice width={412} height={892}>
                 <DriverScreen1Setup/>
@@ -107,7 +110,7 @@ const App = () => {
           <TweakToggle label="A2. Transporteur entreprise"     value={tweaks.showTransporter} onChange={(v) => setTweak('showTransporter', v)}/>
           <TweakToggle label="A3. Transporteur particulier"    value={tweaks.showIndividual}  onChange={(v) => setTweak('showIndividual', v)}/>
           <TweakToggle label="Tablette + mobile"          value={tweaks.showMobile}      onChange={(v) => setTweak('showMobile', v)}/>
-          <TweakToggle label="Applications terrain (Android)" value={tweaks.showFieldApps} onChange={(v) => setTweak('showFieldApps', v)}/>
+          <TweakToggle label="Applications terrain (Android et iOS)" value={tweaks.showFieldApps} onChange={(v) => setTweak('showFieldApps', v)}/>
         </TweakSection>
 
         <TweakSection label="Langue de l'interface">

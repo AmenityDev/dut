@@ -71,7 +71,7 @@ const OfficerTopBar = ({ lang }) => (
   }}>
     <div style={{ color: '#FCD116' }}><SealEmblem size={42} /></div>
     <div style={{ flex: 1 }}>
-      <div style={{ fontSize: 10, letterSpacing: '.22em', color: '#C8A24A', textTransform: 'uppercase' }}>{t('republic', lang)}, MTI, DGTT</div>
+      <div style={{ fontSize: 10, letterSpacing: '.22em', color: '#C8A24A', textTransform: 'uppercase' }}>{t('republic', lang)}, MTI, DNTT</div>
       <div style={{ fontFamily: '"Crimson Pro", Georgia, serif', fontSize: 17, fontWeight: 500, letterSpacing: '-0.005em', marginTop: 2 }}>
         Plateforme officielle du Document Unique de Transport <span style={{ fontSize: 11.5, color: '#9A9281', fontStyle: 'italic', marginLeft: 6 }}>(espace agent)</span>
       </div>
@@ -399,7 +399,7 @@ const StepRouteOff = ({ draft, set, distance }) => (
       <Field label="Date d'arrivée prévue"><Input type="date" value={draft.arrival} onChange={(v) => set('arrival', v)}/></Field>
     </FieldRow>
     <div style={{ background: '#FBF8F2', border: '1px solid #E5DDC9', padding: 12, fontSize: 12 }}>
-      <span style={{ color: '#6B6557' }}>Distance officielle (réf. DGTT) :</span>{' '}
+      <span style={{ color: '#6B6557' }}>Distance officielle (réf. DNTT) :</span>{' '}
       <b style={{ fontFamily: '"JetBrains Mono", monospace' }}>{distance} km</b>
       <span style={{ color: '#6B6557' }}>, Durée estimée :</span> <b>{Math.round(distance / 55)} h</b>
     </div>
@@ -503,7 +503,7 @@ const OfficerBillPreview = ({ lang, billId, transporter, draft, goods, distance,
         <div style={{ flex: 1 }}>
           <div style={{ fontSize: 10.5, letterSpacing: '.18em', textTransform: 'uppercase', color: '#6B6557' }}>République de Guinée, Travail, Justice, Solidarité</div>
           <div style={{ fontSize: 13, marginTop: 4 }}>Ministère des Transports, Direction Générale des Transports Terrestres</div>
-          <div style={{ fontSize: 11.5, color: '#6B6557' }}>Direction Nationale du Transports Terrestre (DNTT)</div>
+          <div style={{ fontSize: 11.5, color: '#6B6557' }}>Direction Nationale des Transports Terrestres (DNTT)</div>
         </div>
         <div style={{ textAlign: 'right' }}>
           <div style={{ fontSize: 10.5, letterSpacing: '.18em', color: '#6B6557' }}>RÉFÉRENCE</div>

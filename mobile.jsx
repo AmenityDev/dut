@@ -343,7 +343,7 @@ const MPdf = ({ lang, paid, onClose }) => (
                               padding: '2px 8px', transform: 'rotate(-6deg)', fontWeight: 700, letterSpacing: '.14em', fontSize: 9 }}>PAYÉ</div>}
       <div style={{ display: 'flex', alignItems: 'center', gap: 8, paddingBottom: 8, borderBottom: '1.5px solid #0F1A14' }}>
         <SealEmblem size={36}/>
-        <div style={{ fontSize: 9, letterSpacing: '.16em', color: '#5A665E', textTransform: 'uppercase' }}>République de Guinée<br/>DGTT, DNTT</div>
+        <div style={{ fontSize: 9, letterSpacing: '.16em', color: '#5A665E', textTransform: 'uppercase' }}>République de Guinée<br/>DNTT</div>
       </div>
       <h2 style={{ textAlign: 'center', fontSize: 13, letterSpacing: '.04em', margin: '12px 0 4px', fontWeight: 600 }}>
         DOCUMENT UNIQUE DE TRANSPORT

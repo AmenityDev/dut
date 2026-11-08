@@ -56,7 +56,7 @@ const DriverScreen1Setup = () => (
         Liez ce téléphone au camion
       </div>
       <div style={{ fontSize: 13.5, color: DRIVER_PALETTE.muted, lineHeight: 1.5 }}>
-        Le transporteur génère un code à 6 chiffres depuis son espace, puis vous le saisissez ici. Ce téléphone deviendra l'unité de suivi du véhicule.
+        Une fois le DUT payé, le transporteur (ou l'agent DNTT) génère un code à 6 chiffres. Saisissez-le ici : ce téléphone deviendra l'unité de suivi du véhicule et de la marchandise.
       </div>
 
       {/* Code input */}
@@ -77,7 +77,7 @@ const DriverScreen1Setup = () => (
         </div>
         <div style={{ marginTop: 14, padding: '8px 12px', background: '#FFF', border: `1px dashed ${DRIVER_PALETTE.rule}`, borderRadius: 8, display: 'flex', alignItems: 'center', gap: 8 }}>
           <Icon name="qr" size={14} stroke={2}/>
-          <span style={{ fontSize: 11.5, color: DRIVER_PALETTE.muted }}>ou scanner le QR depuis l'espace transporteur</span>
+          <span style={{ fontSize: 11.5, color: DRIVER_PALETTE.muted }}>ou scanner le QR code imprimé sur le DUT</span>
         </div>
       </div>
 

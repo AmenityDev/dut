@@ -323,8 +323,8 @@ const TransporterBillDetail = ({ lang, bill, onPay, onBack }) => {
           <SealEmblem size={64}/>
           <div style={{ flex: 1 }}>
             <div style={{ fontSize: 10.5, letterSpacing: '.18em', textTransform: 'uppercase', color: '#6B6557' }}>République de Guinée, Travail, Justice, Solidarité</div>
-            <div style={{ fontSize: 13, marginTop: 4 }}>Ministère des Transports, DGTT</div>
-            <div style={{ fontSize: 11.5, color: '#6B6557' }}>Direction Nationale du Transports Terrestre (DNTT)</div>
+            <div style={{ fontSize: 13, marginTop: 4 }}>Ministère des Transports, DNTT</div>
+            <div style={{ fontSize: 11.5, color: '#6B6557' }}>Direction Nationale des Transports Terrestres (DNTT)</div>
           </div>
           <div style={{ textAlign: 'right' }}>
             <div style={{ fontSize: 10.5, letterSpacing: '.18em', color: '#6B6557' }}>RÉFÉRENCE</div>

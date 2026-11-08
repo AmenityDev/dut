@@ -508,12 +508,25 @@ function DCFocusOverlay({ entry, sectionMeta, sectionOrder }) {
   const { width = 260, height = 480, children } = artboard.props;
   const [vp, setVp] = React.useState({ w: window.innerWidth, h: window.innerHeight });
   React.useEffect(() => { const r = () => setVp({ w: window.innerWidth, h: window.innerHeight }); window.addEventListener('resize', r); return () => window.removeEventListener('resize', r); }, []);
-  const scale = Math.max(0.1, Math.min((vp.w - 200) / width, (vp.h - 260) / height, 2));
+  // Fill the available space: small side gutters on phones, room for the
+  // arrows on larger screens, and just enough height for the top bar, the
+  // label and the dots. Upscaling is allowed so small mockups stay readable.
+  const narrow = vp.w < 760;
+  const sidePad = narrow ? 8 : 76;
+  const topPad = narrow ? 56 : 78;
+  const bottomPad = narrow ? 112 : 60;
+  // 'screen': the whole mockup fits the window. 'width': it fills the width
+  // and scrolls vertically, handy to read desktop screens on a laptop.
+  const [fit, setFit] = React.useState('screen');
+  const fitScreen = Math.min((vp.w - 2 * sidePad) / width, (vp.h - topPad - bottomPad) / height, 3);
+  const fitWidth = Math.min((vp.w - 2 * sidePad) / width, 3);
+  const scale = Math.max(0.1, fit === 'width' ? fitWidth : fitScreen);
+  const canWiden = !narrow && fitWidth > fitScreen * 1.05;
 
   const [ddOpen, setDd] = React.useState(false);
   const Arrow = ({ dir, onClick }) => (
     <button onClick={(e) => { e.stopPropagation(); onClick(); }}
-      style={{ position: 'absolute', top: '50%', [dir]: 28, transform: 'translateY(-50%)',
+      style={{ position: 'absolute', ...(narrow ? { bottom: 28 } : { top: '50%', transform: 'translateY(-50%)' }), [dir]: narrow ? 16 : 16,
         border: 'none', background: 'rgba(255,255,255,.08)', color: 'rgba(255,255,255,.9)',
         width: 44, height: 44, borderRadius: 22, fontSize: 18, cursor: 'pointer',
         display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'background .15s' }}
@@ -540,10 +553,10 @@ function DCFocusOverlay({ entry, sectionMeta, sectionOrder }) {
             style={{ border: 'none', background: 'transparent', color: '#fff', cursor: 'pointer', padding: '6px 8px',
               borderRadius: 6, textAlign: 'left', fontFamily: 'inherit' }}>
             <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-              <span style={{ fontSize: 18, fontWeight: 600, letterSpacing: -0.3 }}>{meta.title}</span>
+              <span style={{ fontSize: narrow ? 15 : 18, fontWeight: 600, letterSpacing: -0.3, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: narrow ? vp.w - 120 : 'none' }}>{meta.title}</span>
               <svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" style={{ opacity: .7 }}><path d="M2 4l3.5 3.5L9 4"/></svg>
             </span>
-            {meta.subtitle && <span style={{ display: 'block', fontSize: 13, opacity: .6, fontWeight: 400, marginTop: 2 }}>{meta.subtitle}</span>}
+            {meta.subtitle && !narrow && <span style={{ display: 'block', fontSize: 13, opacity: .6, fontWeight: 400, marginTop: 2 }}>{meta.subtitle}</span>}
           </button>
           {ddOpen && (
             <div style={{ position: 'absolute', top: '100%', left: 0, marginTop: 4, background: '#2a251f', borderRadius: 8,
@@ -560,6 +573,14 @@ function DCFocusOverlay({ entry, sectionMeta, sectionOrder }) {
           )}
         </div>
         <div style={{ flex: 1 }} />
+        {canWiden && (
+          <button onClick={() => setFit((m) => (m === 'width' ? 'screen' : 'width'))}
+            title={fit === 'width' ? 'Afficher la maquette entière' : 'Agrandir à la largeur de l\u2019écran'}
+            style={{ border: '1px solid rgba(255,255,255,.25)', background: fit === 'width' ? 'rgba(255,255,255,.16)' : 'transparent', color: '#fff',
+              height: 32, padding: '0 12px', borderRadius: 16, fontSize: 12.5, cursor: 'pointer', fontFamily: 'inherit', whiteSpace: 'nowrap' }}>
+            {fit === 'width' ? 'Vue entière' : 'Pleine largeur'}
+          </button>
+        )}
         <button onClick={() => ctx.setFocus(null)}
           onMouseEnter={(e) => (e.currentTarget.style.background = 'rgba(255,255,255,.12)')}
           onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
@@ -571,17 +592,20 @@ function DCFocusOverlay({ entry, sectionMeta, sectionOrder }) {
           propagation so any backdrop click (including the margins around
           the card) exits focus */}
       <div
-        style={{ position: 'absolute', top: 64, bottom: 56, left: 100, right: 100, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 16 }}>
-        <div onClick={(e) => e.stopPropagation()} style={{ width: width * scale, height: height * scale, position: 'relative' }}>
+        style={{ position: 'absolute', top: topPad, bottom: bottomPad, left: sidePad, right: sidePad, display: 'flex', flexDirection: 'column', alignItems: 'center',
+          justifyContent: fit === 'width' ? 'flex-start' : 'center', overflowY: fit === 'width' ? 'auto' : 'hidden', overflowX: 'hidden' }}
+        onWheel={(e) => e.stopPropagation()}>
+        <div onClick={(e) => e.stopPropagation()} style={{ width: width * scale, height: height * scale, position: 'relative', flexShrink: 0 }}>
           <div style={{ width, height, transform: `scale(${scale})`, transformOrigin: 'top left', background: '#fff', borderRadius: 2, overflow: 'hidden',
             boxShadow: '0 20px 80px rgba(0,0,0,.4)' }}>
             {children || <div style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#bbb' }}>{aid}</div>}
           </div>
         </div>
-        <div onClick={(e) => e.stopPropagation()} style={{ fontSize: 14, fontWeight: 500, opacity: .85, textAlign: 'center' }}>
-          {(sec.labels || {})[aid] ?? artboard.props.label}
-          <span style={{ opacity: .5, marginLeft: 10, fontVariantNumeric: 'tabular-nums' }}>{idx + 1} / {peers.length}</span>
-        </div>
+      </div>
+      <div onClick={(e) => e.stopPropagation()} style={{ position: 'absolute', left: narrow ? 70 : 90, right: narrow ? 70 : 90, bottom: narrow ? 72 : 30,
+        fontSize: narrow ? 12.5 : 14, fontWeight: 500, opacity: .85, textAlign: 'center', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+        {(sec.labels || {})[aid] ?? artboard.props.label}
+        <span style={{ opacity: .5, marginLeft: 10, fontVariantNumeric: 'tabular-nums' }}>{idx + 1} / {peers.length}</span>
       </div>
 
       <Arrow dir="left" onClick={() => go(-1)} />
@@ -589,7 +613,7 @@ function DCFocusOverlay({ entry, sectionMeta, sectionOrder }) {
 
       {/* dots */}
       <div onClick={(e) => e.stopPropagation()}
-        style={{ position: 'absolute', bottom: 20, left: '50%', transform: 'translateX(-50%)', display: 'flex', gap: 8 }}>
+        style={{ position: 'absolute', bottom: narrow ? 40 : 12, left: '50%', transform: 'translateX(-50%)', display: 'flex', gap: 8 }}>
         {peers.map((p, i) => (
           <button key={p} onClick={() => ctx.setFocus(`${sectionId}/${p}`)}
             style={{ border: 'none', padding: 0, cursor: 'pointer', width: 6, height: 6, borderRadius: 3,

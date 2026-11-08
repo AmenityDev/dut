@@ -115,6 +115,11 @@ const SoberIndividualApp = ({ lang = 'fr', density = 'comfortable' }) => {
             )}
           </div>
         </main>
+        <SoberBottomNav screen={screen === 'payflow' || screen === 'receipt' ? 'pay' : screen} setScreen={setScreen} items={[
+          { id: 'home', icon: 'home', label: isFr ? 'Accueil' : 'Home' },
+          { id: 'pay', icon: 'coin', label: isFr ? 'Régler' : 'Pay', badge: pending.length || null },
+          { id: 'account', icon: 'user', label: isFr ? 'Profil' : 'Profile' },
+        ]}/>
       </div>
 
       <ChatbotBadge role="individual" lang={lang}/>
@@ -134,14 +139,14 @@ const IndividualTopBar = ({ lang, pending }) => {
       background: '#FBF8F2', borderBottom: '1px solid #E5DDC9',
     }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-        <div style={{ width: 32, height: 32, background: '#161413', color: '#FCD116', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: '"Crimson Pro", serif', fontWeight: 700, fontSize: 15 }}>D</div>
-        <div style={{ lineHeight: 1.1 }}>
+        <div style={{ width: 32, height: 32, background: '#161413', color: '#FCD116', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: '"Crimson Pro", serif', fontWeight: 700, fontSize: 15, flexShrink: 0 }}>D</div>
+        <div className="sober-topbar-emblem-text" style={{ lineHeight: 1.1 }}>
           <div style={{ fontSize: 9.5, letterSpacing: '.18em', color: '#9A9281', textTransform: 'uppercase' }}>République de Guinée, DNTT</div>
           <div style={{ fontFamily: '"Crimson Pro", serif', fontSize: 17, fontWeight: 600 }}>Document Unique de Transport</div>
         </div>
       </div>
       <div style={{ flex: 1 }}/>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '6px 10px', border: '1px solid #DCD3BD', borderRadius: 4, background: '#fff', width: 280 }}>
+      <div className="sober-topbar-search" style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '6px 10px', border: '1px solid #DCD3BD', borderRadius: 4, background: '#fff', width: 280 }}>
         <Icon name="search" size={14} style={{ color: '#9A9281' }}/>
         <span style={{ color: '#9A9281', fontSize: 12.5 }}>{isFr ? 'Rechercher un DUT' : 'Search'}…</span>
       </div>
@@ -153,7 +158,7 @@ const IndividualTopBar = ({ lang, pending }) => {
         <div style={{ width: 32, height: 32, borderRadius: '50%', background: '#161413', color: '#FCD116', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: '"Crimson Pro", serif', fontSize: 13, fontWeight: 700 }}>
           {INDIVIDUAL.name.split(' ').map(s => s[0]).join('')}
         </div>
-        <div style={{ lineHeight: 1.2 }}>
+        <div className="sober-topbar-user-text" style={{ lineHeight: 1.2 }}>
           <div style={{ fontSize: 12.5, fontWeight: 600 }}>{INDIVIDUAL.name}</div>
           <div style={{ fontSize: 10.5, color: '#9A9281' }}>{isFr ? 'Personne physique' : 'Individual'}, {INDIVIDUAL.city}</div>
         </div>
@@ -178,26 +183,26 @@ const IndividualSidebar = ({ lang, screen, setScreen, pending }) => {
         fontWeight: active ? 600 : 500, fontFamily: 'inherit',
       }}>
         <Icon name={icon} size={17}/>
-        <span>{label}</span>
-        {badge && <span style={{ marginLeft: 'auto', fontSize: 10, background: '#CE1126', color: '#fff', padding: '1px 6px', borderRadius: 2, fontWeight: 700 }}>{badge}</span>}
+        <span className="sober-navlabel">{label}</span>
+        {badge && <span className="sober-navbadge" style={{ marginLeft: 'auto', fontSize: 10, background: '#CE1126', color: '#fff', padding: '1px 6px', borderRadius: 2, fontWeight: 700 }}>{badge}</span>}
       </button>
     );
   };
   return (
-    <aside style={{ width: 230, background: '#FBF8F2', borderRight: '1px solid #E5DDC9', padding: '14px 0', display: 'flex', flexDirection: 'column' }}>
-      <div style={{ padding: '0 14px 10px', fontSize: 10, letterSpacing: '.18em', color: '#9A9281', textTransform: 'uppercase' }}>
+    <aside className="sober-nav" style={{ width: 230, background: '#FBF8F2', borderRight: '1px solid #E5DDC9', padding: '14px 0', display: 'flex', flexDirection: 'column' }}>
+      <div className="sober-navhead" style={{ padding: '0 14px 10px', fontSize: 10, letterSpacing: '.18em', color: '#9A9281', textTransform: 'uppercase' }}>
         {isFr ? 'Espace personnel' : 'Personal space'}
       </div>
       <Item id="home"    icon="home" label={isFr ? 'Accueil' : 'Home'}/>
       <Item id="pay"     icon="coin" label={isFr ? 'Régler mes DUT' : 'Pay bills'} badge={pending.length || null}/>
 
-      <div style={{ padding: '18px 14px 6px', fontSize: 10, letterSpacing: '.18em', color: '#9A9281', textTransform: 'uppercase' }}>
+      <div className="sober-navhead" style={{ padding: '18px 14px 6px', fontSize: 10, letterSpacing: '.18em', color: '#9A9281', textTransform: 'uppercase' }}>
         {isFr ? 'Compte' : 'Account'}
       </div>
       <Item id="account" icon="user" label={isFr ? 'Mon profil' : 'My profile'}/>
 
       {/* Vehicle card pinned in sidebar: single vehicle is the defining trait of an individual */}
-      <div style={{ margin: '20px 14px 0', padding: 12, background: '#fff', border: '1px solid #E5DDC9' }}>
+      <div className="sober-navfooter" style={{ margin: '20px 14px 0', padding: 12, background: '#fff', border: '1px solid #E5DDC9' }}>
         <div style={{ fontSize: 9.5, letterSpacing: '.16em', color: '#9A9281', textTransform: 'uppercase', marginBottom: 8 }}>
           {isFr ? 'Mon véhicule' : 'My vehicle'}
         </div>
@@ -214,7 +219,7 @@ const IndividualSidebar = ({ lang, screen, setScreen, pending }) => {
       </div>
 
       <div style={{ flex: 1 }}/>
-      <div style={{ padding: '10px 14px', fontSize: 10, color: '#9A9281', borderTop: '1px solid #E5DDC9' }}>
+      <div className="sober-navfooter" style={{ padding: '10px 14px', fontSize: 10, color: '#9A9281', borderTop: '1px solid #E5DDC9' }}>
         {isFr ? 'DNTT, Min. des Transports' : 'DNTT, Transport Min.'}<br/>v 2.4.1, 04 / 2026
       </div>
     </aside>
@@ -581,6 +586,11 @@ const IndividualReceipt = ({ lang, bill, onBack }) => {
         <button style={{ ...ghostBtn(), flex: 1, justifyContent: 'center', padding: '12px' }}>
           <Icon name="upload" size={14}/> {isFr ? 'Partager' : 'Share'}
         </button>
+      </div>
+
+      <div style={{ marginTop: 18 }}>
+        <PairingCard lang={lang} actor="individual" paid
+                     dut={{ id: bill.id, vehicle: INDIVIDUAL.vehicle.plate, driver: INDIVIDUAL.name, from: bill.from, to: bill.to, driverPhone: INDIVIDUAL.phone }}/>
       </div>
     </div>
   );

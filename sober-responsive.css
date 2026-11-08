@@ -119,3 +119,19 @@
 /* Topbar user-name overflow guard (fix for officer dark topbar) */
 .sober-root .sober-topbar-user-text { min-width: 0; }
 .sober-root .sober-topbar-user-text > div > div { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 180px; }
+
+/* Label / value rows: stack on phone so long values stay readable */
+@container sober (max-width: 620px) {
+  .sober-root .sober-summaryrow {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 2px !important;
+    padding: 8px 0 !important;
+    border-bottom: 1px solid #F0E9D6;
+  }
+  .sober-root .sober-summaryrow:last-of-type { border-bottom: none; }
+  .sober-root .sober-summaryrow-k {
+    font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: #9A9281 !important;
+  }
+  .sober-root .sober-summaryrow-v { text-align: left !important; }
+}

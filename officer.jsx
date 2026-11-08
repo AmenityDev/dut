@@ -94,7 +94,7 @@ const OfficerTopBar = ({ lang }) => (
         Plateforme DNTT : émission des DUT
       </div>
       <div style={{ fontSize: 11, color: '#9A9281', letterSpacing: '.16em', textTransform: 'uppercase', marginTop: 2 }}>
-        {t('dntt', lang) || 'Direction Nationale du Transports Terrestre'}
+        {t('dntt', lang) || 'Direction Nationale des Transports Terrestres'}
       </div>
     </div>
     <div style={{ flex: 1 }}/>
@@ -389,6 +389,10 @@ const OfficerBillDetail = ({ lang, bill, onClose }) => (
           ))}
         </div>
       </section>
+    </div>
+    <div style={{ marginTop: 22, maxWidth: 560 }}>
+      <PairingCard lang={lang} actor="officer" paid={bill.status === 'paid'}
+                   dut={{ id: bill.id, vehicle: bill.vehicle || 'RC-4821-AC', driver: bill.driver, from: bill.from, to: bill.to }}/>
     </div>
   </div>
 );

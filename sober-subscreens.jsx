@@ -133,7 +133,7 @@ const OfficerProfile = ({ lang }) => (
         <SummaryRow label="Habilitations" value="Émission DUT, Contrôle routier, Verbalisation"/>
         <SummaryRow label="Dernière connexion" value="30/04/2026, 09:38 GMT, Conakry"/>
         <SummaryRow label="Sessions actives" value="2 (poste bureau, mobile)"/>
-        <div style={{ marginTop: 16, paddingTop: 12, borderTop: '1px solid #E5DDC9', display: 'flex', gap: 8 }}>
+        <div style={{ marginTop: 16, paddingTop: 12, borderTop: '1px solid #E5DDC9', display: 'flex', gap: 8, flexWrap: 'wrap' }}>
           <button style={ghostBtn()}>Modifier mes informations</button>
           <button style={ghostBtn()}>Changer le mot de passe</button>
         </div>
@@ -426,7 +426,7 @@ const TransporterSupport = ({ lang }) => (
         ['Comment puis-je payer un DUT par USSD ?', 'Composez *144# depuis le numéro associé à votre compte, choisissez "Payer une facture DUT" puis saisissez la référence DUT-AAAA-MM-XXXXX. Validez avec votre code Mobile Money.'],
         ['Que faire si le contrôle routier ne reconnaît pas mon DUT ?', 'Présentez le QR code imprimé ou affichez-le depuis l\'application. Le QR est vérifiable hors ligne sur les terminaux des agents de contrôle.'],
         ['Combien de temps un DUT est-il valide ?', 'Un DUT est valide pour le seul trajet déclaré, entre les dates de départ et d\'arrivée saisies. Au-delà, un nouveau DUT est requis.'],
-        ['Puis-je contester une liquidation ?', 'Oui, dans un délai de 48 h après émission, via le bouton "Contester" sur la facture. La réclamation est instruite par la DGTT sous 5 jours ouvrés.'],
+        ['Puis-je contester une liquidation ?', 'Oui, dans un délai de 48 h après émission, via le bouton "Contester" sur la facture. La réclamation est instruite par la DNTT sous 5 jours ouvrés.'],
       ].map(([q, a], i) => (
         <details key={i} style={{ borderTop: i ? '1px solid #E5DDC9' : 'none', padding: '12px 0' }}>
           <summary style={{ cursor: 'pointer', fontWeight: 600, fontSize: 13 }}>{q}</summary>
