@@ -9,7 +9,7 @@
 // trip timeline, etc.
 //
 // State is kept in memory and in localStorage (best effort), so it survives a
-// reload. "Réinitialiser la démo" (Tweaks panel) restores the seed data.
+// reload. "Réinitialiser les données" restores the seed data.
 
 const DNTT_HQ = {
   name: 'Direction Nationale des Transports Terrestres (DNTT)',
@@ -83,7 +83,7 @@ const DUT_GOODS = [
   { code: 'OR', label: 'Or brut', unit: 'kg', cat: 'Minerai' },
 ];
 
-// ─── Demo clock: starts on 30/04/2026 09:38 and runs in real time ────
+// ─── Clock: starts on 30/04/2026 09:38 and runs in real time ────
 const DEMO_T0 = Date.now();
 const DEMO_BASE = new Date(2026, 3, 30, 9, 38, 0).getTime();
 const demoNow = () => DEMO_BASE + (Date.now() - DEMO_T0);

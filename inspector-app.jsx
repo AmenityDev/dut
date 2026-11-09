@@ -127,7 +127,7 @@ const InspectorPlate = ({ plate, setPlate, onBack, onFound }) => {
         <div style={{ fontSize: 10.5, color: '#C8BFAA', letterSpacing: '.16em', textTransform: 'uppercase', marginBottom: 6 }}>Immatriculation</div>
         <input value={plate} onChange={e => setPlate(e.target.value.toUpperCase())} placeholder="RC-0000-AA" style={{ width: '100%', boxSizing: 'border-box', height: 46, borderRadius: 10, border: '1px solid #3A332A', background: '#1A1814', color: '#FFF', padding: '0 12px', fontSize: 17, fontWeight: 700, ...dMono }}/>
       </label>
-      <div style={{ fontSize: 10.5, color: '#C8BFAA', letterSpacing: '.16em', textTransform: 'uppercase', margin: '14px 0 6px' }}>Véhicules à proximité (démo)</div>
+      <div style={{ fontSize: 10.5, color: '#C8BFAA', letterSpacing: '.16em', textTransform: 'uppercase', margin: '14px 0 6px' }}>Véhicules à proximité</div>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
         {suggestions.map(p => <button key={p} onClick={() => read(p)} style={{ padding: '8px 10px', borderRadius: 8, border: '1px solid #3A332A', background: '#1A1814', color: '#FFF', fontSize: 12, fontWeight: 700, cursor: 'pointer', ...dMono }}>{p}</button>)}
       </div>

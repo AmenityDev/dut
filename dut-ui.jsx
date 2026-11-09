@@ -339,7 +339,7 @@ const SelfPayPanel = ({ bills, transporterId, onDone, onCancel, lang = 'fr' }) =
             <FieldRow><Field label="Expiration"><Input defaultValue="08/28"/></Field><Field label="CVV"><Input defaultValue="123"/></Field></FieldRow>
           </div>
         )}
-        {method === 'bank' && stage === 'choose' && <div style={{ marginTop: 14, fontSize: 12, color: '#6B6557', lineHeight: 1.5 }}>Vous serez redirigé vers votre banque. Dans cette démonstration, le virement est confirmé immédiatement.</div>}
+        {method === 'bank' && stage === 'choose' && <div style={{ marginTop: 14, fontSize: 12, color: '#6B6557', lineHeight: 1.5 }}>Vous serez redirigé vers votre banque pour confirmer le virement.</div>}
         {stage === 'ussd' && (
           <div style={{ marginTop: 16, padding: 14, background: '#FFF8E1', border: '1px solid #E8D896' }}>
             <div style={{ fontWeight: 600, fontSize: 13 }}>Demande envoyée au {number}</div>

@@ -87,7 +87,7 @@ const DriverSetup = () => {
           <Icon name="qr" size={16} stroke={2}/> Scanner le QR code imprimé sur le DUT
         </button>
       </div>
-      <div style={{ fontSize: 11, color: DP.muted, marginTop: 12, lineHeight: 1.5 }}>Démo : générez un code dans l’espace transporteur (Suivi des véhicules) ou chez l’agent DNTT, puis envoyez-le par SMS : il apparaît ici.</div>
+      <div style={{ fontSize: 11, color: DP.muted, marginTop: 12, lineHeight: 1.5 }}>Le transporteur ou l’agent DNTT génère le code dans son espace et vous l’envoie par SMS : il apparaît alors ici.</div>
       {scan && (
         <div style={{ position: 'absolute', inset: 0, background: '#0E0D0C', color: '#FFF', zIndex: 5, paddingTop: 38, display: 'flex', flexDirection: 'column' }}>
           <div style={{ padding: '10px 16px', display: 'flex', alignItems: 'center' }}>
@@ -95,7 +95,7 @@ const DriverSetup = () => {
             <button onClick={() => setScan(false)} aria-label="Fermer" style={{ background: 'none', border: 'none', color: '#FFF', cursor: 'pointer', display: 'flex' }}><Icon name="x" size={18}/></button>
           </div>
           <div style={{ margin: '10px 40px', aspectRatio: '1', border: `2px solid ${DP.yellow}`, borderRadius: 16, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#9A9281', fontSize: 12, textAlign: 'center', padding: 20 }}>Placez le QR code du DUT dans le cadre</div>
-          <div style={{ padding: '6px 16px', fontSize: 11, color: '#C8BFAA' }}>Démo : choisissez le DUT dont le QR est présenté (DUT payés).</div>
+          <div style={{ padding: '6px 16px', fontSize: 11, color: '#C8BFAA' }}>Choisissez le DUT dont le QR code est présenté (DUT payés).</div>
           <div style={{ padding: '0 16px', overflow: 'auto', flex: 1 }}>
             {scannable.length === 0 && <div style={{ fontSize: 12.5, color: '#C8BFAA', padding: 10 }}>Aucun DUT payé disponible.</div>}
             {scannable.map(b => (
@@ -159,7 +159,7 @@ const DriverTrip = ({ bill, trip }) => {
     <DriverShell title="Trajet en cours" pill={trip.offline ? <DriverPill dot={DP.red} bg="#FFFBEA">HORS LIGNE</DriverPill> : <DriverPill dot={DP.green}>EN LIGNE</DriverPill>}
       footer={<div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
         <DBtn kind="light" onClick={() => dutActions.setOffline(bill.id, !trip.offline)} style={{ fontSize: 12.5 }}><Icon name={trip.offline ? 'reload' : 'alert'} size={14}/>{trip.offline ? 'Rétablir le réseau' : 'Couper le réseau'}</DBtn>
-        <DBtn onClick={() => dutActions.advanceTrip(bill.id, 0.15)} style={{ fontSize: 12.5 }}>Avancer (démo) <Icon name="arrow" size={13}/></DBtn>
+        <DBtn onClick={() => dutActions.advanceTrip(bill.id, 0.15)} style={{ fontSize: 12.5 }}>Avancer <Icon name="arrow" size={13}/></DBtn>
       </div>}>
       {trip.offline && (
         <div style={{ padding: 12, background: '#FFF8E0', border: `1px solid ${DP.yellow}66`, borderRadius: 12, marginBottom: 10, display: 'flex', gap: 10 }}>

@@ -331,9 +331,9 @@ const OfficerSettings = () => {
           <SettingRow label="KKiaPay (mobile money, cartes)" value="Connecté" tone="good"/>
           <SettingRow label="RCCM, CCI" value="Connecté" tone="good"/>
         </SettingsCard>
-        <SettingsCard title="Démonstration">
-          <p style={{ fontSize: 12.5, color: '#6B6557', marginTop: 0 }}>Remet toutes les données du prototype à leur état initial (DUT, paiements, jumelages, trajets).</p>
-          <button style={ghostBtn()} onClick={() => { dutActions.reset(); toast('Données de démonstration réinitialisées', 'info'); }}><Icon name="reload" size={13}/> Réinitialiser la démo</button>
+        <SettingsCard title="Données">
+          <p style={{ fontSize: 12.5, color: '#6B6557', marginTop: 0 }}>Remet toutes les données à leur état initial (DUT, paiements, jumelages, trajets).</p>
+          <button style={ghostBtn()} onClick={() => { dutActions.reset(); toast('Données réinitialisées', 'info'); }}><Icon name="reload" size={13}/> Réinitialiser les données</button>
         </SettingsCard>
       </div>
     </div>

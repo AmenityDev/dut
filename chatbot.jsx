@@ -14,7 +14,7 @@
 //
 // Free-form questions use window.claude.complete when it exists. On a static
 // deployment (Cloudflare Pages) it does not, so a local keyword matcher answers
-// from the canned responses and the demo keeps working without any backend.
+// from the canned responses and the assistant keeps working without any backend.
 
 const CHATBOT_ACTIONS = {
   officer: {
@@ -142,8 +142,8 @@ const chatbotLocalAnswer = (q, role, isFr) => {
   });
   if (best) return cbText(best, isFr);
   return isFr
-    ? "Je n'ai pas encore de réponse précise à cette question dans cette démonstration. Essayez une des actions rapides ci-dessous, ou contactez la DNTT au 1505 (numéro vert)."
-    : "I don't have a precise answer to that question in this demo yet. Try one of the quick actions below, or call DNTT on 1505 (toll-free).";
+    ? "Je n'ai pas encore de réponse précise à cette question pour le moment. Essayez une des actions rapides ci-dessous, ou contactez la DNTT au 1505 (numéro vert)."
+    : "I don't have a precise answer to that question yet. Try one of the quick actions below, or call DNTT on 1505 (toll-free).";
 };
 
 // Position helpers. A position is stored as an offset from the nearest

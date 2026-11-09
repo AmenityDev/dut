@@ -29,7 +29,7 @@
   <script type="text/babel" src="sober.jsx"></script>
   <script type="text/babel" src="dut-ui.jsx"></script>
   <script type="text/babel">
-    // Prints the DUT given in ?id=..., otherwise every DUT of the demo data.
+    // Prints the DUT given in ?id=..., otherwise every DUT of the data set.
     const id = new URLSearchParams(location.search).get('id');
     const PrintDeck = () => {
       const s = useDut();

@@ -12,12 +12,12 @@ const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
   "showFieldApps": true
 }/*EDITMODE-END*/;
 
-// Small always-visible demo bar (the Tweaks panel only exists in the design tool).
-const DemoBar = ({ lang, setLang }) => {
+// Small always-visible toolbar (the Tweaks panel only exists in the design tool).
+const ToolBar = ({ lang, setLang }) => {
   const [confirm, setConfirm] = React.useState(false);
   return (
     <div style={{ position: 'fixed', left: 12, bottom: 12, zIndex: 40, display: 'flex', gap: 6, alignItems: 'center', background: 'rgba(22,20,19,.92)', color: '#F7F3EB', padding: '6px 8px', borderRadius: 8, fontFamily: 'Inter, system-ui, sans-serif', fontSize: 12, boxShadow: '0 8px 24px -8px rgba(0,0,0,.5)' }}>
-      <span style={{ padding: '0 4px', color: '#FCD116', fontWeight: 600 }}>Démo</span>
+      <span style={{ padding: '0 4px', color: '#FCD116', fontWeight: 600 }}>Prototype</span>
       <select value={lang} onChange={e => setLang(e.target.value)} aria-label="Langue" style={{ background: '#2A2520', color: '#F7F3EB', border: '1px solid #3A332A', borderRadius: 4, padding: '4px 6px', fontFamily: 'inherit', fontSize: 12 }}>
         <option value="fr">Français</option><option value="sus">Soussou</option><option value="ful">Pular</option><option value="man">Maninka</option><option value="en">English</option>
       </select>
@@ -65,7 +65,7 @@ const App = () => {
         )}
       </DesignCanvas>
 
-      <DemoBar lang={lang} setLang={(v) => setTweak('lang', v)}/>
+      <ToolBar lang={lang} setLang={(v) => setTweak('lang', v)}/>
 
       <TweaksPanel title="Tweaks">
         <TweakSection label="Artboards visibles">
@@ -81,7 +81,7 @@ const App = () => {
           ]}/>
         </TweakSection>
         <TweakSection label="Données">
-          <TweakButton label="Réinitialiser la démo" onClick={() => dutActions.reset()}/>
+          <TweakButton label="Réinitialiser les données" onClick={() => dutActions.reset()}/>
         </TweakSection>
       </TweaksPanel>
     </>
