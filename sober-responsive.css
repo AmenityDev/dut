@@ -135,3 +135,10 @@
   }
   .sober-root .sober-summaryrow-v { text-align: left !important; }
 }
+
+/* Stacked tables on phone: let long values wrap inside the card */
+@container sober (max-width: 620px) {
+  .sober-root table.sober-stack td { white-space: normal !important; text-align: right; overflow-wrap: anywhere; }
+  .sober-root table.sober-stack td::before { text-align: left; flex-shrink: 0; }
+  .sober-root .dut-paper { padding: 18px 14px !important; }
+}

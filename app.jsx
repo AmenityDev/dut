@@ -1,9 +1,10 @@
-// Mounts the design canvas with the two SOBER platforms (Officer + Transporter),
-// the field apps, and mobile responsive views.
+// Mounts the design canvas with the DNTT officer space, the company and the
+// individual transporter spaces (desktop, tablet, phone) and the two field
+// apps (driver, control agent). Every artboard shares the same data store:
+// what you do in one space shows up in the others.
 
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
   "lang": "fr",
-  "userState": "overdue",
   "showOfficer": true,
   "showTransporter": true,
   "showIndividual": true,
@@ -11,125 +12,76 @@ const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
   "showFieldApps": true
 }/*EDITMODE-END*/;
 
+// Small always-visible demo bar (the Tweaks panel only exists in the design tool).
+const DemoBar = ({ lang, setLang }) => {
+  const [confirm, setConfirm] = React.useState(false);
+  return (
+    <div style={{ position: 'fixed', left: 12, bottom: 12, zIndex: 40, display: 'flex', gap: 6, alignItems: 'center', background: 'rgba(22,20,19,.92)', color: '#F7F3EB', padding: '6px 8px', borderRadius: 8, fontFamily: 'Inter, system-ui, sans-serif', fontSize: 12, boxShadow: '0 8px 24px -8px rgba(0,0,0,.5)' }}>
+      <span style={{ padding: '0 4px', color: '#FCD116', fontWeight: 600 }}>Démo</span>
+      <select value={lang} onChange={e => setLang(e.target.value)} aria-label="Langue" style={{ background: '#2A2520', color: '#F7F3EB', border: '1px solid #3A332A', borderRadius: 4, padding: '4px 6px', fontFamily: 'inherit', fontSize: 12 }}>
+        <option value="fr">Français</option><option value="sus">Soussou</option><option value="ful">Pular</option><option value="man">Maninka</option><option value="en">English</option>
+      </select>
+      {!confirm
+        ? <button onClick={() => setConfirm(true)} style={{ background: 'transparent', color: '#F7F3EB', border: '1px solid #3A332A', borderRadius: 4, padding: '4px 8px', cursor: 'pointer', fontFamily: 'inherit', fontSize: 12 }}>Réinitialiser les données</button>
+        : <button onClick={() => { dutActions.reset(); setConfirm(false); }} style={{ background: '#CE1126', color: '#fff', border: 'none', borderRadius: 4, padding: '5px 8px', cursor: 'pointer', fontFamily: 'inherit', fontSize: 12 }}>Confirmer la réinitialisation</button>}
+    </div>
+  );
+};
+
 const App = () => {
   const [tweaks, setTweak] = useTweaks(TWEAK_DEFAULTS);
-
+  const lang = tweaks.lang;
   return (
     <>
       <DesignCanvas initialZoom={0.42}>
-        <DCSection id="sober" title="A. Sobre institutionnelle (desktop)"
-                   subtitle="Trois espaces distincts : l'agent DNTT émet, l'entreprise gère sa flotte, le particulier règle ses propres trajets. Tous partagent le même langage visuel ; la complexité s'adapte au rôle.">
-          {tweaks.showOfficer && (
-            <DCArtboard id="officer" label="A1. Espace agent DNTT (émetteur)" width={1440} height={960}>
-              <SoberOfficerApp lang={tweaks.lang}/>
-            </DCArtboard>
-          )}
-          {tweaks.showTransporter && (
-            <DCArtboard id="transporter" label="A2. Espace transporteur (entreprise)" width={1440} height={960}>
-              <SoberTransporterApp lang={tweaks.lang} userState={tweaks.userState}/>
-            </DCArtboard>
-          )}
-          {tweaks.showIndividual && (
-            <DCArtboard id="individual" label="A3. Espace transporteur (particulier)" width={1440} height={960}>
-              <SoberIndividualApp lang={tweaks.lang}/>
-            </DCArtboard>
-          )}
+        <DCSection id="sober" title="A. Plateformes web (desktop)"
+                   subtitle="Trois espaces reliés par les mêmes données : l’agent DNTT émet et peut encaisser pour le transporteur, l’entreprise et le particulier règlent leurs DUT (prix fixe de 10 €) et suivent leurs véhicules. Tout est cliquable.">
+          {tweaks.showOfficer && <DCArtboard id="officer" label="A1. Espace agent DNTT (émetteur)" width={1440} height={960}><SoberOfficerApp lang={lang}/></DCArtboard>}
+          {tweaks.showTransporter && <DCArtboard id="transporter" label="A2. Espace transporteur (entreprise)" width={1440} height={960}><SoberTransporterApp lang={lang}/></DCArtboard>}
+          {tweaks.showIndividual && <DCArtboard id="individual" label="A3. Espace transporteur (particulier)" width={1440} height={960}><SoberIndividualApp lang={lang}/></DCArtboard>}
         </DCSection>
 
         {tweaks.showMobile && (
-          <DCSection id="mobile" title="A. Sobre (tablette et mobile)"
-                     subtitle="Mêmes applications, layouts adaptatifs grâce aux container queries : la sidebar se replie en barre d'onglets bas, les tableaux deviennent des cartes empilées.">
-            <DCArtboard id="officer-tablet" label="Tablette : agent DNTT" width={820} height={1100}>
-              <SoberOfficerApp lang={tweaks.lang}/>
-            </DCArtboard>
-            <DCArtboard id="transporter-tablet" label="Tablette : transporteur" width={820} height={1100}>
-              <SoberTransporterApp lang={tweaks.lang} userState={tweaks.userState}/>
-            </DCArtboard>
-            <DCArtboard id="officer-phone" label="Mobile : agent DNTT" width={390} height={844}>
-              <SoberOfficerApp lang={tweaks.lang}/>
-            </DCArtboard>
-            <DCArtboard id="transporter-phone" label="Mobile : transporteur" width={390} height={844}>
-              <SoberTransporterApp lang={tweaks.lang} userState={tweaks.userState}/>
-            </DCArtboard>
-            <DCArtboard id="individual-phone" label="Mobile : particulier" width={390} height={844}>
-              <SoberIndividualApp lang={tweaks.lang}/>
-            </DCArtboard>
+          <DCSection id="mobile" title="A. Tablette et mobile"
+                     subtitle="Mêmes applications et mêmes données, mises en page adaptatives : la barre latérale devient une barre d’onglets, les tableaux deviennent des cartes.">
+            <DCArtboard id="officer-tablet" label="Tablette : agent DNTT" width={820} height={1100}><SoberOfficerApp lang={lang}/></DCArtboard>
+            <DCArtboard id="transporter-tablet" label="Tablette : transporteur" width={820} height={1100}><SoberTransporterApp lang={lang}/></DCArtboard>
+            <DCArtboard id="officer-phone" label="Mobile : agent DNTT" width={390} height={844}><SoberOfficerApp lang={lang}/></DCArtboard>
+            <DCArtboard id="transporter-phone" label="Mobile : transporteur" width={390} height={844}><SoberTransporterApp lang={lang}/></DCArtboard>
+            <DCArtboard id="individual-phone" label="Mobile : particulier" width={390} height={844}><SoberIndividualApp lang={lang}/></DCArtboard>
           </DCSection>
         )}
 
         {tweaks.showFieldApps && (
-          <DCSection id="field" title="A. Sobre (applications terrain mobiles)"
-                     subtitle="Deux applications de terrain, disponibles sur Android et iOS : le téléphone du conducteur devient l'unité de suivi GPS du camion ; l'agent au poste de contrôle photographie la plaque et la marchandise pour valider chaque passage.">
-            <DCArtboard id="driver-1" label="Conducteur 1 : jumelage avec le transporteur" width={412} height={892}>
-              <AndroidDevice width={412} height={892}>
-                <DriverScreen1Setup/>
-              </AndroidDevice>
+          <DCSection id="field" title="A. Applications terrain mobiles (Android et iOS)"
+                     subtitle="Applications interactives : le conducteur lie son téléphone au DUT payé (code à 6 chiffres ou QR code) puis le trajet est suivi en direct ; l’agent au poste de contrôle lit la plaque, vérifie le DUT et la marchandise, et valide le passage.">
+            <DCArtboard id="driver" label="Application Conducteur (jumelage et suivi)" width={412} height={892}>
+              <AndroidDevice width={412} height={892}><DriverApp/></AndroidDevice>
             </DCArtboard>
-            <DCArtboard id="driver-2" label="Conducteur 2 : trajet en cours, suivi GPS" width={412} height={892}>
-              <AndroidDevice width={412} height={892}>
-                <DriverScreen2Trip/>
-              </AndroidDevice>
-            </DCArtboard>
-            <DCArtboard id="driver-3" label="Conducteur 3 : mode hors ligne, file de synchronisation" width={412} height={892}>
-              <AndroidDevice width={412} height={892}>
-                <DriverScreen3Offline/>
-              </AndroidDevice>
-            </DCArtboard>
-            <DCArtboard id="driver-4" label="Conducteur 4 : trajet terminé" width={412} height={892}>
-              <AndroidDevice width={412} height={892}>
-                <DriverScreen4Recap/>
-              </AndroidDevice>
-            </DCArtboard>
-            <DCArtboard id="ins-1" label="Agent de contrôle 1 : file de passages" width={412} height={892}>
-              <AndroidDevice width={412} height={892}>
-                <InspectorScreen1Queue/>
-              </AndroidDevice>
-            </DCArtboard>
-            <DCArtboard id="ins-2" label="Agent de contrôle 2 : capture de la plaque" width={412} height={892}>
-              <AndroidDevice width={412} height={892} dark>
-                <InspectorScreen2Plate/>
-              </AndroidDevice>
-            </DCArtboard>
-            <DCArtboard id="ins-3" label="Agent de contrôle 3 : vérification de la marchandise" width={412} height={892}>
-              <AndroidDevice width={412} height={892}>
-                <InspectorScreen3Goods/>
-              </AndroidDevice>
-            </DCArtboard>
-            <DCArtboard id="ins-4" label="Agent de contrôle 4 : passage validé" width={412} height={892}>
-              <AndroidDevice width={412} height={892}>
-                <InspectorScreen4Confirm/>
-              </AndroidDevice>
+            <DCArtboard id="inspector" label="Application Agent de contrôle" width={412} height={892}>
+              <AndroidDevice width={412} height={892}><InspectorApp/></AndroidDevice>
             </DCArtboard>
           </DCSection>
         )}
       </DesignCanvas>
 
+      <DemoBar lang={lang} setLang={(v) => setTweak('lang', v)}/>
+
       <TweaksPanel title="Tweaks">
         <TweakSection label="Artboards visibles">
-          <TweakToggle label="A1. Espace agent DNTT"           value={tweaks.showOfficer}     onChange={(v) => setTweak('showOfficer', v)}/>
-          <TweakToggle label="A2. Transporteur entreprise"     value={tweaks.showTransporter} onChange={(v) => setTweak('showTransporter', v)}/>
-          <TweakToggle label="A3. Transporteur particulier"    value={tweaks.showIndividual}  onChange={(v) => setTweak('showIndividual', v)}/>
-          <TweakToggle label="Tablette + mobile"          value={tweaks.showMobile}      onChange={(v) => setTweak('showMobile', v)}/>
-          <TweakToggle label="Applications terrain (Android et iOS)" value={tweaks.showFieldApps} onChange={(v) => setTweak('showFieldApps', v)}/>
+          <TweakToggle label="A1. Espace agent DNTT" value={tweaks.showOfficer} onChange={(v) => setTweak('showOfficer', v)}/>
+          <TweakToggle label="A2. Transporteur entreprise" value={tweaks.showTransporter} onChange={(v) => setTweak('showTransporter', v)}/>
+          <TweakToggle label="A3. Transporteur particulier" value={tweaks.showIndividual} onChange={(v) => setTweak('showIndividual', v)}/>
+          <TweakToggle label="Tablette et mobile" value={tweaks.showMobile} onChange={(v) => setTweak('showMobile', v)}/>
+          <TweakToggle label="Applications terrain" value={tweaks.showFieldApps} onChange={(v) => setTweak('showFieldApps', v)}/>
         </TweakSection>
-
-        <TweakSection label="Langue de l'interface">
-          <TweakSelect value={tweaks.lang} onChange={(v) => setTweak('lang', v)}
-            options={[
-              { value: 'fr',  label: 'Français' },
-              { value: 'en',  label: 'English' },
-              { value: 'sus', label: 'Soussou' },
-              { value: 'ful', label: 'Pular' },
-              { value: 'man', label: 'Maninka' },
-            ]}/>
+        <TweakSection label="Langue de l’interface">
+          <TweakSelect value={lang} onChange={(v) => setTweak('lang', v)} options={[
+            { value: 'fr', label: 'Français' }, { value: 'en', label: 'English' }, { value: 'sus', label: 'Soussou' }, { value: 'ful', label: 'Pular' }, { value: 'man', label: 'Maninka' },
+          ]}/>
         </TweakSection>
-
-        <TweakSection label="État du transporteur">
-          <TweakRadio value={tweaks.userState} onChange={(v) => setTweak('userState', v)}
-            options={[
-              { value: 'active',  label: 'À jour' },
-              { value: 'overdue', label: 'En retard' },
-            ]}/>
+        <TweakSection label="Données">
+          <TweakButton label="Réinitialiser la démo" onClick={() => dutActions.reset()}/>
         </TweakSection>
       </TweaksPanel>
     </>

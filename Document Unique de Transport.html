@@ -23,6 +23,14 @@
     .sober-root *::-webkit-scrollbar { width: 8px; height: 8px; }
     .sober-root *::-webkit-scrollbar-thumb { background: #DCD3BD; border-radius: 4px; }
     .sober-root *::-webkit-scrollbar-track { background: transparent; }
+    /* Print only the DUT document */
+    @media print {
+      body.dut-printing * { visibility: hidden !important; }
+      body.dut-printing .dut-print-area, body.dut-printing .dut-print-area * { visibility: visible !important; }
+      body.dut-printing .dut-print-area { position: fixed; left: 0; top: 0; width: 100%; }
+      body.dut-printing .dut-paper { box-shadow: none !important; }
+      * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    }
   </style>
 
   <link rel="stylesheet" href="sober-responsive.css"/>
@@ -37,14 +45,13 @@
   <script type="text/babel" src="design-canvas.jsx"></script>
   <script type="text/babel" src="tweaks-panel.jsx"></script>
   <script type="text/babel" src="shared.jsx"></script>
+  <script type="text/babel" src="store.jsx"></script>
   <script type="text/babel" src="sober.jsx"></script>
   <script type="text/babel" src="sober-subscreens.jsx"></script>
-  <script type="text/babel" src="imports-data.jsx"></script>
-  <script type="text/babel" src="imports-officer.jsx"></script>
+  <script type="text/babel" src="dut-ui.jsx"></script>
   <script type="text/babel" src="officer.jsx"></script>
   <script type="text/babel" src="individual.jsx"></script>
   <script type="text/babel" src="chatbot.jsx"></script>
-  <script type="text/babel" src="pairing.jsx"></script>
   <script type="text/babel" src="android-frame.jsx"></script>
   <script type="text/babel" src="driver-app.jsx"></script>
   <script type="text/babel" src="inspector-app.jsx"></script>

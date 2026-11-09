@@ -1,4 +1,5 @@
-// Shared data, translations, and small primitives used by both DUT variants.
+// Translations, icons and small primitives. The live data (DUT, transporters,
+// vehicles, payments, trips) lives in store.jsx.
 
 const GUINEA_CITIES = [
   'Conakry', 'Kankan', 'Labé', 'Nzérékoré', 'Kindia', 'Boké',
@@ -47,20 +48,7 @@ const VEHICLES = [
   { plate: 'RC-1244-AE', type: 'Frigorifique',    brand: 'Iveco Stralis',    year: 2023, capacity: '22 t', driver: 'Fatoumata Touré' },
 ];
 
-const RECENT_DUTS = [
-  { id: 'DUT-2026-04-08821', date: '28/04/2026', from: 'Kamsar', to: 'Conakry', goods: 'Bauxite, 32 t', vehicle: 'RC-4821-AC', amount: 425000, status: 'paid'    },
-  { id: 'DUT-2026-04-08754', date: '24/04/2026', from: 'Conakry', to: 'Kankan', goods: 'Ciment, 1240 sacs', vehicle: 'RC-3107-AB', amount: 612000, status: 'paid' },
-  { id: 'DUT-2026-04-08712', date: '22/04/2026', from: 'Conakry', to: 'Labé',   goods: 'Riz importé, 980 sacs', vehicle: 'RC-7715-AD', amount: 388000, status: 'paid' },
-  { id: 'DUT-2026-04-08698', date: '21/04/2026', from: 'Boké',   to: 'Conakry', goods: 'Bauxite, 28 t', vehicle: 'RC-9032-AB', amount: 372000, status: 'pending' },
-  { id: 'DUT-2026-04-08651', date: '18/04/2026', from: 'Conakry', to: 'Nzérékoré', goods: 'Carburant, 22 000 L', vehicle: 'RC-1244-AE', amount: 845000, status: 'paid' },
-  { id: 'DUT-2026-04-08603', date: '15/04/2026', from: 'Kankan', to: 'Siguiri', goods: 'Ciment, 540 sacs', vehicle: 'RC-3107-AB', amount: 198000, status: 'expired' },
-];
 
-const ALERTS = [
-  { kind: 'warn', label: 'Carte transporteur', detail: 'Expire dans 38 jours, 07/06/2026' },
-  { kind: 'info', label: 'Nouveau tarif DUT', detail: 'Itinéraire Conakry→Nzérékoré, +4,2%' },
-  { kind: 'ok',   label: 'Paiement reçu',     detail: 'DUT-2026-04-08821, 425 000 GNF' },
-];
 
 // FR / EN / Soussou / Pular / Malinké: translations for visible labels.
 // Keys are stable; FR is the canonical source. English provides full coverage;
@@ -756,7 +744,7 @@ const OFFICER = {
   name: 'Fatoumata Camara',
   role: 'Inspecteur principal, DNTT Conakry',
   badge: 'DNTT-INS-0418',
-  office: 'DNTT Conakry, Direction Générale des Transports',
+  office: 'DNTT, siège de Conakry',
   email: 'f.camara@transports.gov.gn',
 };
 
@@ -773,21 +761,8 @@ const TRANSPORTERS = [
   { id: 'IND-31907', kind: 'individual', short: 'Fatoumata Camara',        contact: 'Fatoumata Camara',       rccm: 'CNI 071-2020-0031907',  city: 'Mamou',       fleet: 2 },
 ];
 
-// ─── Bills queue (officer side) ──────────────────────────────────
-const BILLS = [
-  { id: 'DUT-2026-04-08821', transporterId: 'TRP-04812', transporter: 'Diallo & Frères',   from: 'Kamsar',   to: 'Conakry',     goods: 'Bauxite',          amount: 338000,  status: 'paid',    issued: '28/04/2026', officer: 'F. Camara' },
-  { id: 'DUT-2026-04-08820', transporterId: 'TRP-08231', transporter: 'SAGECO',            from: 'Boffa',    to: 'Conakry',     goods: 'Ciment',           amount: 198500,  status: 'pending', issued: '28/04/2026', officer: 'F. Camara' },
-  { id: 'DUT-2026-04-08818', transporterId: 'TRP-09317', transporter: 'Bauxite Express',   from: 'Sangarédi',to: 'Kamsar',      goods: 'Bauxite',          amount: 412500,  status: 'paid',    issued: '27/04/2026', officer: 'M. Sylla' },
-  { id: 'DUT-2026-04-08817', transporterId: 'TRP-02194', transporter: 'Trans-Fouta',       from: 'Labé',     to: 'Mamou',       goods: 'Produits du cru',  amount: 87400,   status: 'paid',    issued: '27/04/2026', officer: 'F. Camara' },
-  { id: 'DUT-2026-04-08815', transporterId: 'TRP-04812', transporter: 'Diallo & Frères',   from: 'Conakry',  to: 'Nzérékoré',   goods: 'Marchandises',     amount: 1240000, status: 'paid',    issued: '26/04/2026', officer: 'F. Camara' },
-  { id: 'DUT-2026-04-08812', transporterId: 'TRP-05126', transporter: 'Sahel Cargo',       from: 'Kindia',   to: 'Conakry',     goods: 'Hydrocarbures',    amount: 524800,  status: 'pending', issued: '26/04/2026', officer: 'F. Camara' },
-  { id: 'DUT-2026-04-08810', transporterId: 'TRP-07744', transporter: 'Forêt-Trans',       from: 'Nzérékoré',to: 'Kankan',      goods: 'Café-Cacao',       amount: 156200,  status: 'paid',    issued: '25/04/2026', officer: 'M. Sylla' },
-  { id: 'DUT-2026-04-08807', transporterId: 'TRP-08231', transporter: 'SAGECO',            from: 'Conakry',  to: 'Faranah',     goods: 'Marchandises',     amount: 287900,  status: 'expired', issued: '23/04/2026', officer: 'F. Camara' },
-  { id: 'DUT-2026-04-08819', transporterId: 'IND-44218', transporter: 'Sékou Soumah',      from: 'Coyah',    to: 'Conakry',     goods: 'Produits maraîchers', amount: 64200, status: 'paid',    issued: '28/04/2026', officer: 'F. Camara', payerKind: 'individual' },
-  { id: 'DUT-2026-04-08816', transporterId: 'IND-31907', transporter: 'Fatoumata Camara',  from: 'Mamou',    to: 'Kindia',      goods: 'Produits du cru',  amount: 92800,   status: 'pending', issued: '27/04/2026', officer: 'F. Camara', payerKind: 'individual' },
-];
 
-Object.assign(window, { OFFICER, TRANSPORTERS, BILLS });
+Object.assign(window, { OFFICER, TRANSPORTERS });
 
 // Vertical three-stripe flag bar: red | yellow | green (hoist → fly).
 // Used as a hairline accent strip.
@@ -800,6 +775,6 @@ const FlagBar = ({ height = 3, style }) => (
 );
 
 Object.assign(window, {
-  GUINEA_CITIES, ROUTES, GOODS, CARRIER, VEHICLES, RECENT_DUTS, ALERTS,
+  GUINEA_CITIES, ROUTES, GOODS, CARRIER, VEHICLES,
   I18N, t, tFmt, fmtGNF, Icon, SealEmblem, FlagBar,
 });

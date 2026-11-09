@@ -1,473 +1,6 @@
-// Sub-screens shared across Officer and Transporter platforms:
-// transporters list, vehicles, tariffs, fleet, profile, support, settings.
+// Sub-screens shared across the Officer and Transporter platforms.
+// All of them read and write the shared store.
 
-// ─── Officer: Transporteurs (référentiel) ──────────────────────────
-const OfficerTransporters = ({ lang }) => (
-  <div>
-    <PageHead kicker="Référentiel, transporteurs agréés" title="Transporteurs">
-      <button style={ghostBtn()}><Icon name="download" size={13}/> Exporter</button>
-      <button style={primaryBtn()}><Icon name="plus" size={14}/> Nouveau transporteur</button>
-    </PageHead>
-    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 14 }}>
-      {TRANSPORTERS.map(tr => {
-        const isInd = tr.kind === 'individual';
-        const initials = isInd
-          ? tr.contact.split(' ').map(s=>s[0]).slice(0,2).join('')
-          : tr.short.split(' ').map(s=>s[0]).slice(0,2).join('');
-        return (
-        <div key={tr.id} style={{ ...paperCard(), padding: 16 }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
-            <div style={{
-              width: 36, height: 36,
-              background: isInd ? '#FBF8F2' : '#161413',
-              color: isInd ? '#161413' : '#FCD116',
-              border: isInd ? '1px solid #E5DDC9' : 'none',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontWeight: 700, fontFamily: '"Crimson Pro", serif',
-              borderRadius: isInd ? '50%' : 0,
-            }}>{initials}</div>
-            <div style={{ flex: 1, minWidth: 0 }}>
-              <div style={{ fontWeight: 600, fontSize: 13.5, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{tr.short}</div>
-              <div style={{ fontSize: 10.5, color: '#9A9281', fontFamily: '"JetBrains Mono", monospace' }}>{tr.id}</div>
-            </div>
-            <span style={{
-              background: isInd ? '#FFF6E0' : '#E8F2EA',
-              color: isInd ? '#7A5A00' : '#1F4F2C',
-              padding: '2px 7px', fontSize: 10, fontWeight: 600,
-              letterSpacing: '.08em', textTransform: 'uppercase',
-            }}>{isInd ? 'P. physique' : 'Agréé'}</span>
-          </div>
-          <div style={{ fontSize: 11.5, color: '#6B6557', lineHeight: 1.7 }}>
-            {!isInd && <div>{tr.contact}</div>}
-            <div style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 11 }}>{tr.rccm}</div>
-            <div>{tr.city}, {tr.fleet} {isInd ? (tr.fleet > 1 ? 'véhicules' : 'véhicule') : 'véhicules'}</div>
-          </div>
-          <div style={{ marginTop: 10, paddingTop: 10, borderTop: '1px solid #E5DDC9', display: 'flex', justifyContent: 'space-between' }}>
-            <span style={{ fontSize: 11, color: '#9A9281' }}>{BILLS.filter(b => b.transporterId === tr.id).length} DUT émis</span>
-            <button style={{ ...ghostBtn(), padding: '4px 10px', fontSize: 11 }}>Voir →</button>
-          </div>
-        </div>
-        );
-      })}
-    </div>
-  </div>
-);
-
-// ─── Officer: Véhicules ────────────────────────────────────────────
-const OfficerVehicles = ({ lang }) => (
-  <div>
-    <PageHead kicker="Référentiel, véhicules immatriculés" title="Véhicules"/>
-    <section style={paperCard()}>
-      <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12 }}>
-        <thead><tr style={{ color: '#9A9281', fontSize: 10, letterSpacing: '.14em', textTransform: 'uppercase' }}>
-          {['Plaque','Type','Marque','Année','Capacité','Conducteur'].map(h => <th key={h} style={{ textAlign: 'left', padding: '10px 6px', borderBottom: '1px solid #E5DDC9', fontWeight: 500 }}>{h}</th>)}
-        </tr></thead>
-        <tbody>
-          {VEHICLES.map((v, i) => (
-            <tr key={v.plate} style={{ background: i % 2 ? '#FBF8F2' : 'transparent' }}>
-              <td style={{ ...td(), fontFamily: '"JetBrains Mono", monospace', fontWeight: 600 }}>{v.plate}</td>
-              <td style={td()}>{v.type}</td>
-              <td style={td()}>{v.brand}</td>
-              <td style={td()}>{v.year}</td>
-              <td style={td()}>{v.capacity}</td>
-              <td style={td()}>{v.driver}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </section>
-  </div>
-);
-
-// ─── Officer: Grille tarifaire ─────────────────────────────────────
-const OfficerTariffs = ({ lang }) => (
-  <div>
-    <PageHead kicker="Arrêté 2025/MTI/DNTT du 14 janvier 2026" title="Grille tarifaire en vigueur"/>
-    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 16, marginBottom: 22 }}>
-      <KpiTile label="Redevance kilométrique" big="1 200" suffix="GNF / km" hint="Toutes catégories" tone="good"/>
-      <KpiTile label="Forfait quantité" big="800" suffix="GNF / unité" hint="Pondéré par tonnage"/>
-      <KpiTile label="Timbre fiscal" big="25 000" suffix="GNF" hint="Reversé au Trésor"/>
-      <KpiTile label="Quote-part DNTT" big="8 000" suffix="GNF" hint="Fonctionnement DNTT"/>
-    </div>
-    <section style={paperCard()}>
-      <header style={cardHeader()}><h2 style={cardTitle()}>Majorations & exemptions</h2></header>
-      <table style={{ width: '100%', fontSize: 12.5, borderCollapse: 'collapse' }}>
-        <tbody>
-          {[
-            ['Hydrocarbures (essence, gasoil, GPL)', '+15%', 'Majoration risque'],
-            ['Marchandises classées dangereuses', '+15%', 'CMR Article 7'],
-            ['Convois exceptionnels (>40 t)', '+25%', 'Étude voirie requise'],
-            ['Aide humanitaire homologuée', 'Exonération totale', 'Sur visa MAE'],
-            ['Produits du cru, circuits courts', '−50%', 'Décret 2024/PR/452'],
-          ].map(([k, v, note], i) => (
-            <tr key={k} style={{ background: i % 2 ? '#FBF8F2' : 'transparent' }}>
-              <td style={td()}>{k}</td>
-              <td style={{ ...td(), fontWeight: 700, fontFamily: '"JetBrains Mono", monospace', color: v.startsWith('−') || v.includes('Exo') ? '#1F4F2C' : '#8A1B1B' }}>{v}</td>
-              <td style={{ ...td(), color: '#9A9281', fontSize: 11.5 }}>{note}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </section>
-  </div>
-);
-
-// ─── Officer: Profil ───────────────────────────────────────────────
-const OfficerProfile = ({ lang }) => (
-  <div>
-    <PageHead kicker={`Agent DNTT, ${OFFICER.badge}`} title="Mon profil"/>
-    <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 320px) 1fr', gap: 22 }} className="dut-profile-grid">
-      <section style={paperCard(true)}>
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
-          <div style={{ width: 96, height: 96, borderRadius: '50%', background: '#161413', color: '#FCD116', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: '"Crimson Pro", serif', fontSize: 42, fontWeight: 600 }}>FC</div>
-          <div style={{ fontFamily: '"Crimson Pro", serif', fontSize: 22, fontWeight: 600 }}>{OFFICER.name}</div>
-          <div style={{ fontSize: 12, color: '#6B6557', textAlign: 'center' }}>{OFFICER.role}</div>
-          <div style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 11, padding: '3px 8px', background: '#161413', color: '#FCD116', marginTop: 4 }}>{OFFICER.badge}</div>
-        </div>
-      </section>
-      <section style={paperCard(true)}>
-        <header style={cardHeader()}><h2 style={cardTitle()}>Coordonnées professionnelles</h2></header>
-        <SummaryRow label="Bureau" value={OFFICER.office}/>
-        <SummaryRow label="Email" value={OFFICER.email}/>
-        <SummaryRow label="Téléphone" value="+224 622 04 71 88"/>
-        <SummaryRow label="Habilitations" value="Émission DUT, Contrôle routier, Verbalisation"/>
-        <SummaryRow label="Dernière connexion" value="30/04/2026, 09:38 GMT, Conakry"/>
-        <SummaryRow label="Sessions actives" value="2 (poste bureau, mobile)"/>
-        <div style={{ marginTop: 16, paddingTop: 12, borderTop: '1px solid #E5DDC9', display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-          <button style={ghostBtn()}>Modifier mes informations</button>
-          <button style={ghostBtn()}>Changer le mot de passe</button>
-        </div>
-      </section>
-    </div>
-  </div>
-);
-
-// ─── Officer: Paramètres ───────────────────────────────────────────
-const OfficerSettings = ({ lang }) => (
-  <div>
-    <PageHead kicker="Préférences de l'application" title="Paramètres"/>
-    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 16 }}>
-      <SettingsCard title="Sécurité">
-        <SettingRow label="Authentification à deux facteurs" value="Activée, SMS au +224 622 04 71 88" toggle/>
-        <SettingRow label="Verrouillage automatique" value="Après 5 minutes d'inactivité"/>
-        <SettingRow label="Journal d'audit" value="237 actions ce mois"/>
-      </SettingsCard>
-      <SettingsCard title="Notifications">
-        <SettingRow label="DUT émis par mes collègues" value="Email seulement" toggle/>
-        <SettingRow label="Paiements reçus" value="Push + email" toggle defaultChecked/>
-        <SettingRow label="Échéances dépassées" value="Récap quotidien à 08:00" toggle defaultChecked/>
-      </SettingsCard>
-      <SettingsCard title="Préférences">
-        <SettingRow label="Langue" value="Français (Guinée)"/>
-        <SettingRow label="Format des dates" value="JJ/MM/AAAA"/>
-        <SettingRow label="Devise par défaut" value="GNF, Franc guinéen"/>
-        <SettingRow label="Fuseau horaire" value="GMT (Conakry)"/>
-      </SettingsCard>
-      <SettingsCard title="Intégrations">
-        <SettingRow label="SAFI, Trésor public" value="Connecté" tone="good"/>
-        <SettingRow label="RCCM-CCI" value="Connecté" tone="good"/>
-        <SettingRow label="KKiaPay" value="Connecté" tone="good"/>
-        <SettingRow label="Annuaire DGI (NIF)" value="Connecté" tone="good"/>
-      </SettingsCard>
-    </div>
-  </div>
-);
-
-// ─── Transporter: Historique des DUT ───────────────────────────────
-const TransporterHistory = ({ lang, onOpen }) => {
-  const [filter, setFilter] = React.useState('all');
-  const allRows = [...RECENT_DUTS, ...RECENT_DUTS.map(r => ({ ...r, id: r.id.replace('821','712'), date: '12/04/2026' }))];
-  const filtered = filter === 'all' ? allRows : allRows.filter(r => r.status === filter);
-  return (
-    <div>
-      <PageHead kicker={`${allRows.length} DUT émis depuis ${CARRIER.since}`} title={t('history', lang)}>
-        <button style={ghostBtn()}><Icon name="download" size={13}/> Exporter CSV</button>
-        <button style={ghostBtn()}><Icon name="search" size={13}/> Filtres avancés</button>
-      </PageHead>
-      <div style={{ display: 'flex', gap: 6, marginBottom: 16, flexWrap: 'wrap' }}>
-        {[['all','Tous'],['paid',t('statusPaid', lang)],['pending',t('statusPending', lang)],['expired',t('statusExpired', lang)]].map(([k,l]) => (
-          <button key={k} onClick={() => setFilter(k)} style={{
-            padding: '6px 12px', border: '1px solid', borderColor: filter===k?'#161413':'#DCD3BD',
-            background: filter===k?'#161413':'#fff', color: filter===k?'#FCD116':'#161413',
-            fontSize: 12, fontWeight: filter===k?600:500, cursor: 'pointer', fontFamily: 'inherit', borderRadius: 2,
-          }}>{l}</button>
-        ))}
-      </div>
-      <section style={{ ...paperCard(), padding: 0 }}>
-        <table className="sober-stack" style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12.5 }}>
-          <thead><tr style={{ color: '#9A9281', fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase', background: '#FBF8F2' }}>
-            {[t('docNumber', lang), t('issuedOn', lang), t('route', lang), t('cargo', lang), t('vehicle', lang), t('total', lang), 'Statut'].map(h => <th key={h} style={{ textAlign: 'left', padding: '12px 12px', borderBottom: '1px solid #E5DDC9', fontWeight: 500 }}>{h}</th>)}
-          </tr></thead>
-          <tbody>
-            {filtered.map((d, i) => (
-              <tr key={d.id+'-'+i} onClick={onOpen} style={{ cursor: 'pointer', background: i % 2 ? '#FBF8F2' : 'transparent' }}>
-                <td data-label={t('docNumber', lang)} style={{ ...td(), fontFamily: '"JetBrains Mono", monospace', fontSize: 11.5 }}>{d.id}</td>
-                <td data-label={t('issuedOn', lang)} style={td()}>{d.date}</td>
-                <td data-label={t('route', lang)} style={td()}>{d.from} → {d.to}</td>
-                <td data-label={t('cargo', lang)} style={td()}>{d.goods}</td>
-                <td data-label={t('vehicle', lang)} style={{ ...td(), fontFamily: '"JetBrains Mono", monospace' }}>{d.vehicle}</td>
-                <td data-label={t('total', lang)} style={{ ...td(), textAlign: 'right' }}>{fmtGNF(d.amount)}</td>
-                <td data-label="Statut" style={td()}><StatusPill status={d.status} lang={lang}/></td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </section>
-    </div>
-  );
-};
-
-// ─── Transporter: Paiements ────────────────────────────────────────
-const TransporterPayments = ({ lang, onPay, onPayImport, onViewDut, onViewImport }) => {
-  const isFr = lang !== 'en';
-  // Mock: bills issued to this carrier (Diallo & Frères = TRP-04812) that are unpaid.
-  const pending = [
-    { id: 'DUT-2026-04-08820', from: 'Boffa',   to: 'Conakry', goods: 'Ciment',         amount: 198500, due: '02/05/2026', issued: '28/04/2026', officer: 'F. Camara' },
-    { id: 'DUT-2026-04-08812', from: 'Kindia',  to: 'Conakry', goods: 'Hydrocarbures',  amount: 524800, due: '03/05/2026', issued: '26/04/2026', officer: 'F. Camara' },
-  ];
-  const totalDue = pending.reduce((s, b) => s + b.amount, 0);
-
-  // Vehicle import bills addressed to this company
-  const myImports = (typeof IMPORT_BILLS !== 'undefined' ? IMPORT_BILLS : []).filter(b => b.importerKind === 'company' && b.importerId === 'TRP-04812');
-  const pendingImports = myImports.filter(b => b.status === 'pending');
-  const importDue = pendingImports.reduce((s, b) => s + b.total, 0);
-  const grandTotal = totalDue + importDue;
-  const [importModal, setImportModal] = React.useState(null);
-
-  return (
-    <div>
-      <PageHead kicker={isFr ? 'Émis par DNTT, à régler en ligne' : 'Issued by DNTT, to be paid online'} title={isFr ? 'Mes DUT à régler' : 'Bills due'}>
-        <button style={ghostBtn()}><Icon name="download" size={13}/> {isFr ? 'Relevé' : 'Statement'}</button>
-      </PageHead>
-
-      {/* Hero summary */}
-      <div style={{ marginBottom: 22, padding: 18, background: '#161413', color: '#F7F3EB', display: 'grid', gridTemplateColumns: '1fr auto', alignItems: 'center', gap: 16, borderRadius: 2 }}>
-        <div>
-          <div style={{ fontSize: 10.5, letterSpacing: '.18em', textTransform: 'uppercase', color: '#FCD116' }}>{isFr ? 'Total à régler' : 'Total due'}</div>
-          <div style={{ fontFamily: '"Crimson Pro", serif', fontSize: 36, fontWeight: 600, marginTop: 4 }}>{fmtGNF(grandTotal)}</div>
-          <div style={{ fontSize: 12, color: '#B5AC97', marginTop: 4 }}>
-            {pending.length} {isFr ? 'DUT' : 'DUT'}{pendingImports.length > 0 ? ` + ${pendingImports.length} ${isFr ? 'taxe d’importation véhicule' + (pendingImports.length > 1 ? 's' : '') : 'vehicle import tax' + (pendingImports.length > 1 ? 'es' : '')}` : ''}, {isFr ? 'prochain règlement avant le 02/05' : 'next due May 2'}
-          </div>
-        </div>
-        <button onClick={onPay} style={{ background: '#FCD116', color: '#161413', border: 'none', padding: '12px 22px', fontFamily: 'inherit', fontWeight: 700, fontSize: 13.5, cursor: 'pointer', borderRadius: 2, display: 'inline-flex', alignItems: 'center', gap: 8 }}>
-          <Icon name="coin" size={15}/> {isFr ? 'Tout régler maintenant' : 'Pay all now'}
-        </button>
-      </div>
-
-      {/* Vehicle import bills */}
-      {pendingImports.length > 0 && (
-        <section style={{ marginBottom: 22 }}>
-          <div style={{ fontSize: 10.5, letterSpacing: '.18em', color: '#9A9281', textTransform: 'uppercase', marginBottom: 10, display: 'flex', alignItems: 'center', gap: 8 }}>
-            <Icon name="ship" size={13}/> {isFr ? 'Importations de véhicules' : 'Vehicle imports'}, {pendingImports.length} {isFr ? 'taxe' : 'tax'}{pendingImports.length > 1 ? 's' : ''} {isFr ? 'à régler' : 'due'}
-          </div>
-          <div style={{ display: 'grid', gridTemplateColumns: pendingImports.length > 1 ? 'repeat(auto-fit, minmax(360px, 1fr))' : '1fr', gap: 12 }}>
-            {pendingImports.map(b => (
-              <ImportBillCard key={b.id} bill={b} lang={lang} onView={(x) => onViewImport ? onViewImport(x) : setImportModal(x)} onPay={(x) => onPayImport ? onPayImport(x) : setImportModal(x)}/>
-            ))}
-          </div>
-        </section>
-      )}
-
-      {/* Pending DUT cards */}
-      <div style={{ fontSize: 10.5, letterSpacing: '.18em', color: '#9A9281', textTransform: 'uppercase', marginBottom: 10 }}>
-        {isFr ? 'Documents Uniques de Transport' : 'Transport documents'}
-      </div>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))', gap: 14, marginBottom: 28 }}>
-        {pending.map(b => (
-          <article key={b.id} style={{ ...paperCard(), padding: 16, borderLeft: '3px solid #FCD116' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 10 }}>
-              <div>
-                <div style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 12, fontWeight: 700 }}>{b.id}</div>
-                <div style={{ fontSize: 11, color: '#9A9281' }}>{isFr ? 'Émis le' : 'Issued'} {b.issued}, {b.officer}</div>
-              </div>
-              <StatusPill status="pending" lang={lang}/>
-            </div>
-            <div style={{ fontSize: 13, marginBottom: 4 }}>{b.from} → {b.to}</div>
-            <div style={{ fontSize: 12, color: '#6B6557', marginBottom: 10 }}>{b.goods}</div>
-            <div style={{ paddingTop: 10, borderTop: '1px solid #E5DDC9', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <div>
-                <div style={{ fontSize: 10.5, color: '#9A9281', letterSpacing: '.12em', textTransform: 'uppercase' }}>{isFr ? 'À régler avant' : 'Due'}</div>
-                <div style={{ fontWeight: 600, fontSize: 13 }}>{b.due}</div>
-              </div>
-              <div style={{ textAlign: 'right' }}>
-                <div style={{ fontFamily: '"Crimson Pro", serif', fontSize: 18, fontWeight: 600 }}>{fmtGNF(b.amount)}</div>
-              </div>
-            </div>
-            <div style={{ display: 'flex', gap: 8, marginTop: 12 }}>
-              <button onClick={() => onViewDut?.(b)} style={{ ...ghostBtn(), flex: 1, justifyContent: 'center' }}>
-                <Icon name="doc" size={13}/> {isFr ? 'Voir le DUT' : 'View bill'}
-              </button>
-              <button onClick={onPay} style={{
-                flex: 1, background: '#161413', color: '#FCD116', border: 'none',
-                padding: '9px 14px', fontFamily: 'inherit', fontWeight: 700, fontSize: 12.5,
-                cursor: 'pointer', borderRadius: 2, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 6,
-              }}>
-                <Icon name="coin" size={13}/> {isFr ? 'Régler le DUT' : 'Pay bill'}
-              </button>
-            </div>
-          </article>
-        ))}
-      </div>
-
-      {/* KPI strip */}
-      <div className="sober-kpi-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 14, marginBottom: 22 }}>
-        <KpiTile label={isFr ? 'Réglés ce mois' : 'Paid this month'} big="8,42M" suffix="GNF" hint={`14 ${isFr ? 'transactions' : 'transactions'}`} tone="good"/>
-        <KpiTile label={isFr ? 'En attente' : 'Pending'} big={`${Math.round(totalDue/1000)}`} suffix="K GNF" hint={`${pending.length} DUT`} tone="warn"/>
-        <KpiTile label={isFr ? 'Méthode favorite' : 'Top method'} big="OM" hint={isFr ? '64% des paiements' : '64% of payments'}/>
-      </div>
-
-      <section style={paperCard()}>
-        <header style={cardHeader()}><h2 style={cardTitle()}>{isFr ? 'Transactions récentes' : 'Recent transactions'}</h2><button style={ghostBtn()}><Icon name="download" size={13}/> {isFr ? 'Relevé PDF' : 'PDF statement'}</button></header>
-        <table className="sober-stack" style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12.5 }}>
-          <thead><tr style={{ color: '#9A9281', fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase' }}>
-            {[isFr?'Référence':'Reference', 'Date', 'DUT', isFr?'Méthode':'Method', isFr?'Montant':'Amount', isFr?'Statut':'Status'].map(h => <th key={h} style={{ textAlign: 'left', padding: '10px 6px', borderBottom: '1px solid #E5DDC9', fontWeight: 500 }}>{h}</th>)}
-          </tr></thead>
-          <tbody>
-            {[
-              { ref: 'KKP-2026-A4F71B', date: '28/04', dut: 'DUT-2026-04-08821', method: 'Orange Money', amount: 338000, ok: true },
-              { ref: 'KKP-2026-9B22E0', date: '25/04', dut: 'DUT-2026-04-08714', method: 'MTN MoMo',     amount: 412500, ok: true },
-              { ref: 'KKP-2026-7CD104', date: '22/04', dut: 'DUT-2026-04-08698', method: 'Carte BICIGUI', amount: 372000, ok: false },
-              { ref: 'KKP-2026-4F8A2E', date: '18/04', dut: 'DUT-2026-04-08512', method: 'Virement Ecobank', amount: 1240000, ok: true },
-              { ref: 'KKP-2026-3119BA', date: '14/04', dut: 'DUT-2026-04-08344', method: 'Orange Money', amount: 296500, ok: true },
-            ].map((p, i) => (
-              <tr key={p.ref} style={{ background: i % 2 ? '#FBF8F2' : 'transparent' }}>
-                <td data-label={isFr?'Référence':'Reference'} style={{ ...td(), fontFamily: '"JetBrains Mono", monospace', fontSize: 11 }}>{p.ref}</td>
-                <td data-label="Date" style={td()}>{p.date}/2026</td>
-                <td data-label="DUT" style={{ ...td(), fontFamily: '"JetBrains Mono", monospace', fontSize: 11 }}>{p.dut}</td>
-                <td data-label={isFr?'Méthode':'Method'} style={td()}>{p.method}</td>
-                <td data-label={isFr?'Montant':'Amount'} style={{ ...td(), textAlign: 'right' }}>{fmtGNF(p.amount)}</td>
-                <td data-label={isFr?'Statut':'Status'} style={td()}><StatusPill status={p.ok ? 'paid' : 'expired'} lang={lang}/></td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </section>
-      {importModal && <ImportBillModal bill={importModal} lang={lang} onClose={() => setImportModal(null)} onPay={(b) => { setImportModal(null); onPayImport?.(b); }}/>}
-    </div>
-  );
-};
-
-// ─── Transporter: Ma flotte ────────────────────────────────────────
-const TransporterFleet = ({ lang }) => (
-  <div>
-    <PageHead kicker={`${CARRIER.short}, ${VEHICLES.length} véhicules`} title="Ma flotte">
-      <button style={ghostBtn()}><Icon name="download" size={13}/> Exporter</button>
-      <button style={primaryBtn()}><Icon name="plus" size={14}/> Ajouter un véhicule</button>
-    </PageHead>
-    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(290px, 1fr))', gap: 14 }}>
-      {VEHICLES.map(v => (
-        <div key={v.plate} style={{ ...paperCard(), padding: 16 }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
-            <div style={{ width: 36, height: 36, background: '#FBF8F2', border: '1px solid #E5DDC9', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Icon name="truck" size={18} style={{ color: '#161413' }}/></div>
-            <div style={{ flex: 1 }}>
-              <div style={{ fontFamily: '"JetBrains Mono", monospace', fontWeight: 700, fontSize: 14 }}>{v.plate}</div>
-              <div style={{ fontSize: 10.5, color: '#9A9281', textTransform: 'uppercase', letterSpacing: '.1em' }}>{v.type}</div>
-            </div>
-          </div>
-          <div style={{ fontSize: 11.5, color: '#6B6557', lineHeight: 1.7 }}>
-            <SummaryRow label="Marque" value={`${v.brand} (${v.year})`}/>
-            <SummaryRow label="Capacité" value={v.capacity}/>
-            <SummaryRow label="Conducteur" value={v.driver}/>
-          </div>
-          <div style={{ marginTop: 10, paddingTop: 10, borderTop: '1px solid #E5DDC9', display: 'flex', justifyContent: 'space-between' }}>
-            <span style={{ fontSize: 11, color: '#1F4F2C', fontWeight: 600 }}>✓ Visite technique à jour</span>
-            <button style={{ ...ghostBtn(), padding: '4px 10px', fontSize: 11 }}>Détail →</button>
-          </div>
-        </div>
-      ))}
-    </div>
-  </div>
-);
-
-// ─── Transporter: Profil ───────────────────────────────────────────
-const TransporterProfile = ({ lang }) => (
-  <div>
-    <PageHead kicker={`Compte transporteur, ${CARRIER.id || CARRIER.rccm}`} title="Profil de ma société"/>
-    <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 320px) 1fr', gap: 22 }} className="dut-profile-grid">
-      <section style={paperCard(true)}>
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
-          <div style={{ width: 96, height: 96, background: '#161413', color: '#FCD116', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: '"Crimson Pro", serif', fontSize: 36, fontWeight: 600 }}>D&F</div>
-          <div style={{ fontFamily: '"Crimson Pro", serif', fontSize: 18, fontWeight: 600, textAlign: 'center' }}>{CARRIER.name}</div>
-          <div style={{ fontSize: 11.5, color: '#6B6557' }}>Depuis {CARRIER.since}</div>
-          <span style={{ background: '#E8F2EA', color: '#1F4F2C', padding: '3px 10px', fontSize: 11, fontWeight: 600 }}>✓ Compte vérifié</span>
-        </div>
-      </section>
-      <section style={paperCard(true)}>
-        <header style={cardHeader()}><h2 style={cardTitle()}>Identité juridique</h2></header>
-        <SummaryRow label="RCCM" value={CARRIER.rccm} mono/>
-        <SummaryRow label="NIF" value={CARRIER.nif} mono/>
-        <SummaryRow label="Dirigeant" value={CARRIER.director}/>
-        <SummaryRow label="Adresse" value={CARRIER.address}/>
-        <SummaryRow label="Téléphone" value={CARRIER.phone}/>
-        <SummaryRow label="Email" value={CARRIER.email}/>
-        <SummaryRow label="Flotte" value={`${CARRIER.fleet} véhicules`}/>
-        <div style={{ marginTop: 16, paddingTop: 12, borderTop: '1px solid #E5DDC9', display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-          <button style={ghostBtn()}>Modifier les informations</button>
-          <button style={ghostBtn()}>Demander un duplicata RCCM</button>
-        </div>
-      </section>
-    </div>
-  </div>
-);
-
-// ─── Transporter: Support ──────────────────────────────────────────
-const TransporterSupport = ({ lang }) => (
-  <div>
-    <PageHead kicker="Aide & assistance" title="Support transporteur"/>
-    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 16, marginBottom: 22 }}>
-      <ContactTile icon="phone" label="USSD gratuit" value="*144#" detail="Tous opérateurs, 24/7, français + langues nationales"/>
-      <ContactTile icon="phone" label="Hotline" value="+224 657 144 144" detail="Lun-Ven, 08:00 à 18:00 GMT"/>
-      <ContactTile icon="chat"  label="WhatsApp"  value="+224 622 14 88 03" detail="Réponse sous 30 min en heures ouvrables"/>
-      <ContactTile icon="search"  label="Email"     value="support@dut.gov.gn" detail="Réponse sous 24 h"/>
-    </div>
-    <section style={paperCard()}>
-      <header style={cardHeader()}><h2 style={cardTitle()}>Questions fréquentes</h2></header>
-      {[
-        ['Comment puis-je payer un DUT par USSD ?', 'Composez *144# depuis le numéro associé à votre compte, choisissez "Payer une facture DUT" puis saisissez la référence DUT-AAAA-MM-XXXXX. Validez avec votre code Mobile Money.'],
-        ['Que faire si le contrôle routier ne reconnaît pas mon DUT ?', 'Présentez le QR code imprimé ou affichez-le depuis l\'application. Le QR est vérifiable hors ligne sur les terminaux des agents de contrôle.'],
-        ['Combien de temps un DUT est-il valide ?', 'Un DUT est valide pour le seul trajet déclaré, entre les dates de départ et d\'arrivée saisies. Au-delà, un nouveau DUT est requis.'],
-        ['Puis-je contester une liquidation ?', 'Oui, dans un délai de 48 h après émission, via le bouton "Contester" sur la facture. La réclamation est instruite par la DNTT sous 5 jours ouvrés.'],
-      ].map(([q, a], i) => (
-        <details key={i} style={{ borderTop: i ? '1px solid #E5DDC9' : 'none', padding: '12px 0' }}>
-          <summary style={{ cursor: 'pointer', fontWeight: 600, fontSize: 13 }}>{q}</summary>
-          <div style={{ marginTop: 8, color: '#6B6557', fontSize: 12.5, lineHeight: 1.55 }}>{a}</div>
-        </details>
-      ))}
-    </section>
-  </div>
-);
-
-// ─── Transporter: Paramètres ───────────────────────────────────────
-const TransporterSettings = ({ lang }) => (
-  <div>
-    <PageHead kicker="Préférences du compte" title="Paramètres"/>
-    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 16 }}>
-      <SettingsCard title="Sécurité">
-        <SettingRow label="Authentification à deux facteurs" value={`Activée, SMS au ${CARRIER.phone}`} toggle defaultChecked/>
-        <SettingRow label="PIN de validation paiement" value="4 chiffres, changé il y a 14 j"/>
-        <SettingRow label="Sessions actives" value="3 appareils"/>
-      </SettingsCard>
-      <SettingsCard title="Notifications">
-        <SettingRow label="Nouvelle facture DUT émise" value="SMS + email" toggle defaultChecked/>
-        <SettingRow label="Rappel d'échéance" value="J−2, J−1, jour J" toggle defaultChecked/>
-        <SettingRow label="Confirmation de paiement" value="SMS uniquement" toggle defaultChecked/>
-      </SettingsCard>
-      <SettingsCard title="Moyens de paiement enregistrés">
-        <SettingRow label="Orange Money" value={CARRIER.phone} tone="good"/>
-        <SettingRow label="MTN MoMo" value="+224 628 41 02 17" tone="good"/>
-        <SettingRow label="Carte Visa" value="•••• 7821, BICIGUI"/>
-        <button style={{ ...ghostBtn(), marginTop: 8 }}><Icon name="plus" size={12}/> Ajouter un moyen</button>
-      </SettingsCard>
-      <SettingsCard title="Préférences">
-        <SettingRow label="Langue" value="Français"/>
-        <SettingRow label="Reçus PDF par défaut" value="Téléchargement automatique" toggle defaultChecked/>
-        <SettingRow label="Format des dates" value="JJ/MM/AAAA"/>
-      </SettingsCard>
-    </div>
-  </div>
-);
-
-// ─── Small helpers used by the screens above ───────────────────────
 const PageHead = ({ kicker, title, children }) => (
   <div className="dut-pagehead" style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', borderBottom: '1px solid #E5DDC9', paddingBottom: 14, marginBottom: 22, gap: 12, flexWrap: 'wrap' }}>
     <div>
@@ -477,49 +10,506 @@ const PageHead = ({ kicker, title, children }) => (
     {children && <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>{children}</div>}
   </div>
 );
-
 const SettingsCard = ({ title, children }) => (
-  <section style={paperCard(true)}>
-    <header style={cardHeader()}><h2 style={cardTitle()}>{title}</h2></header>
-    {children}
-  </section>
+  <section style={paperCard(true)}><header style={cardHeader()}><h2 style={cardTitle()}>{title}</h2></header>{children}</section>
 );
-
-const SettingRow = ({ label, value, tone, toggle, defaultChecked }) => (
-  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 0', borderTop: '1px solid #F0E9D6', gap: 14 }}>
-    <div style={{ minWidth: 0, flex: 1 }}>
-      <div style={{ fontSize: 12.5, fontWeight: 600 }}>{label}</div>
-      <div style={{ fontSize: 11.5, color: tone === 'good' ? '#1F4F2C' : '#6B6557', marginTop: 2 }}>{value}</div>
-    </div>
-    {toggle ? <ToggleSwitch defaultChecked={defaultChecked}/> : <Icon name="chev" size={14} style={{ color: '#9A9281', flexShrink: 0 }}/>}
-  </div>
+const ToggleSwitch = ({ checked, onChange, label }) => (
+  <button role="switch" aria-checked={checked} aria-label={label} onClick={() => onChange(!checked)} style={{ width: 38, height: 22, borderRadius: 11, border: 'none', background: checked ? '#009460' : '#DCD3BD', position: 'relative', cursor: 'pointer', flexShrink: 0, transition: 'background .15s' }}>
+    <span style={{ position: 'absolute', top: 3, left: checked ? 19 : 3, width: 16, height: 16, borderRadius: '50%', background: '#fff', transition: 'left .15s' }}/>
+  </button>
 );
-
-const ToggleSwitch = ({ defaultChecked }) => {
+// Setting row with an optional working toggle (local state, toast on change).
+const SettingRow = ({ label, value, tone, toggle, defaultChecked, onClick }) => {
   const [on, setOn] = React.useState(!!defaultChecked);
+  const toast = useToast();
   return (
-    <button onClick={() => setOn(!on)} style={{
-      width: 38, height: 22, borderRadius: 11, border: 'none', cursor: 'pointer', padding: 0,
-      background: on ? '#161413' : '#DCD3BD', position: 'relative', flexShrink: 0,
-    }}>
-      <span style={{ position: 'absolute', top: 2, left: on ? 18 : 2, width: 18, height: 18, borderRadius: '50%', background: on ? '#FCD116' : '#fff', transition: 'left .15s' }}/>
-    </button>
+    <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '10px 0', borderTop: '1px solid #F0E9D6' }}>
+      <div style={{ flex: 1, minWidth: 0 }}>
+        <div style={{ fontSize: 13, fontWeight: 500 }}>{label}</div>
+        {value && <div style={{ fontSize: 11.5, color: tone === 'good' ? '#1F4F2C' : '#6B6557' }}>{value}</div>}
+      </div>
+      {toggle && <ToggleSwitch checked={on} label={label} onChange={(v) => { setOn(v); toast(`${label} : ${v ? 'activé' : 'désactivé'}`, 'info'); }}/>}
+      {onClick && <button style={{ ...ghostBtn(), padding: '5px 10px', fontSize: 11.5 }} onClick={onClick}>Modifier</button>}
+    </div>
+  );
+};
+const ContactTile = ({ icon, label, value, detail, href, onClick }) => {
+  const inner = (
+    <>
+      <div style={{ width: 36, height: 36, background: '#161413', color: '#FCD116', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}><Icon name={icon} size={16}/></div>
+      <div style={{ minWidth: 0 }}>
+        <div style={{ fontSize: 10.5, letterSpacing: '.16em', color: '#9A9281', textTransform: 'uppercase' }}>{label}</div>
+        <div style={{ fontWeight: 600, fontSize: 14 }}>{value}</div>
+        {detail && <div style={{ fontSize: 11.5, color: '#6B6557' }}>{detail}</div>}
+      </div>
+    </>
+  );
+  const st = { ...paperCard(), display: 'flex', gap: 12, alignItems: 'flex-start', textDecoration: 'none', color: '#161413', cursor: 'pointer', textAlign: 'left', fontFamily: 'inherit', width: '100%' };
+  return href ? <a href={href} style={st}>{inner}</a> : <button onClick={onClick} style={st}>{inner}</button>;
+};
+
+// ─── Officer: Transporteurs ────────────────────────────────────────
+const OfficerTransporters = ({ lang, go }) => {
+  const s = useDut();
+  const toast = useToast();
+  const [q, setQ] = React.useState('');
+  const [kind, setKind] = React.useState('all');
+  const [add, setAdd] = React.useState(false);
+  const [nt, setNt] = React.useState({ kind: 'company', short: '', contact: '', doc: '', phone: '+224 6', city: 'Conakry', address: '' });
+  const list = s.transporters.filter(t => (kind === 'all' || t.kind === kind) && (t.short + t.id + t.city).toLowerCase().includes(q.toLowerCase()));
+  return (
+    <div>
+      <PageHead kicker="Référentiel, transporteurs agréés" title="Transporteurs">
+        <button style={ghostBtn()} onClick={() => { downloadCsv('transporteurs.csv', [['ID', 'Nom', 'Type', 'Pièce', 'Ville', 'Téléphone'], ...s.transporters.map(t => [t.id, t.short, t.kind, t.doc, t.city, t.phone])]); toast('Export téléchargé'); }}><Icon name="download" size={13}/> Exporter</button>
+        <button style={primaryBtn()} onClick={() => setAdd(true)}><Icon name="plus" size={14}/> Nouveau transporteur</button>
+      </PageHead>
+      <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', alignItems: 'center', marginBottom: 6 }}>
+        <div style={{ flex: '1 1 220px', maxWidth: 320 }}><Input value={q} onChange={setQ} placeholder="Filtrer par nom, identifiant, ville"/></div>
+        <FilterChips value={kind} onChange={setKind} options={[['all', 'Tous'], ['company', 'Personnes morales'], ['individual', 'Personnes physiques']]}/>
+      </div>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: 14 }}>
+        {list.map(tr => {
+          const isInd = tr.kind === 'individual';
+          const bills = sel.billsOf(s, tr.id);
+          const due = bills.filter(b => b.status === 'pending');
+          return (
+            <button key={tr.id} onClick={() => go('transporter', tr.id)} style={{ ...paperCard(), padding: 16, textAlign: 'left', cursor: 'pointer', fontFamily: 'inherit', color: '#161413' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
+                <div style={{ width: 36, height: 36, background: isInd ? '#FBF8F2' : '#161413', color: isInd ? '#161413' : '#FCD116', border: isInd ? '1px solid #E5DDC9' : 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontFamily: '"Crimson Pro", serif', borderRadius: isInd ? '50%' : 0, flexShrink: 0 }}>{tr.short.split(' ').map(x => x[0]).slice(0, 2).join('')}</div>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ fontWeight: 600, fontSize: 13.5, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{tr.short}</div>
+                  <div style={{ fontSize: 10.5, color: '#9A9281', ...monoStyle }}>{tr.id}</div>
+                </div>
+                <span style={{ background: isInd ? '#FFF6E0' : '#E8F2EA', color: isInd ? '#7A5A00' : '#1F4F2C', padding: '2px 7px', fontSize: 10, fontWeight: 600, letterSpacing: '.08em', textTransform: 'uppercase' }}>{isInd ? 'P. physique' : 'Agréé'}</span>
+              </div>
+              <div style={{ fontSize: 11.5, color: '#6B6557', lineHeight: 1.7 }}>
+                <div style={{ ...monoStyle, fontSize: 11 }}>{tr.doc}</div>
+                <div>{tr.city}, {sel.vehiclesOf(s, tr.id).length} véhicule(s)</div>
+                <div>{tr.payAccount ? `${PROVIDERS[tr.payAccount.provider].label}${tr.payAccount.mandate ? ', prélèvement autorisé' : ''}` : 'Pas de compte de paiement'}</div>
+              </div>
+              <div style={{ marginTop: 10, paddingTop: 10, borderTop: '1px solid #E5DDC9', display: 'flex', justifyContent: 'space-between', fontSize: 11 }}>
+                <span style={{ color: '#9A9281' }}>{bills.length} DUT</span>
+                {due.length > 0 ? <span style={{ color: '#8A1B1B', fontWeight: 600 }}>{due.length} à régler</span> : <span style={{ color: '#1F4F2C' }}>À jour</span>}
+              </div>
+            </button>
+          );
+        })}
+      </div>
+      {add && (
+        <DutModal title="Nouveau transporteur" onClose={() => setAdd(false)} footer={<><button style={ghostBtn()} onClick={() => setAdd(false)}>Annuler</button><button style={primaryBtn()} disabled={!nt.short || !nt.doc} onClick={() => { const id = (nt.kind === 'company' ? 'TRP-' : 'IND-') + Math.floor(10000 + Math.random() * 89999); dutActions.addTransporter({ ...nt, id, name: nt.kind === 'company' ? nt.short.toUpperCase() : nt.short, contact: nt.contact || nt.short, address: nt.address || nt.city, nif: '', email: '', since: 2026, payAccount: null }); toast(`${nt.short} enregistré (${id})`); setAdd(false); go('transporter', id); }}>Enregistrer</button></>}>
+          <Field label="Type"><Select value={nt.kind} onChange={v => setNt(x => ({ ...x, kind: v }))} options={[{ value: 'company', label: 'Personne morale' }, { value: 'individual', label: 'Personne physique' }]}/></Field>
+          <FieldRow><Field label={nt.kind === 'company' ? 'Raison sociale' : 'Nom et prénoms'}><Input value={nt.short} onChange={v => setNt(x => ({ ...x, short: v }))}/></Field><Field label={nt.kind === 'company' ? 'RCCM' : 'N° CNI'}><Input value={nt.doc} onChange={v => setNt(x => ({ ...x, doc: v }))}/></Field></FieldRow>
+          <FieldRow><Field label="Représentant"><Input value={nt.contact} onChange={v => setNt(x => ({ ...x, contact: v }))}/></Field><Field label="Téléphone"><Input value={nt.phone} onChange={v => setNt(x => ({ ...x, phone: v }))}/></Field></FieldRow>
+          <FieldRow><Field label="Ville"><Select value={nt.city} onChange={v => setNt(x => ({ ...x, city: v }))} options={DUT_CITIES}/></Field><Field label="Adresse"><Input value={nt.address} onChange={v => setNt(x => ({ ...x, address: v }))}/></Field></FieldRow>
+        </DutModal>
+      )}
+    </div>
   );
 };
 
-const ContactTile = ({ icon, label, value, detail }) => (
-  <div style={{ ...paperCard(), padding: 16 }}>
-    <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 8 }}>
-      <div style={{ width: 32, height: 32, background: '#161413', color: '#FCD116', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Icon name={icon} size={16}/></div>
-      <div style={{ fontSize: 11, letterSpacing: '.16em', textTransform: 'uppercase', color: '#9A9281' }}>{label}</div>
+const OfficerTransporterDetail = ({ lang, id, go }) => {
+  const s = useDut();
+  const [addVeh, setAddVeh] = React.useState(false);
+  const tr = sel.transporter(s, id);
+  if (!tr) return null;
+  const bills = [...sel.billsOf(s, id)].sort((a, b) => b.issuedAt - a.issuedAt);
+  const vehicles = sel.vehiclesOf(s, id);
+  const acc = tr.payAccount;
+  return (
+    <div>
+      <PageHead kicker={`${tr.kind === 'company' ? 'Personne morale' : 'Personne physique'}, ${tr.id}`} title={tr.short}>
+        <button style={ghostBtn()} onClick={() => go('transporters')}>← Transporteurs</button>
+        <button style={primaryBtn()} onClick={() => go('issue', null, { transporterId: id })}><Icon name="plus" size={14}/> Émettre un DUT</button>
+      </PageHead>
+      <div className="sober-grid-2" style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1fr)', gap: 22, marginBottom: 22 }}>
+        <section style={paperCard(true)}>
+          <header style={cardHeader()}><h2 style={cardTitle()}>Identification</h2></header>
+          <SummaryRow label={tr.kind === 'company' ? 'Raison sociale' : 'Nom'} value={tr.name}/>
+          <SummaryRow label={tr.kind === 'company' ? 'RCCM' : 'Pièce'} value={tr.doc} mono/>
+          <SummaryRow label="Représentant" value={tr.contact}/>
+          <SummaryRow label="Téléphone" value={tr.phone}/>
+          <SummaryRow label="Adresse" value={tr.address}/>
+        </section>
+        <section style={paperCard(true)}>
+          <header style={cardHeader()}><h2 style={cardTitle()}>Paiement</h2></header>
+          {acc ? (
+            <>
+              <SummaryRow label="Compte enregistré" value={`${PROVIDERS[acc.provider].label} ${maskPhone(acc.number)}`}/>
+              <SummaryRow label="Titulaire" value={acc.holder}/>
+              <SummaryRow label="Prélèvement par la DNTT" value={acc.mandate ? 'Autorisé' : 'Non autorisé'}/>
+              <SummaryRow label="Paiement automatique" value={acc.mandate && acc.autoPay ? 'Activé à chaque émission' : 'Désactivé'}/>
+            </>
+          ) : <p style={{ fontSize: 12.5, color: '#6B6557', margin: 0 }}>Le transporteur n’a pas encore enregistré de moyen de paiement. Vous pouvez encaisser en espèces ou envoyer une demande de paiement mobile money.</p>}
+          <div style={{ marginTop: 10, fontSize: 12 }}>{bills.filter(b => b.status === 'pending').length} DUT à régler, {fmtGNF(bills.filter(b => b.status === 'pending').reduce((x, b) => x + b.amount, 0))}</div>
+        </section>
+      </div>
+      <section style={{ ...paperCard(), marginBottom: 22 }}>
+        <header style={cardHeader()}><h2 style={cardTitle()}>Véhicules ({vehicles.length})</h2><button style={ghostBtn()} onClick={() => setAddVeh(true)}><Icon name="plus" size={13}/> Ajouter</button></header>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: 10 }}>
+          {vehicles.map(v => <div key={v.plate} style={{ padding: 10, border: '1px solid #E5DDC9', fontSize: 12 }}><b style={monoStyle}>{v.plate}</b><div style={{ color: '#6B6557' }}>{v.type}, {v.brand}, {v.driver}</div></div>)}
+        </div>
+      </section>
+      <section style={paperCard()}><header style={cardHeader()}><h2 style={cardTitle()}>DUT ({bills.length})</h2></header><BillsTable bills={bills} onOpen={(b) => go('bill', b.id)} lang={lang}/></section>
+      {addVeh && <AddVehicleModal transporterId={id} onClose={() => setAddVeh(false)}/>}
     </div>
-    <div style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 17, fontWeight: 700 }}>{value}</div>
-    <div style={{ fontSize: 11.5, color: '#6B6557', marginTop: 4 }}>{detail}</div>
+  );
+};
+
+// ─── Officer: Véhicules ────────────────────────────────────────────
+const OfficerVehicles = ({ lang, go }) => {
+  const s = useDut();
+  const [q, setQ] = React.useState('');
+  const [add, setAdd] = React.useState(false);
+  const list = s.vehicles.filter(v => (v.plate + v.brand + v.driver).toLowerCase().includes(q.toLowerCase()));
+  return (
+    <div>
+      <PageHead kicker="Référentiel, véhicules immatriculés" title="Véhicules"><button style={primaryBtn()} onClick={() => setAdd(true)}><Icon name="plus" size={14}/> Ajouter un véhicule</button></PageHead>
+      <div style={{ maxWidth: 320, marginBottom: 14 }}><Input value={q} onChange={setQ} placeholder="Plaque, marque ou conducteur"/></div>
+      <section style={paperCard()}>
+        <div style={{ overflowX: 'auto' }}>
+          <table className="sober-stack" style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12.5 }}>
+            <thead><tr style={{ color: '#9A9281', fontSize: 10.5, letterSpacing: '.14em', textTransform: 'uppercase' }}>{['Plaque', 'Transporteur', 'Type', 'Marque', 'Conducteur', 'Dernier DUT'].map(h => <th key={h} style={{ textAlign: 'left', padding: '10px 8px', borderBottom: '1px solid #E5DDC9', fontWeight: 500 }}>{h}</th>)}</tr></thead>
+            <tbody>
+              {list.map((v, i) => {
+                const tr = sel.transporter(s, v.transporterId) || {};
+                const last = s.bills.filter(b => b.vehicle === v.plate).sort((a, b) => b.issuedAt - a.issuedAt)[0];
+                return (
+                  <tr key={v.plate} style={{ background: i % 2 ? '#FBF8F2' : 'transparent' }}>
+                    <td data-label="Plaque" style={{ ...td(), ...monoStyle, fontWeight: 600 }}>{v.plate}</td>
+                    <td data-label="Transporteur" style={td()}><button onClick={() => go('transporter', tr.id)} style={{ background: 'none', border: 'none', padding: 0, textDecoration: 'underline', cursor: 'pointer', fontFamily: 'inherit', fontSize: 'inherit' }}>{tr.short}</button></td>
+                    <td data-label="Type" style={td()}>{v.type}</td>
+                    <td data-label="Marque" style={td()}>{v.brand} {v.year}</td>
+                    <td data-label="Conducteur" style={td()}>{v.driver}</td>
+                    <td data-label="Dernier DUT" style={td()}>{last ? <button onClick={() => go('bill', last.id)} style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', ...monoStyle, fontSize: 11.5, textDecoration: 'underline' }}>{last.id}</button> : '-'}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      </section>
+      {add && <AddVehicleModal transporters={s.transporters} onClose={() => setAdd(false)}/>}
+    </div>
+  );
+};
+
+// ─── Officer: Contrôles et suivi ───────────────────────────────────
+const OfficerControls = ({ lang, go }) => {
+  const s = useDut();
+  useTick(2000);
+  const tracked = Object.keys(s.trips).map(id => sel.bill(s, id)).filter(Boolean).sort((a, b) => (s.trips[a.id].status === 'in_progress' ? -1 : 1));
+  return (
+    <div>
+      <PageHead kicker="Véhicules suivis par téléphone et passages aux postes de contrôle" title="Contrôles et suivi"/>
+      <div className="sober-grid-2" style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1.2fr) minmax(0, 1fr)', gap: 22, alignItems: 'start' }}>
+        <section style={paperCard()}>
+          <header style={cardHeader()}><h2 style={cardTitle()}>Trajets suivis</h2></header>
+          {tracked.map((b, i) => (
+            <div key={b.id} style={{ padding: '12px 0', borderTop: i ? '1px solid #E5DDC9' : 'none' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', gap: 8, flexWrap: 'wrap' }}>
+                <button onClick={() => go('bill', b.id)} style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', textAlign: 'left', fontFamily: 'inherit' }}><b style={monoStyle}>{b.vehicle}</b> <span style={{ fontSize: 12, color: '#6B6557' }}>{b.id}, {(sel.transporter(s, b.transporterId) || {}).short}</span></button>
+                <TripStatus billId={b.id}/>
+              </div>
+              <TripTimeline billId={b.id} compact/>
+            </div>
+          ))}
+        </section>
+        <section style={paperCard()}>
+          <header style={cardHeader()}><h2 style={cardTitle()}>Passages aux postes</h2></header>
+          {s.passages.map((p, i) => (
+            <div key={p.id} style={{ display: 'flex', gap: 10, padding: '10px 0', borderTop: i ? '1px solid #E5DDC9' : 'none', fontSize: 12.5 }}>
+              <span style={{ width: 22, height: 22, borderRadius: '50%', flexShrink: 0, background: p.result === 'ok' ? '#009460' : '#CE1126', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontWeight: 700 }}>{p.result === 'ok' ? <Icon name="check" size={12} stroke={3}/> : '!'}</span>
+              <div style={{ flex: 1 }}>
+                <div><b style={monoStyle}>{p.plate}</b>, {p.post}</div>
+                <div style={{ color: '#6B6557', fontSize: 11.5 }}>{fmtDT(p.at)}, {p.agent}. {p.note}</div>
+                {p.billId && <button onClick={() => go('bill', p.billId)} style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', ...monoStyle, fontSize: 11, textDecoration: 'underline' }}>{p.billId}</button>}
+              </div>
+            </div>
+          ))}
+        </section>
+      </div>
+    </div>
+  );
+};
+
+// ─── Officer: Tarif ────────────────────────────────────────────────
+const OfficerTariffs = () => (
+  <div>
+    <PageHead kicker="Arrêté 2025/MTI/DNTT" title="Tarif du DUT"/>
+    <div className="sober-kpi-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 16, marginBottom: 22 }}>
+      <KpiTile label="Prix fixe par DUT" big={fmtEur(TARIFF.priceEur)} hint="Tous trajets, toutes marchandises" tone="good"/>
+      <KpiTile label="Montant encaissé" big={fmtGNF(TARIFF.priceGnf).replace(' GNF', '')} suffix="GNF" hint={`Taux de référence : 1 € = ${fmtGNF(TARIFF.eurToGnf)}`}/>
+      <KpiTile label="Validité de paiement" big="48 h" hint="Après émission, ensuite expiré"/>
+    </div>
+    <section style={paperCard(true)}>
+      <header style={cardHeader()}><h2 style={cardTitle()}>Règles appliquées</h2></header>
+      {[
+        ['Montant', `Le DUT coûte ${fmtEur(TARIFF.priceEur)}, quel que soit le trajet, la distance, le véhicule ou la marchandise.`],
+        ['Paiement', 'Orange Money, MTN MoMo, carte bancaire, virement, espèces au guichet DNTT, ou prélèvement sur le compte enregistré du transporteur.'],
+        ['Encaissement par l’agent', 'L’agent peut régler le DUT pour le transporteur : espèces, demande de paiement mobile money ou prélèvement autorisé.'],
+        ['Suivi du véhicule', 'Facultatif, activé après paiement par un code de jumelage à 6 chiffres ou en scannant le QR code du DUT.'],
+      ].map(([k, v]) => <SummaryRow key={k} label={k} value={v}/>)}
+    </section>
+  </div>
+);
+
+// ─── Officer: Profil ───────────────────────────────────────────────
+const OfficerProfile = () => {
+  const s = useDut();
+  const toast = useToast();
+  const [edit, setEdit] = React.useState(false);
+  const [pwd, setPwd] = React.useState(false);
+  const [f, setF] = React.useState(s.officer);
+  const o = s.officer;
+  return (
+    <div>
+      <PageHead kicker={`Agent DNTT, ${o.badge}`} title="Mon profil"/>
+      <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 320px) minmax(0, 1fr)', gap: 22 }} className="dut-profile-grid">
+        <section style={paperCard(true)}>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
+            <div style={{ width: 96, height: 96, borderRadius: '50%', background: '#161413', color: '#FCD116', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: '"Crimson Pro", serif', fontSize: 42, fontWeight: 600 }}>{o.initials}</div>
+            <div style={{ fontFamily: '"Crimson Pro", serif', fontSize: 22, fontWeight: 600, textAlign: 'center' }}>{o.name}</div>
+            <div style={{ fontSize: 12, color: '#6B6557', textAlign: 'center' }}>{o.role}</div>
+            <div style={{ ...monoStyle, fontSize: 11, padding: '3px 8px', background: '#161413', color: '#FCD116', marginTop: 4 }}>{o.badge}</div>
+          </div>
+        </section>
+        <section style={paperCard(true)}>
+          <header style={cardHeader()}><h2 style={cardTitle()}>Coordonnées professionnelles</h2></header>
+          <SummaryRow label="Affectation" value={o.office}/>
+          <SummaryRow label="Adresse" value={DNTT_HQ.address}/>
+          <SummaryRow label="Email" value={o.email}/>
+          <SummaryRow label="Téléphone" value={o.phone}/>
+          <SummaryRow label="Habilitations" value="Émission DUT, encaissement, contrôle routier"/>
+          <div style={{ marginTop: 16, paddingTop: 12, borderTop: '1px solid #E5DDC9', display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+            <button style={ghostBtn()} onClick={() => { setF(o); setEdit(true); }}>Modifier mes informations</button>
+            <button style={ghostBtn()} onClick={() => setPwd(true)}>Changer le mot de passe</button>
+          </div>
+        </section>
+      </div>
+      {edit && (
+        <DutModal title="Modifier mes informations" onClose={() => setEdit(false)} footer={<><button style={ghostBtn()} onClick={() => setEdit(false)}>Annuler</button><button style={primaryBtn()} onClick={() => { dutActions.updateOfficer({ ...f, initials: f.name.split(' ').map(x => x[0]).slice(0, 2).join('').toUpperCase() }); setEdit(false); toast('Profil mis à jour'); }}>Enregistrer</button></>}>
+          <Field label="Nom complet"><Input value={f.name} onChange={v => setF(x => ({ ...x, name: v }))}/></Field>
+          <FieldRow><Field label="Email"><Input value={f.email} onChange={v => setF(x => ({ ...x, email: v }))}/></Field><Field label="Téléphone"><Input value={f.phone} onChange={v => setF(x => ({ ...x, phone: v }))}/></Field></FieldRow>
+        </DutModal>
+      )}
+      {pwd && <PasswordModal onClose={() => setPwd(false)}/>}
+    </div>
+  );
+};
+const PasswordModal = ({ onClose }) => {
+  const toast = useToast();
+  const [a, setA] = React.useState(''); const [b, setB] = React.useState(''); const [c, setC] = React.useState('');
+  const ok = a.length >= 4 && b.length >= 8 && b === c;
+  return (
+    <DutModal title="Changer le mot de passe" onClose={onClose} footer={<><button style={ghostBtn()} onClick={onClose}>Annuler</button><button style={{ ...primaryBtn(), opacity: ok ? 1 : .5 }} disabled={!ok} onClick={() => { onClose(); toast('Mot de passe modifié'); }}>Valider</button></>}>
+      <Field label="Mot de passe actuel"><Input type="password" value={a} onChange={setA}/></Field>
+      <Field label="Nouveau mot de passe (8 caractères minimum)"><Input type="password" value={b} onChange={setB}/></Field>
+      <Field label="Confirmer"><Input type="password" value={c} onChange={setC}/></Field>
+      {c && b !== c && <div style={{ fontSize: 12, color: '#8A1B1B' }}>Les deux mots de passe ne correspondent pas.</div>}
+    </DutModal>
+  );
+};
+
+// ─── Officer: Paramètres ───────────────────────────────────────────
+const OfficerSettings = () => {
+  const toast = useToast();
+  return (
+    <div>
+      <PageHead kicker="Préférences de l’application" title="Paramètres"/>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 16 }}>
+        <SettingsCard title="Sécurité">
+          <SettingRow label="Authentification à deux facteurs" value="SMS au +224 622 04 71 88" toggle defaultChecked/>
+          <SettingRow label="Verrouillage automatique" value="Après 5 minutes d’inactivité" toggle defaultChecked/>
+        </SettingsCard>
+        <SettingsCard title="Notifications">
+          <SettingRow label="Paiements reçus" value="Push et email" toggle defaultChecked/>
+          <SettingRow label="Anomalies aux postes de contrôle" value="Push immédiat" toggle defaultChecked/>
+          <SettingRow label="Échéances dépassées" value="Récapitulatif à 08:00" toggle/>
+        </SettingsCard>
+        <SettingsCard title="Intégrations">
+          <SettingRow label="SAFI, Trésor public" value="Connecté" tone="good"/>
+          <SettingRow label="KKiaPay (mobile money, cartes)" value="Connecté" tone="good"/>
+          <SettingRow label="RCCM, CCI" value="Connecté" tone="good"/>
+        </SettingsCard>
+        <SettingsCard title="Démonstration">
+          <p style={{ fontSize: 12.5, color: '#6B6557', marginTop: 0 }}>Remet toutes les données du prototype à leur état initial (DUT, paiements, jumelages, trajets).</p>
+          <button style={ghostBtn()} onClick={() => { dutActions.reset(); toast('Données de démonstration réinitialisées', 'info'); }}><Icon name="reload" size={13}/> Réinitialiser la démo</button>
+        </SettingsCard>
+      </div>
+    </div>
+  );
+};
+
+// ─── Transporter (company or individual): fleet ────────────────────
+const TransporterFleet = ({ transporterId, go }) => {
+  const s = useDut();
+  const toast = useToast();
+  const [add, setAdd] = React.useState(false);
+  const tr = sel.transporter(s, transporterId);
+  const vehicles = sel.vehiclesOf(s, transporterId);
+  return (
+    <div>
+      <PageHead kicker={`${tr.short}, ${vehicles.length} véhicule(s)`} title="Ma flotte"><button style={primaryBtn()} onClick={() => setAdd(true)}><Icon name="plus" size={14}/> Ajouter un véhicule</button></PageHead>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: 14 }}>
+        {vehicles.map(v => {
+          const active = s.bills.find(b => b.vehicle === v.plate && s.trips[b.id] && s.trips[b.id].status === 'in_progress');
+          return (
+            <div key={v.plate} style={{ ...paperCard(), padding: 16 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                <div style={{ width: 44, height: 28, border: '1.5px solid #161413', background: '#FCD116', display: 'flex', alignItems: 'center', justifyContent: 'center', ...monoStyle, fontSize: 10, fontWeight: 700 }}>RG</div>
+                <div style={{ flex: 1 }}><div style={{ ...monoStyle, fontWeight: 700 }}>{v.plate}</div><div style={{ fontSize: 11.5, color: '#6B6557' }}>{v.type}, {v.brand} {v.year}</div></div>
+              </div>
+              <div style={{ fontSize: 12, marginTop: 10, lineHeight: 1.6 }}>
+                <div>Conducteur : <b>{v.driver}</b></div>
+                <div style={{ color: '#6B6557' }}>{v.driverPhone}, capacité {v.capacity} t</div>
+              </div>
+              <div style={{ marginTop: 10, paddingTop: 10, borderTop: '1px solid #E5DDC9', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 8 }}>
+                {active ? <button onClick={() => go('tracking', active.id)} style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', fontFamily: 'inherit' }}><TripStatus billId={active.id}/></button>
+                  : <span style={{ fontSize: 11, color: v.status === 'active' ? '#1F4F2C' : '#8A1B1B' }}>{v.status === 'active' ? 'Disponible' : 'En maintenance'}</span>}
+                <button style={{ ...ghostBtn(), padding: '4px 10px', fontSize: 11 }} onClick={() => { dutActions.updateVehicle(v.plate, { status: v.status === 'active' ? 'maintenance' : 'active' }); toast(`${v.plate} : ${v.status === 'active' ? 'en maintenance' : 'disponible'}`, 'info'); }}>{v.status === 'active' ? 'Mettre en maintenance' : 'Remettre en service'}</button>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+      {add && <AddVehicleModal transporterId={transporterId} onClose={() => setAdd(false)}/>}
+    </div>
+  );
+};
+
+// ─── Transporter: tracking page ────────────────────────────────────
+const TransporterTracking = ({ transporterId, initialId, lang }) => {
+  const s = useDut();
+  const rows = sel.billsOf(s, transporterId).filter(b => b.status === 'paid').sort((a, b) => b.issuedAt - a.issuedAt);
+  const [selId, setSel] = React.useState(initialId || (rows.find(b => !s.pairings[b.id]) || rows[0] || {}).id);
+  const current = rows.find(r => r.id === selId) || rows[0];
+  const tracked = rows.filter(r => sel.tripState(s, r.id) === 'in_progress').length;
+  return (
+    <div>
+      <PageHead kicker="DUT payés, jumelage du téléphone conducteur" title="Suivi des véhicules"/>
+      <div className="sober-kpi-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', gap: 12, marginBottom: 18 }}>
+        <KpiTile label="En route" big={String(tracked)} hint="GPS actif"/>
+        <KpiTile label="Sans suivi" big={String(rows.filter(r => !s.pairings[r.id]).length)} hint="Code à générer"/>
+        <KpiTile label="Application" big="2" hint="Android et iOS"/>
+      </div>
+      {rows.length === 0 ? <section style={paperCard(true)}>Aucun DUT payé pour l’instant. Le suivi devient disponible après paiement.</section> : (
+        <div className="sober-grid-2" style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1.1fr)', gap: 18, alignItems: 'start' }}>
+          <section style={paperCard()}>
+            <header style={cardHeader()}><h2 style={cardTitle()}>DUT payés</h2></header>
+            {rows.map(r => {
+              const on = r.id === current.id;
+              return (
+                <button key={r.id} onClick={() => setSel(r.id)} aria-pressed={on} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '11px 10px', textAlign: 'left', background: on ? '#FBF8F2' : 'transparent', border: 'none', borderLeft: on ? '2px solid #CE1126' : '2px solid transparent', borderBottom: '1px solid #F0E9D6', cursor: 'pointer', fontFamily: 'inherit', width: '100%' }}>
+                  <span style={{ flex: 1, minWidth: 0 }}><span style={{ display: 'block', ...monoStyle, fontSize: 12, fontWeight: 600 }}>{r.id}</span><span style={{ display: 'block', fontSize: 12, color: '#6B6557' }}>{r.from} → {r.to}, {r.vehicle}</span></span>
+                  <TripStatus billId={r.id}/>
+                </button>
+              );
+            })}
+          </section>
+          <PairingCard key={current.id} billId={current.id} actor="company" lang={lang}/>
+        </div>
+      )}
+    </div>
+  );
+};
+
+// ─── Transporter: profile, support, settings ───────────────────────
+const TransporterProfile = ({ transporterId }) => {
+  const s = useDut();
+  const toast = useToast();
+  const tr = sel.transporter(s, transporterId);
+  const [edit, setEdit] = React.useState(false);
+  const [f, setF] = React.useState(tr);
+  return (
+    <div>
+      <PageHead kicker={`Compte transporteur, ${tr.id}`} title={tr.kind === 'company' ? 'Profil de ma société' : 'Mon profil'}><button style={ghostBtn()} onClick={() => { setF(tr); setEdit(true); }}>Modifier</button></PageHead>
+      <div className="sober-grid-2" style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1fr)', gap: 22, alignItems: 'start' }}>
+        <section style={paperCard(true)}>
+          <header style={cardHeader()}><h2 style={cardTitle()}>Identification</h2></header>
+          <SummaryRow label={tr.kind === 'company' ? 'Raison sociale' : 'Nom'} value={tr.name}/>
+          <SummaryRow label={tr.kind === 'company' ? 'RCCM' : 'Pièce d’identité'} value={tr.doc} mono/>
+          {tr.nif && <SummaryRow label="NIF" value={tr.nif} mono/>}
+          <SummaryRow label="Représentant" value={tr.contact}/>
+          <SummaryRow label="Adresse" value={tr.address}/>
+          <SummaryRow label="Téléphone" value={tr.phone}/>
+          <SummaryRow label="Email" value={tr.email || '-'}/>
+          <SummaryRow label="Carte transporteur" value="Valide jusqu’au 07/06/2026"/>
+        </section>
+        <PayAccountCard transporterId={transporterId}/>
+      </div>
+      {edit && (
+        <DutModal title="Modifier le profil" onClose={() => setEdit(false)} footer={<><button style={ghostBtn()} onClick={() => setEdit(false)}>Annuler</button><button style={primaryBtn()} onClick={() => { dutActions.updateTransporter(transporterId, { contact: f.contact, address: f.address, phone: f.phone, email: f.email }); setEdit(false); toast('Profil mis à jour'); }}>Enregistrer</button></>}>
+          <Field label="Représentant"><Input value={f.contact} onChange={v => setF(x => ({ ...x, contact: v }))}/></Field>
+          <Field label="Adresse"><Input value={f.address} onChange={v => setF(x => ({ ...x, address: v }))}/></Field>
+          <FieldRow><Field label="Téléphone"><Input value={f.phone} onChange={v => setF(x => ({ ...x, phone: v }))}/></Field><Field label="Email"><Input value={f.email} onChange={v => setF(x => ({ ...x, email: v }))}/></Field></FieldRow>
+        </DutModal>
+      )}
+    </div>
+  );
+};
+
+const TransporterSupport = () => {
+  const toast = useToast();
+  const [open, setOpen] = React.useState(null);
+  const [ticket, setTicket] = React.useState(false);
+  const [msg, setMsg] = React.useState('');
+  const faq = [
+    ['Combien coûte un DUT ?', `Le DUT a un prix fixe de ${fmtEur(TARIFF.priceEur)} (${fmtGNF(TARIFF.priceGnf)}), quel que soit le trajet.`],
+    ['Qui émet le DUT ?', 'Les agents de la DNTT. Vous recevez un SMS et le DUT apparaît dans votre espace pour paiement.'],
+    ['L’agent peut-il payer à ma place ?', 'Oui. Enregistrez votre compte mobile money dans votre profil et autorisez le prélèvement : l’agent pourra régler vos DUT depuis la plateforme.'],
+    ['Comment suivre mon camion ?', 'Après paiement, générez un code de jumelage dans « Suivi des véhicules » et transmettez-le au conducteur, ou faites-lui scanner le QR code du DUT.'],
+  ];
+  return (
+    <div>
+      <PageHead kicker={DNTT_HQ.name} title="Assistance"><button style={primaryBtn()} onClick={() => setTicket(true)}><Icon name="chat" size={14}/> Ouvrir un ticket</button></PageHead>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 14, marginBottom: 22 }}>
+        <ContactTile icon="phone" label="Numéro vert" value={DNTT_HQ.greenLine} detail="Gratuit, tous opérateurs" href={`tel:${DNTT_HQ.greenLine}`}/>
+        <ContactTile icon="phone" label="Standard DNTT" value={DNTT_HQ.phone} detail={DNTT_HQ.hours} href={`tel:${DNTT_HQ.phone.replace(/ /g, '')}`}/>
+        <ContactTile icon="email" label="Email" value={DNTT_HQ.email} detail="Réponse sous 24 h ouvrées" href={`mailto:${DNTT_HQ.email}`}/>
+        <ContactTile icon="office" label="Siège de la DNTT" value="Almamya, Kaloum" detail={DNTT_HQ.address} onClick={() => toast(DNTT_HQ.address, 'info')}/>
+      </div>
+      <section style={paperCard(true)}>
+        <header style={cardHeader()}><h2 style={cardTitle()}>Questions fréquentes</h2></header>
+        {faq.map(([q, a], i) => (
+          <div key={q} style={{ borderTop: i ? '1px solid #F0E9D6' : 'none' }}>
+            <button onClick={() => setOpen(open === i ? null : i)} aria-expanded={open === i} style={{ display: 'flex', width: '100%', padding: '12px 0', background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit', fontSize: 13, fontWeight: 600, textAlign: 'left', alignItems: 'center' }}>
+              <span style={{ flex: 1 }}>{q}</span><Icon name={open === i ? 'chevDown' : 'chev'} size={14}/>
+            </button>
+            {open === i && <div style={{ fontSize: 12.5, color: '#3A352D', paddingBottom: 12, lineHeight: 1.55 }}>{a}</div>}
+          </div>
+        ))}
+      </section>
+      {ticket && (
+        <DutModal title="Ouvrir un ticket" onClose={() => setTicket(false)} footer={<><button style={ghostBtn()} onClick={() => setTicket(false)}>Annuler</button><button style={primaryBtn()} disabled={msg.length < 5} onClick={() => { setTicket(false); setMsg(''); toast(`Ticket TCK-${Math.floor(1000 + Math.random() * 8999)} créé, la DNTT vous répond sous 24 h`); }}>Envoyer</button></>}>
+          <Field label="Sujet"><Select value="Paiement" onChange={() => {}} options={['Paiement', 'DUT émis', 'Suivi du véhicule', 'Autre']}/></Field>
+          <Field label="Message"><textarea value={msg} onChange={e => setMsg(e.target.value)} style={{ width: '100%', minHeight: 100, padding: 10, border: '1px solid #DCD3BD', fontFamily: 'inherit', fontSize: 13, boxSizing: 'border-box' }}/></Field>
+        </DutModal>
+      )}
+    </div>
+  );
+};
+
+const TransporterSettings = ({ transporterId }) => (
+  <div>
+    <PageHead kicker="Préférences" title="Paramètres"/>
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 16, alignItems: 'start' }}>
+      <PayAccountCard transporterId={transporterId}/>
+      <SettingsCard title="Notifications">
+        <SettingRow label="SMS à chaque nouveau DUT" value="Recommandé" toggle defaultChecked/>
+        <SettingRow label="SMS à chaque paiement" toggle defaultChecked/>
+        <SettingRow label="Rappel avant échéance" value="24 h avant" toggle defaultChecked/>
+        <SettingRow label="Alertes de suivi (départ, arrivée, contrôle)" toggle defaultChecked/>
+      </SettingsCard>
+      <SettingsCard title="Sécurité">
+        <SettingRow label="Authentification à deux facteurs" value="SMS" toggle defaultChecked/>
+        <SettingRow label="Code de validation des paiements" value="4 chiffres" toggle defaultChecked/>
+      </SettingsCard>
+    </div>
   </div>
 );
 
 Object.assign(window, {
-  OfficerTransporters, OfficerVehicles, OfficerTariffs, OfficerProfile, OfficerSettings,
-  TransporterHistory, TransporterPayments, TransporterFleet, TransporterProfile, TransporterSupport, TransporterSettings,
-  PageHead, SettingsCard, SettingRow, ToggleSwitch, ContactTile,
+  PageHead, SettingsCard, SettingRow, ToggleSwitch, ContactTile, PasswordModal,
+  OfficerTransporters, OfficerTransporterDetail, OfficerVehicles, OfficerControls, OfficerTariffs, OfficerProfile, OfficerSettings,
+  TransporterFleet, TransporterTracking, TransporterProfile, TransporterSupport, TransporterSettings,
 });

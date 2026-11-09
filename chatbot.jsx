@@ -19,116 +19,117 @@
 const CHATBOT_ACTIONS = {
   officer: {
     fr: [
-      { id: 'rate',    icon: 'coin',   label: 'Calculer une redevance',     hint: 'Conakry vers Kankan, citerne 32 t' },
-      { id: 'lookup',  icon: 'search', label: 'Vérifier une plaque',        hint: 'RC-3107-AB' },
-      { id: 'tariff',  icon: 'doc',    label: 'Barème en vigueur (2026)',   hint: 'Décret 2024-189' },
+      { id: 'rate',    icon: 'coin',   label: 'Prix d’un DUT',              hint: 'Tarif fixe' },
+      { id: 'lookup',  icon: 'search', label: 'Vérifier une plaque',        hint: 'RC-4821-AC' },
+      { id: 'tariff',  icon: 'doc',    label: 'Encaisser pour un transporteur', hint: 'Espèces, mobile money, prélèvement' },
       { id: 'cancel',  icon: 'help',   label: 'Comment annuler un DUT ?',   hint: 'Procédure agent' },
     ],
     en: [
-      { id: 'rate',    icon: 'coin',   label: 'Calculate a fee',            hint: 'Conakry to Kankan, 32 t tanker' },
-      { id: 'lookup',  icon: 'search', label: 'Look up a plate',            hint: 'RC-3107-AB' },
-      { id: 'tariff',  icon: 'doc',    label: 'Active tariff (2026)',       hint: 'Decree 2024-189' },
+      { id: 'rate',    icon: 'coin',   label: 'Price of an STD',            hint: 'Fixed price' },
+      { id: 'lookup',  icon: 'search', label: 'Look up a plate',            hint: 'RC-4821-AC' },
+      { id: 'tariff',  icon: 'doc',    label: 'Collect for a transporter',  hint: 'Cash, mobile money, debit' },
       { id: 'cancel',  icon: 'help',   label: 'How to cancel an STD?',      hint: 'Officer procedure' },
     ],
   },
   company: {
     fr: [
-      { id: 'pay',     icon: 'coin',  label: 'Régler tous mes DUT',         hint: '2 en attente, 1 645 800 GNF' },
-      { id: 'fleet',   icon: 'truck', label: 'Statut de ma flotte',         hint: '14 véhicules, dont 12 actifs' },
-      { id: 'invoice', icon: 'doc',   label: 'Relevé du mois',              hint: 'Avril 2026 (PDF)' },
-      { id: 'agent',   icon: 'phone', label: 'Parler à un agent DNTT',      hint: 'Du lundi au vendredi, 8 h à 17 h' },
+      { id: 'pay',     icon: 'coin',  label: 'Mes DUT à régler',            hint: 'Montant et échéances' },
+      { id: 'fleet',   icon: 'truck', label: 'Statut de ma flotte',         hint: 'Véhicules et trajets' },
+      { id: 'invoice', icon: 'pin',   label: 'Suivre un camion',            hint: 'Code de jumelage' },
+      { id: 'agent',   icon: 'phone', label: 'Contacter la DNTT',           hint: 'Siège de Kaloum' },
     ],
     en: [
-      { id: 'pay',     icon: 'coin',  label: 'Pay all my bills',            hint: '2 pending, 1,645,800 GNF' },
-      { id: 'fleet',   icon: 'truck', label: 'My fleet status',             hint: '14 vehicles, 12 active' },
-      { id: 'invoice', icon: 'doc',   label: 'Monthly statement',           hint: 'April 2026 (PDF)' },
-      { id: 'agent',   icon: 'phone', label: 'Talk to a DNTT agent',        hint: 'Monday to Friday, 8 am to 5 pm' },
+      { id: 'pay',     icon: 'coin',  label: 'My bills to pay',             hint: 'Amounts and due dates' },
+      { id: 'fleet',   icon: 'truck', label: 'My fleet status',             hint: 'Vehicles and trips' },
+      { id: 'invoice', icon: 'pin',   label: 'Track a truck',               hint: 'Pairing code' },
+      { id: 'agent',   icon: 'phone', label: 'Contact the DNTT',            hint: 'Kaloum head office' },
     ],
   },
   individual: {
     fr: [
-      { id: 'paynow',  icon: 'coin',  label: 'Régler mon DUT en attente',   hint: 'Coyah vers Conakry, 64 200 GNF' },
-      { id: 'next',    icon: 'doc',   label: 'Estimer mon prochain trajet', hint: 'Combien va coûter mon trajet ?' },
+      { id: 'paynow',  icon: 'coin',  label: 'Régler mon DUT en attente',   hint: 'Montant à payer' },
+      { id: 'next',    icon: 'doc',   label: 'Combien coûte un DUT ?',      hint: 'Prix fixe' },
       { id: 'momo',    icon: 'phone', label: 'Aide Orange Money',           hint: 'Échec de paiement ?' },
-      { id: 'office',  icon: 'help',  label: 'Bureau DNTT le plus proche',  hint: 'Coyah, ouvert' },
+      { id: 'office',  icon: 'help',  label: 'Adresse de la DNTT',          hint: 'Almamya, Kaloum' },
     ],
     en: [
-      { id: 'paynow',  icon: 'coin',  label: 'Pay my pending bill',         hint: 'Coyah to Conakry, 64,200 GNF' },
-      { id: 'next',    icon: 'doc',   label: 'Estimate my next trip',       hint: 'How much will it cost?' },
+      { id: 'paynow',  icon: 'coin',  label: 'Pay my pending bill',         hint: 'Amount due' },
+      { id: 'next',    icon: 'doc',   label: 'How much is an STD?',         hint: 'Fixed price' },
       { id: 'momo',    icon: 'phone', label: 'Orange Money help',           hint: 'Payment failed?' },
-      { id: 'office',  icon: 'help',  label: 'Nearest DNTT office',         hint: 'Coyah, open now' },
+      { id: 'office',  icon: 'help',  label: 'DNTT address',                hint: 'Almamya, Kaloum' },
     ],
   },
 };
 
+// Answers are computed from the shared store, so they match the screens.
+const cbState = () => dutStore.get();
+const cbDue = (tid) => sel.billsOf(cbState(), tid).filter(b => b.status === 'pending');
 const CHATBOT_RESPONSES = {
-  // Officer
   rate: {
-    fr: "**Conakry vers Kankan, citerne 32 t**\n\n• Distance : 642 km\n• Tarif kilométrique : 720 GNF/km/t\n• Redevance : 14 791 680 GNF\n• Timbre fiscal : 25 000 GNF\n• Quote-part DNTT : 8 000 GNF\n\n**Total : 14 824 680 GNF**\n\nBarème : décret 2024-189, article 12.",
-    en: "**Conakry to Kankan, 32 t tanker**\n\n• Distance: 642 km\n• Per-km rate: 720 GNF/km/t\n• Fee: 14,791,680 GNF\n• Stamp duty: 25,000 GNF\n• DNTT share: 8,000 GNF\n\n**Total: 14,824,680 GNF**\n\nReference: decree 2024-189, article 12.",
+    fr: () => `**Prix du DUT : ${fmtEur(TARIFF.priceEur)}**\n\nLe prix est fixe, quel que soit le trajet, la distance, le véhicule ou la marchandise.\n\nMontant encaissé : ${fmtGNF(TARIFF.priceGnf)} (taux de référence 1 € = ${fmtGNF(TARIFF.eurToGnf)}).`,
+    en: () => `**STD price: ${fmtEur(TARIFF.priceEur)}**\n\nFixed price, whatever the route, distance, vehicle or cargo.\n\nCollected amount: ${fmtGNF(TARIFF.priceGnf)}.`,
   },
   lookup: {
-    fr: "**RC-3107-AB**\n\n• Type : semi-remorque Renault K460\n• Année : 2019, 40 t\n• Transporteur : Diallo & Frères (NIF 7053219K)\n• Carte transporteur : valide jusqu'en décembre 2026\n• 3 DUT actifs, aucun incident\n\nLe véhicule est en règle.",
-    en: "**RC-3107-AB**\n\n• Type: Renault K460 semi-trailer\n• Year: 2019, 40 t\n• Carrier: Diallo & Frères (NIF 7053219K)\n• Carrier card: valid through December 2026\n• 3 active STDs, no incidents\n\nThe vehicle is compliant.",
+    fr: () => { const s = cbState(); const v = sel.vehicle(s, 'RC-4821-AC'); const b = s.bills.filter(x => x.vehicle === 'RC-4821-AC').sort((a, c) => c.issuedAt - a.issuedAt)[0]; const tr = sel.transporter(s, v.transporterId); return `**RC-4821-AC**\n\n• ${v.type}, ${v.brand} ${v.year}\n• Transporteur : ${tr.short}\n• Conducteur : ${v.driver}\n• Dernier DUT : ${b.id} (${b.status === 'paid' ? 'payé' : 'à régler'})\n• Suivi : ${s.trips[b.id] ? (s.trips[b.id].status === 'arrived' ? 'arrivé' : `en route, ${Math.round(s.trips[b.id].progress * 100)} %`) : 'non suivi'}`; },
+    en: () => `**RC-4821-AC**\n\nOpen Vehicles in the menu to see its owner, driver and latest STD.`,
   },
   tariff: {
-    fr: "**Barème 2026 (décret 2024-189)**\n\n• De 0 à 3,5 t : 410 GNF/km/t\n• De 3,5 à 12 t : 580 GNF/km/t\n• De 12 à 24 t : 690 GNF/km/t\n• Plus de 24 t (citerne) : 720 GNF/km/t\n\nÀ ajouter : timbre fiscal de 25 000 GNF et quote-part DNTT de 8 000 GNF.\n\nTaux en vigueur depuis le 1er janvier 2026.",
-    en: "**2026 schedule (decree 2024-189)**\n\n• 0 to 3.5 t: 410 GNF/km/t\n• 3.5 to 12 t: 580 GNF/km/t\n• 12 to 24 t: 690 GNF/km/t\n• Over 24 t (tanker): 720 GNF/km/t\n\nPlus a 25,000 GNF stamp duty and an 8,000 GNF DNTT share.\n\nIn effect since 1 January 2026.",
+    fr: "**Encaisser pour le transporteur**\n\nOuvrez le DUT dans la file, puis le bloc « Encaisser pour le transporteur » :\n\n1. Débiter le compte mobile money enregistré (si le transporteur a autorisé le prélèvement dans son espace)\n2. Envoyer une demande de paiement mobile money sur son numéro\n3. Enregistrer des espèces reçues au guichet\n\nLe DUT passe à « Payé » partout et le transporteur reçoit une notification.",
+    en: "**Collect for the transporter**\n\nOpen the STD, then use « Collect for the transporter »: debit his registered mobile money account (if authorised), send a mobile money request, or record cash.",
   },
   cancel: {
-    fr: "**Annuler un DUT émis**\n\nL'annulation est possible tant que le DUT n'est pas payé. Après paiement, il faut passer par un remboursement.\n\n1. Ouvrez le DUT dans la liste « Émis »\n2. Cliquez sur « Annuler » (en haut à droite)\n3. Indiquez le motif (obligatoire)\n4. Faites valider par votre responsable de bureau\n\nL'opération reste tracée dans le journal d'audit.",
-    en: "**Cancel an issued STD**\n\nCancellation is possible until the bill is paid. After payment, it becomes a refund.\n\n1. Open the STD in the « Issued » list\n2. Click « Cancel » (top right)\n3. Enter the reason (required)\n4. Get approval from your office manager\n\nThe operation stays recorded in the audit log.",
+    fr: "**Annuler un DUT émis**\n\nPossible tant que le DUT n’est pas payé.\n\n1. Ouvrez le DUT dans la file\n2. Cliquez sur « Annuler ce DUT »\n3. Choisissez le motif\n\nLe transporteur est prévenu et l’opération reste dans l’historique.",
+    en: "**Cancel an issued STD**\n\nPossible until it is paid. Open the STD, click « Cancel », pick a reason. The transporter is notified.",
   },
-  // Company
   pay: {
-    fr: "**Règlement groupé de 2 DUT en attente**\n\n• DUT-2026-04-08741 : 982 400 GNF\n• DUT-2026-04-08672 : 663 400 GNF\n\n**Total : 1 645 800 GNF**\n\nMoyens disponibles : virement bancaire (BICIGUI), Orange Business, MTN MoMo Pro.\n\nVoulez-vous lancer le règlement ?",
-    en: "**Bulk payment of 2 pending bills**\n\n• STD-2026-04-08741: 982,400 GNF\n• STD-2026-04-08672: 663,400 GNF\n\n**Total: 1,645,800 GNF**\n\nAvailable methods: bank transfer (BICIGUI), Orange Business, MTN MoMo Pro.\n\nShall I start the payment?",
+    fr: () => { const d = cbDue('TRP-04812'); return d.length ? `**${d.length} DUT à régler : ${fmtGNF(d.reduce((x, b) => x + b.amount, 0))}**\n\n${d.map(b => `• ${b.id} : ${b.from} vers ${b.to}, ${fmtGNF(b.amount)}${sel.isOverdue(b) ? ' (en retard)' : ''}`).join('\n')}\n\nMoyens : Orange Money, MTN MoMo, carte, virement. Ouvrez « Régler mes DUT ».` : 'Aucun DUT à régler. Tout est à jour.'; },
+    en: () => { const d = cbDue('TRP-04812'); return d.length ? `**${d.length} bills to pay: ${fmtGNF(d.reduce((x, b) => x + b.amount, 0))}**` : 'Nothing to pay.'; },
   },
   fleet: {
-    fr: "**Flotte Diallo & Frères : 14 véhicules**\n\n• 12 actifs (en circulation)\n• 1 en maintenance (RC-2244-AA, révision)\n• 1 immobilisé (RC-1109-CD, en attente de pièces)\n\n3 cartes transporteur arrivent à échéance dans les 60 jours.",
-    en: "**Diallo & Frères fleet: 14 vehicles**\n\n• 12 active (on the road)\n• 1 in maintenance (RC-2244-AA, service)\n• 1 grounded (RC-1109-CD, awaiting parts)\n\n3 carrier cards expire within 60 days.",
+    fr: () => { const s = cbState(); const vs = sel.vehiclesOf(s, 'TRP-04812'); const road = sel.billsOf(s, 'TRP-04812').filter(b => s.trips[b.id] && s.trips[b.id].status === 'in_progress'); return `**Flotte Diallo & Frères : ${vs.length} véhicules**\n\n• ${vs.filter(v => v.status === 'active').length} disponibles\n• ${vs.filter(v => v.status !== 'active').length} en maintenance\n• ${road.length} en route${road.length ? ` (${road.map(b => b.vehicle).join(', ')})` : ''}`; },
+    en: () => `See « Fleet » for vehicles and « Tracking » for trips on the road.`,
   },
   invoice: {
-    fr: "**Relevé d'avril 2026**\n\n• 18 DUT émis, 21 réglés (dont 3 reliquats de mars)\n• Total payé : 12 482 400 GNF\n• Solde au 30/04 : 1 645 800 GNF (en attente)\n\nLe PDF consolidé est prêt. Voulez-vous que je l'envoie à contact@diallo-transports.gn ?",
-    en: "**April 2026 statement**\n\n• 18 STDs issued, 21 paid (including 3 carried over from March)\n• Total paid: 12,482,400 GNF\n• Balance at 30/04: 1,645,800 GNF (pending)\n\nThe consolidated PDF is ready. Shall I email it to contact@diallo-transports.gn?",
+    fr: "**Suivre un camion**\n\n1. Le DUT doit être payé\n2. Menu « Suivi des véhicules », choisissez le DUT\n3. « Générer le code de jumelage », puis « Envoyer par SMS au conducteur »\n4. Le conducteur saisit le code dans l’application DUT Conducteur, ou scanne le QR code du DUT\n\nLe trajet s’affiche ensuite en direct.",
+    en: "Pay the STD, open Tracking, generate the pairing code and send it to the driver, who enters it in the DUT Driver app (or scans the STD QR code).",
   },
   agent: {
-    fr: "**Agent DNTT**\n\nVotre interlocuteur : **F. Camara** (bureau de Conakry-Sonfonia).\n\n• Numéro vert : 1505\n• Ligne directe : +224 656 02 14 09\n• Horaires : du lundi au vendredi, de 8 h à 17 h\n\nJe peux ouvrir un ticket prioritaire si c'est urgent.",
-    en: "**DNTT agent**\n\nYour contact: **F. Camara** (Conakry-Sonfonia office).\n\n• Toll-free: 1505\n• Direct line: +224 656 02 14 09\n• Hours: Monday to Friday, 8 am to 5 pm\n\nI can open a priority ticket if it's urgent.",
+    fr: () => `**${DNTT_HQ.name}**\n\n• Adresse : ${DNTT_HQ.address}\n• Numéro vert : ${DNTT_HQ.greenLine}\n• Standard : ${DNTT_HQ.phone}\n• Horaires : ${DNTT_HQ.hours}\n\nVous pouvez aussi ouvrir un ticket dans « Assistance ».`,
+    en: () => `**DNTT**\n\n• ${DNTT_HQ.address}\n• Toll-free: ${DNTT_HQ.greenLine}\n• ${DNTT_HQ.phone}`,
   },
-  // Individual
   paynow: {
-    fr: "**DUT-2026-04-08819 : Coyah vers Conakry**\n\n• Marchandise : produits maraîchers\n• Émis le 02/05/2026 par F. Camara\n• Échéance : 04/05/2026\n\n**À régler : 64 200 GNF**\n\nLe plus rapide : Orange Money au +224 622 04 18 77. Composez #144*2# pour confirmer.",
-    en: "**STD-2026-04-08819: Coyah to Conakry**\n\n• Goods: fresh produce\n• Issued on 02/05/2026 by F. Camara\n• Due: 04/05/2026\n\n**Amount due: 64,200 GNF**\n\nQuickest: Orange Money on +224 622 04 18 77. Dial #144*2# to confirm.",
+    fr: () => { const d = cbDue('IND-44218'); return d.length ? `**${d[0].id} : ${d[0].from} vers ${d[0].to}**\n\n• Émis le ${fmtD(d[0].issuedAt)} par ${d[0].officer}\n• Échéance : ${fmtD(d[0].due)}\n\n**À régler : ${fmtGNF(d[0].amount)}**\n\nLe plus rapide : « Régler maintenant » puis Orange Money.` : 'Vous n’avez aucun DUT en attente.'; },
+    en: () => { const d = cbDue('IND-44218'); return d.length ? `**${d[0].id}: ${fmtGNF(d[0].amount)} to pay**` : 'Nothing pending.'; },
   },
   next: {
-    fr: "**Estimer un trajet**\n\nIndiquez-moi le départ, la destination, la marchandise et le poids approximatif.\n\nExemple : « Coyah vers Kindia, banane plantain, 1,2 t ».\n\nJe calcule la redevance, le timbre et la quote-part DNTT selon le barème 2026.",
-    en: "**Estimate a trip**\n\nTell me the origin, destination, goods and approximate weight.\n\nExample: « Coyah to Kindia, plantain, 1.2 t ».\n\nI'll calculate the fee, stamp duty and DNTT share using the 2026 schedule.",
+    fr: () => `**Prix du DUT : ${fmtEur(TARIFF.priceEur)}**\n\nC’est un prix fixe : il ne dépend ni du trajet ni de la marchandise. Montant payé : ${fmtGNF(TARIFF.priceGnf)}.`,
+    en: () => `**STD price: ${fmtEur(TARIFF.priceEur)}**, fixed, whatever the trip.`,
   },
   momo: {
-    fr: "**Échec Orange Money : causes fréquentes**\n\n1. Solde insuffisant ? Composez #144#\n2. Plafond journalier atteint (2 000 000 GNF)\n3. Numéro de DUT mal saisi (12 chiffres)\n4. Réseau Orange Money en maintenance\n\nSi rien ne fonctionne, vous pouvez payer en espèces au bureau de Coyah (de 8 h à 17 h, samedi inclus).",
-    en: "**Orange Money failed: common causes**\n\n1. Insufficient balance? Dial #144#\n2. Daily limit reached (2,000,000 GNF)\n3. STD number mistyped (12 digits)\n4. Orange Money network under maintenance\n\nIf nothing works, you can pay cash at the Coyah office (8 am to 5 pm, Saturdays included).",
+    fr: "**Échec Orange Money : causes fréquentes**\n\n1. Solde insuffisant ? Composez #144#\n2. Plafond journalier atteint\n3. Code secret erroné\n4. Réseau Orange Money en maintenance\n\nVous pouvez aussi enregistrer votre compte dans « Profil et paiement » et autoriser le prélèvement : l’agent DNTT pourra alors régler pour vous.",
+    en: "**Orange Money failed**\n\nCheck balance (#144#), daily limit, PIN or network. You can also register your account and authorise the DNTT to debit it.",
   },
   office: {
-    fr: "**Bureau DNTT de Coyah**\n\n• Adresse : marché central, face à la mosquée\n• Horaires : du lundi au samedi, de 8 h à 17 h, sans rendez-vous\n• Téléphone : +224 622 88 14 02\n\nLe bureau est à 12 minutes de chez vous. Espèces, Orange Money et MTN MoMo acceptés.",
-    en: "**DNTT office, Coyah**\n\n• Address: central market, opposite the mosque\n• Hours: Monday to Saturday, 8 am to 5 pm, walk-in\n• Phone: +224 622 88 14 02\n\nIt's 12 minutes from your place. Cash, Orange Money and MTN MoMo accepted.",
+    fr: () => `**${DNTT_HQ.name}**\n\n• ${DNTT_HQ.address}\n• ${DNTT_HQ.hours}\n• Standard : ${DNTT_HQ.phone}, numéro vert ${DNTT_HQ.greenLine}`,
+    en: () => `**DNTT**\n\n• ${DNTT_HQ.address}\n• ${DNTT_HQ.phone}`,
   },
 };
+const cbText = (id, isFr) => { const r = CHATBOT_RESPONSES[id][isFr ? 'fr' : 'en']; return typeof r === 'function' ? r() : r; };
 
 // Keyword matcher used when no AI backend is available (static hosting).
 const CHATBOT_KEYWORDS = {
-  rate:    ['redevance', 'calcul', 'combien', 'fee', 'cost', 'prix'],
+  rate:    ['prix', 'combien', 'coût', 'cout', 'tarif', 'price', 'cost', 'euro'],
   lookup:  ['plaque', 'plate', 'immatricul', 'vehicule', 'véhicule', 'vehicle'],
-  tariff:  ['barème', 'bareme', 'tarif', 'tariff', 'schedule', 'taux'],
+  tariff:  ['encaiss', 'espèces', 'especes', 'cash', 'collect', 'prélèvement', 'prelevement'],
   cancel:  ['annul', 'cancel', 'rembours', 'refund'],
   pay:     ['régler', 'regler', 'payer', 'paiement', 'pay', 'facture'],
   fleet:   ['flotte', 'fleet', 'camion', 'truck'],
-  invoice: ['relevé', 'releve', 'statement', 'mois', 'month', 'pdf'],
-  agent:   ['agent', 'contact', 'humain', 'human', 'appeler', 'call'],
+  invoice: ['suivi', 'suivre', 'jumelage', 'code', 'gps', 'track'],
+  agent:   ['agent', 'contact', 'humain', 'human', 'appeler', 'call', 'adresse', 'dntt'],
   paynow:  ['régler', 'regler', 'payer', 'paiement', 'pay', 'attente', 'pending'],
-  next:    ['estim', 'trajet', 'trip', 'prochain', 'next', 'combien', 'cost'],
+  next:    ['prix', 'combien', 'coût', 'cout', 'tarif', 'price', 'cost'],
   momo:    ['orange', 'momo', 'mobile money', 'échec', 'echec', 'failed'],
-  office:  ['bureau', 'office', 'adresse', 'address', 'horaire', 'hours', 'ouvert', 'open'],
+  office:  ['bureau', 'office', 'adresse', 'address', 'horaire', 'hours', 'kaloum', 'dntt'],
 };
 
 const chatbotLocalAnswer = (q, role, isFr) => {
@@ -139,7 +140,7 @@ const chatbotLocalAnswer = (q, role, isFr) => {
     const score = (CHATBOT_KEYWORDS[id] || []).reduce((n, k) => n + (s.includes(k) ? 1 : 0), 0);
     if (score > bestScore) { best = id; bestScore = score; }
   });
-  if (best) return CHATBOT_RESPONSES[best][isFr ? 'fr' : 'en'];
+  if (best) return cbText(best, isFr);
   return isFr
     ? "Je n'ai pas encore de réponse précise à cette question dans cette démonstration. Essayez une des actions rapides ci-dessous, ou contactez la DNTT au 1505 (numéro vert)."
     : "I don't have a precise answer to that question in this demo yet. Try one of the quick actions below, or call DNTT on 1505 (toll-free).";
@@ -304,12 +305,12 @@ const ChatbotBadge = ({ role = 'company', lang = 'fr' }) => {
   };
 
   const greeting = {
-    officer: { fr: "Bonjour. Je peux vous aider à émettre, vérifier ou annuler un DUT, ou vous donner les barèmes. Que voulez-vous faire ?",
-               en: "Hello. I can help you issue, verify or cancel an STD, or share the rate schedule. What do you need?" },
+    officer: { fr: "Bonjour. Je peux vous aider à émettre, vérifier ou annuler un DUT, ou vous expliquer comment encaisser pour un transporteur. Que voulez-vous faire ?",
+               en: "Hello. I can help you issue, verify or cancel an STD, or explain how to collect payment for a transporter. What do you need?" },
     company: { fr: "Bonjour. Je peux régler vos DUT, suivre votre flotte ou vous mettre en relation avec un agent DNTT. Comment puis-je vous aider ?",
                en: "Hello. I can pay your bills, track your fleet or put you in touch with a DNTT agent. How can I help?" },
-    individual: { fr: "Bonjour Sékou. Je peux régler votre DUT en attente, estimer un trajet ou vous aider avec Orange Money. Que souhaitez-vous faire ?",
-                  en: "Hi Sékou. I can pay your pending STD, estimate a trip or help with Orange Money. What would you like to do?" },
+    individual: { fr: "Bonjour Sékou. Je peux régler votre DUT en attente, vous donner le prix du DUT ou vous aider avec Orange Money. Que souhaitez-vous faire ?",
+                  en: "Hi Sékou. I can pay your pending STD, give you the STD price or help with Orange Money. What would you like to do?" },
   };
 
   const ensureGreeting = () => {
@@ -321,7 +322,7 @@ const ChatbotBadge = ({ role = 'company', lang = 'fr' }) => {
   const handleAction = (action) => {
     ensureGreeting();
     const userMsg = { who: 'user', text: action.label };
-    const botMsg = { who: 'bot', text: CHATBOT_RESPONSES[action.id][isFr ? 'fr' : 'en'] };
+    const botMsg = { who: 'bot', text: cbText(action.id, isFr) };
     setThread(t => [...t, userMsg]);
     setPending(true);
     setTimeout(() => {
@@ -340,7 +341,7 @@ const ChatbotBadge = ({ role = 'company', lang = 'fr' }) => {
     let text = null;
     if (window.claude && typeof window.claude.complete === 'function') {
       try {
-        const sys = `You are a helpful assistant inside the Guinean DUT (Document Unique de Transport) platform, role: ${role}. Respond in ${isFr ? 'French' : 'English'}, in 2 to 4 short sentences, sober institutional tone. Use GNF currency. Never use the characters em dash, en dash or middle dot.`;
+        const sys = `You are a helpful assistant inside the Guinean DUT (Document Unique de Transport) platform, role: ${role}. Respond in ${isFr ? 'French' : 'English'}, in 2 to 4 short sentences, sober institutional tone. The DUT has a fixed price of 10 euros (100 000 GNF). Use GNF currency. Never use the characters em dash, en dash or middle dot.`;
         text = await window.claude.complete({
           messages: [{ role: 'user', content: `${sys}\n\nUser: ${q}` }],
         });
